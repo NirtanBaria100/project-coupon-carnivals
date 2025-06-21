@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogsController;
 use App\Http\Controllers\Admin\CouponsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ReorderController;
@@ -24,7 +25,7 @@ Route::prefix('admin')->group(function () {
 
 
     // Coupon Routes
-    Route::prefix('coupons')->name("admin.coupons")->group(function () {
+    Route::prefix('coupons')->name("admin.coupons.")->group(function () {
 
         Route::get('/', [CouponsController::class, 'index'])->name('index');
         Route::get('/create', [CouponsController::class, 'create'])->name('create');
@@ -39,7 +40,7 @@ Route::prefix('admin')->group(function () {
     });
 
     // Tag Routes
-    Route::prefix('tags')->name('admin.tags')->group(function () {
+    Route::prefix('tags')->name('admin.tags.')->group(function () {
         Route::get('/', [TagsController::class, 'index'])->name('index');
         Route::get('/create', [TagsController::class, 'create'])->name('create');
         Route::post('/', [TagsController::class, 'store'])->name('store');
@@ -49,7 +50,7 @@ Route::prefix('admin')->group(function () {
     });
 
     // Category Routes
-    Route::prefix('categories')->name("admin.categories")->group(function () {
+    Route::prefix('categories')->name("admin.categories.")->group(function () {
 
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
@@ -61,7 +62,7 @@ Route::prefix('admin')->group(function () {
     });
 
 
-    Route::prefix('stores')->name("admin.stores")->group(function () {
+    Route::prefix('stores')->name("admin.stores.")->group(function () {
         Route::get('/', [StoresController::class, 'index'])->name('index');
         Route::get('/create', [StoresController::class, "create"])->name('create');
         Route::post('/create', [StoresController::class, "store"])->name('store');
@@ -70,10 +71,21 @@ Route::prefix('admin')->group(function () {
         Route::put('/{store}', [StoresController::class, 'update'])->name('update');
 
     });
+
+    Route::prefix('/blogs')->name('admin.blogs.')->group(function () {
+        Route::get('/', [BlogsController::class, 'index'])->name('index');
+        Route::get('/create', [BlogsController::class, 'create'])->name('create');
+        Route::post('/', [BlogsController::class, 'store'])->name('store');
+        Route::patch('/{blog}', [BlogsController::class, 'update'])->name('update');
+        Route::get('/{blog}/edit', [BlogsController::class, 'edit'])->name('edit');
+    });
+
+
+
 });
 
 
-Route::prefix("")->name("home")->group(function () {
+Route::prefix("")->name("home.")->group(function () {
     Route::get("/", [HomeController::class, 'Index']);
     Route::get("/store/page", [HomeController::class, 'StorePage']);
     Route::get("/category/page", [HomeController::class, 'CategoryPage']);
