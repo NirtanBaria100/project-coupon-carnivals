@@ -12,6 +12,11 @@ class HomeController extends Controller
     public function Index(){
         return Inertia::render("Web/Index");
     }
-
+    public function StorePage() {
+        return Inertia::render("User/StorePage");
+    }
+    public function CategoryPage() {
+        return Inertia::render("User/CategoryPage");
+    }
     
 }
