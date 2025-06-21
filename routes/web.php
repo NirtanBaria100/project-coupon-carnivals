@@ -87,8 +87,10 @@ Route::prefix('admin')->group(function () {
 
 Route::prefix("")->name("home.")->group(function () {
     Route::get("/", [HomeController::class, 'Index']);
+    Route::get("/store/page", [HomeController::class, 'StorePage']);
+    Route::get("/category/page", [HomeController::class, 'CategoryPage']);
 });
-
+// Yahan top par tum apne pages banaoge
 
 
 
