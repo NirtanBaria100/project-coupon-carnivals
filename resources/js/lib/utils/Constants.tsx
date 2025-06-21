@@ -54,6 +54,17 @@ export const ADMIN_NAVITIEMS = [
         href: '/admin/coupons/store-types/default/reorder',
         icon: ArrowDownUp,
     },
+    {
+        title: 'Blogs',
+        href: '/admin/blogs',
+        icon: ArrowDownUp,
+    },
+    {
+        title: 'Create Blog',
+        href: '/admin/blogs/create',
+        icon: ArrowDownUp,
+    }
+
 ];
 
 
