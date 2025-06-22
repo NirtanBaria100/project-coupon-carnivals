@@ -6,16 +6,20 @@ import OfferCard from '@/Components/OfferCard';
 
 // IMPORTANT: Import the AppLayout component
 import AppLayout from '@/layouts/app-layout'; // Adjust path if your layout is elsewhere
-
+interface Store {
+    name  : string
+  }
+  interface Props {
+    stores: Store[]
+  }
 // Accept props from the Inertia controller, including storeName
-const StorePage = ({ storeName }) => { // Removed ':string' as it's not standard React prop type syntax
-
+const StorePage = ({ storeName , stores }) => { // Removed ':string' as it's not standard React prop type syntax
   const formatStoreName = (name) => {
     if (!name) return 'Store';
     // Handle cases where storeName might be kebab-cased or camelCase
     return name.split(/(?=[A-Z])|-/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   };
-
+  
   const formattedStoreName = formatStoreName(storeName);
 
   // Dummy data for offers on a store page
@@ -41,8 +45,8 @@ const StorePage = ({ storeName }) => { // Removed ':string' as it's not standard
         <div className="container mx-auto px-4 py-8">
           {/* Breadcrumbs */}
           <nav className="text-sm text-gray-600 mb-6">
-            <Link href="/" className="hover:underline">Home</Link> &gt;
-            <Link href="/stores" className="hover:underline ml-1">Stores</Link> &gt;
+            <Link href="/" className="hover:underline">Home </Link> &gt;
+            <Link href="/stores" className="hover:underline ml-1">Stores{stores}</Link> &gt;
             <span className="ml-1 font-semibold">{formattedStoreName} Promo Codes</span>
           </nav>
 

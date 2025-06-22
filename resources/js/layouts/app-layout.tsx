@@ -1,18 +1,15 @@
-// resources/js/Layouts/AppLayout.jsx
-import React from 'react';
-import Header from '@/components/Header'; // Ensure correct path
-import Footer from '@/components/Footer'; // Ensure correct path
+import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout';
+import { type BreadcrumbItem } from '@/types';
+import { type ReactNode } from 'react';
+import { Toaster } from 'react-hot-toast';
+interface AppLayoutProps {
+    children: ReactNode;
+    breadcrumbs?: BreadcrumbItem[];
+}
 
-const AppLayout = ({ children }) => {
-  return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-grow">
-        {children}
-      </main>
-      <Footer />
-    </div>
-  );
-};
-
-export default AppLayout;
+export default ({ children, breadcrumbs, ...props }: AppLayoutProps) => (
+    <AppLayoutTemplate breadcrumbs={breadcrumbs} {...props}>
+        <Toaster position="top-right" />
+        <div className="m-7">{children}</div>
+    </AppLayoutTemplate>
+);
