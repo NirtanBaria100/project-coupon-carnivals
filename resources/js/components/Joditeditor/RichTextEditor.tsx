@@ -35,7 +35,7 @@ export default function RichTextEditor({
       placeholder: "",
       height: "450px",
       uploader: {
-        // insertImageAsBase64URI: true,
+        insertImageAsBase64URI: true,
         url: "/store/editorImage?path=" + path,
         format: "json",
         method: "POST",
