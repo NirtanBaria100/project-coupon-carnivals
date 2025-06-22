@@ -22,6 +22,7 @@ class BlogsController extends Controller
     {
         return Inertia::render('Admin/Blogs/Create', [
             'categories' => Category::all(['id', 'name']),
+            'csrfToken' => csrf_token()
         ]);
     }
 
@@ -56,6 +57,7 @@ class BlogsController extends Controller
         return Inertia::render('Admin/Blogs/Edit', [
             'blog' => $blog,
             'categories' => Category::all(['id', 'name']),
+            'csrfToken' => csrf_token()
         ]);
     }
 

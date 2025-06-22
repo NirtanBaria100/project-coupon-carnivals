@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ReorderController;
 use App\Http\Controllers\Admin\StoresController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagsController;
+use App\Http\Controllers\RichTextEditorController;
 
 use App\Http\Controllers\Web\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -94,7 +95,7 @@ Route::prefix("")->name("home.")->group(function () {
 
 
 
-
+Route::post('store/editorImage', [RichTextEditorController::class ,'storeImage']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {

@@ -8,18 +8,20 @@ import { Head, useForm } from '@inertiajs/react';
 import { BreadcrumbItem } from '@/types';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import Select from 'react-select';
+import Select, { defaultTheme } from 'react-select';
 import customSelectStyles from '@/components/ui/CustomSelectStyles';
 import toast from 'react-hot-toast';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import RichTextEditor from '@/components/Joditeditor/RichTextEditor';
 
 interface CreateProps {
     categories: { id: number; name: string }[];
+    csrfToken : string,
 }
 
-export default function Create({ categories }: CreateProps) {
+export default function Create({ categories , csrfToken }: CreateProps) {
     const categoryOptions = categories.map((cat) => ({ value: cat.id.toString(), label: cat.name })) ?? [];
-
+    const [content , setContent] = useState();
     const { data, setData, post, processing, errors } = useForm({
         title: '',
         slug: '',
@@ -71,13 +73,13 @@ export default function Create({ categories }: CreateProps) {
                             <Input name="slug" placeholder="Slug" required value={data.slug} onChange={handleChange} />
 
                             <label className="block font-medium">Content</label>
-                            <BlogEditor content={data.content} onChange={(val) => setData('content', val)} />
-
+                            <RichTextEditor content={content} setContent={setContent} setFormData={setData}  name={'content'}  csrfToken={csrfToken} path={'blogs'}/>
                             <Input name="image" placeholder="Image URL" value={data.image} onChange={handleChange} />
 
                             <Input name="seo_title" placeholder="SEO Title" value={data.seo_title} onChange={handleChange} />
                             <Input name="focus_keyphrase" placeholder="Focus Keyphrase" value={data.focus_keyphrase} onChange={handleChange} />
                             <Textarea name="meta_description" placeholder="Meta Description" value={data.meta_description} onChange={handleChange} />
+                           
                         </div>
 
                         <div className="space-y-6 rounded-xl bg-white p-4 shadow-md md:p-6 dark:bg-black">
