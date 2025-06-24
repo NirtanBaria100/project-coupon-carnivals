@@ -13,13 +13,19 @@ use App\Http\Controllers\Web\HomeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
-Route::prefix('admin')->group(function () {
+Route::prefix("")->name("home.")->group(function () {
+    Route::get("/", [HomeController::class, 'Index']);
+    Route::get("/store/page/{slug}", [HomeController::class, 'StorePage']);
+    Route::get("/category/page", [HomeController::class, 'CategoryPage']);
+});
 
     // Admin Dashboard or Home
-    Route::get('/', function () {
-        return Inertia::render('Admin/Welcome');
-    })->name('home');
+    Route::prefix('admin')->group(function () {
+
+
+        Route::get('/', function () {
+            return Inertia::render('Admin/Welcome');
+        })->name('home');
 
 
     Route::get("/dashboard", [DashboardController::class, 'index'])->name("admin.dashboard");
@@ -86,11 +92,6 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::prefix("")->name("home.")->group(function () {
-    Route::get("/", [HomeController::class, 'Index']);
-    Route::get("/store/page/{slug}", [HomeController::class, 'StorePage']);
-    Route::get("/category/page", [HomeController::class, 'CategoryPage']);
-});
 // Yahan top par tum apne pages banaoge
 
 
