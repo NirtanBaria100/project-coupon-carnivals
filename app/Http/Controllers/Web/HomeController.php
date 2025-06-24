@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
-use App\Models\Store;
+use App\Models\{Store ,Blog,Category};
 
 class HomeController extends Controller
 {

@@ -15,8 +15,12 @@ use Inertia\Inertia;
 
 Route::prefix("")->name("home.")->group(function () {
     Route::get("/", [HomeController::class, 'Index']);
-    Route::get("/store/page/{slug}", [HomeController::class, 'StorePage']);
-    Route::get("/category/page", [HomeController::class, 'CategoryPage']);
+    Route::get("/store/{slug}", [HomeController::class, 'StorePage']);
+    Route::get("/stores", [HomeController::class, 'AllStorePage']);
+    Route::get("/category/{slug}", [HomeController::class, 'SingleCategoryPage']);
+    Route::get("/categories", [HomeController::class, 'CategoryPage']);
+    Route::get("/blog/{slug}", [HomeController::class, 'singleBlog']);
+    Route::get("/blogs", [HomeController::class, 'AllBlogs']);
 });
 
     // Admin Dashboard or Home
