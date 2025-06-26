@@ -157,3 +157,226 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* Apply Poppins to all elements */
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+
+:root {
+  /* Core Brand Colors */
+  /* orange */
+  --primary-orange: #FF6700; 
+   --secondary-black: #000000; 
+    /*blue  */
+   /* --primary-orange: #007BFF; 
+  --secondary-black: #212529;  */
+  /* green */
+    /* --primary-orange: #4CAF50; 
+   --secondary-black: #3E2723;  */
+/* sea green */
+   /* --primary-orange: #00BCD4; 
+  --secondary-black: #000000; */
+/* maroon */
+    /* --primary-orange: #880E4F;Deep Burgundy 8 */
+  /* --secondary-black: #212121;Near Black */
+
+/* sky blue */
+   /* --primary-orange: #81D4FA; A soft light blue */
+  /* --secondary-black: #37474F; Dark slate gray */
+  --neutral-white: #FFFFFF;   /* Pure white */
+
+  /* General Element Colors */
+  --header-bg: var(--neutral-white);      /* Header background: White */
+  --text-default: var(--secondary-black);  /* Most text: Black */
+  --text-accent-hover: var(--primary-orange); /* Text that turns orange on hover (e.g., for SIGNIN link) */
+  --icon-default: var(--secondary-black);  /* Default icon color: Black */
+  --heading-color: var(--secondary-black); /* General Heading text color: Black */
+  --main-heading-color: #333333; /* Darker text for prominent titles and main section headings */
+
+
+  /* Search Input Specific Colors */
+  --search-input-bg: #F9FAFB;              /* Light gray for input background */
+  --search-input-text: var(--text-default); /* Text inside search input: Black */
+  --search-input-border: #D1D5DB;          /* Medium gray for input border */
+  --search-input-placeholder: #9CA3AF;     /* Placeholder text color */
+  --search-input-focus-ring: var(--primary-orange); /* Focus ring color: Orange */
+  --search-dropdown-bg: var(--neutral-white); /* Search dropdown background: White */
+  --search-dropdown-border: #D1D5DB;       /* Search dropdown border: Medium gray */
+  --search-dropdown-text: var(--text-default); /* Search dropdown text: Black */
+
+  /* Category Button Specific Colors (Used in HomePage, not directly in StoreList but good to have) */
+  --category-button-bg-default: var(--neutral-white);      /* Default button background: White */
+  --category-button-text-default: var(--secondary-black);  /* Default button text: Black */
+  --category-button-bg-hover: var(--primary-orange);       /* Button background on hover: Orange */
+  --category-button-text-hover: var(--neutral-white);    /* Button text on hover: White */
+
+  /* HomePage/General Page Structural Colors */
+  --page-bg: #F9FAFB; /* Light gray background for the entire page (equivalent to Tailwind's gray-50) */
+  --card-bg: var(--neutral-white); /* Background for sections/cards (e.g., Offers List, Popular Stores) */
+  --card-border: #F3F4F6; /* Light border for sections/cards (equivalent to Tailwind's gray-100) */
+
+  --heading-border-accent: var(--primary-orange); /* Orange border for main section headings */
+
+  --text-muted: #666666; /* For descriptive text like website description, affiliate line */
+  --text-highlight: var(--primary-orange); /* For highlighting text within descriptions */
+
+  /* Banner/Carousel Colors */
+  --banner-overlay-bg: rgba(0, 0, 0, 0.4); /* Dark overlay on banner images */
+  --banner-text-color: var(--neutral-white); /* Text color on banners */
+  --banner-button-bg: var(--primary-orange); /* Call-to-action button background on banners */
+  --banner-button-bg-hover: var(--secondary-black); /* Call-to-action button hover background */
+  --banner-button-text: var(--neutral-white); /* Call-to-action button text */
+
+  /* Carousel Navigation and Indicators */
+  --carousel-nav-bg: rgba(0, 0, 0, 0.4); /* Background for prev/next buttons */
+  --carousel-nav-bg-hover: rgba(0, 0, 0, 0.6); /* Hover background for prev/next buttons */
+  --carousel-nav-icon-color: var(--neutral-white); /* Icon color for prev/next buttons */
+  --carousel-nav-focus-ring: var(--neutral-white); /* Focus ring for prev/next buttons */
+  --carousel-indicator-active: var(--primary-orange); /* Active dot for carousel */
+  --carousel-indicator-inactive: #D1D5DB; /* Inactive dot for carousel (Tailwind gray-300) */
+
+  /* Popular Stores/Categories Link Colors */
+  --popular-link-default: var(--text-muted); /* Default link color in popular lists */
+  --popular-link-hover: var(--primary-orange); /* Hover link color in popular lists */
+
+  /* Blog Card Placeholder Image Background */
+  --blog-placeholder-bg: #E5E7EB; /* Placeholder background for blog images (Tailwind gray-200) */
+  --blog-card-text: #333333; /* Blog card title text */
+  --blog-card-description: #666666; /* Blog card description text */
+
+  /* Footer Specific Colors */
+  --footer-bg: var(--secondary-black); /* Main footer background: Black */
+  --footer-text-primary: #E0E0E0; /* Light gray for main text */
+  --footer-text-secondary: #B0B0B0; /* Slightly darker light gray for descriptions and default links */
+  --footer-heading-color: var(--neutral-white); /* Pure white for headings like "LOGO" and section titles */
+
+  --footer-social-icon-bg: #2D3748; /* Dark gray for social icon backgrounds */
+  --footer-social-facebook-hover: #4267B2; /* Facebook Blue */
+  --footer-social-twitter-hover: #1DA1F2; /* Twitter Blue */
+  --footer-social-instagram-hover: #E1306C; /* Instagram Pink */
+  --footer-social-telegram-hover: #0088CC; /* Telegram Blue */
+  --footer-social-icon-color: var(--footer-text-primary); /* Icon color */
+  --footer-link-hover: var(--primary-orange); /* Orange for hover on all footer links */
+  --footer-copyright-text: #909090; /* Medium gray for copyright text */
+  --footer-border-color: #4A5568; /* Border color above copyright */
+
+  /* --- NEW & UPDATED for StoreListPage and general components --- */
+
+  /* Error States (used in StoreListPage loading/error) */
+  --error-border: #FECACA; /* Tailwind red-100 */
+  --error-text: #DC2626;   /* Tailwind red-600 */
+  --error-button-bg: #EF4444; /* Tailwind red-500 */
+  --error-button-hover: #DC2626; /* Tailwind red-600 */
+
+  /* Form Elements (used in StoreListPage filters) */
+  --form-input-bg: var(--neutral-white);
+  --form-input-text: var(--text-default);
+  --form-input-border: #D1D5DB; /* Tailwind gray-300 */
+  --search-icon-color: #6B7280; /* Tailwind gray-500, for general search icons */
+
+  /* Tags/Badges (used for categories on StoreList cards) */
+  --tag-bg: var(--card-border); /* Using card-border for a light gray background */
+  --tag-text: #4B5563; /* Tailwind gray-600 for tag text */
+
+
+  /* General Button Colors (used in StoreListPage for "Visit Store" & "Reset Filters") */
+  --button-hover-orange: #E65C00; /* A slightly darker shade of primary-orange for hover */
+
+
+  /* Breadcrumbs (used in StoreListPage) */
+  --breadcrumb-separator-color: #999999; /* Color for '>' in breadcrumbs */
+
+  /* Offer Card Specifics (Existing, just making sure they are here) */
+  --offer-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind shadow-md */
+  --offer-card-bg: var(--neutral-white);
+  --offer-card-border: var(--card-border); /* Using generic card border */
+  --offer-card-left-section-bg: var(--page-bg); /* light gray, consistent with page bg */
+  --offer-card-store-name-text: #4B5563; /* Tailwind gray-700 */
+  --offer-card-offer-heading-text: #1F2937; /* Tailwind gray-900 */
+  --offer-card-expired-text: #EF4444; /* Tailwind red-500 (kept red for urgency) */
+  --offer-card-expires-text: #4B5563; /* Tailwind gray-600 */
+
+  /* Tag Colors - Harmonized to Orange/Black/White Palette (These are more specific offer tags) */
+  --tag-verified-bg: #FFF3EB; /* Very light orange/cream */
+  --tag-verified-text: var(--primary-orange);
+  --tag-exclusive-bg: #EAEAEA; /* Light gray */
+  --tag-exclusive-text: var(--secondary-black);
+  --tag-featured-bg: #FFEAD9; /* Another light orange/cream */
+  --tag-featured-text: #E06C00; /* Darker orange */
+  --tag-new-bg: #E5E7EB; /* Tailwind gray-200 */
+  --tag-new-text: var(--secondary-black);
+  --tag-default-bg: #F3F4F6; /* Tailwind gray-100 */
+  --tag-default-text: #4B5563; /* Tailwind gray-700 */
+
+  /* Offer Button Colors */
+  --offer-button-bg: var(--primary-orange);
+  --offer-button-hover-bg: var(--secondary-black);
+  --offer-button-text: var(--neutral-white);
+  --offer-button-disabled-bg: #9CA3AF; /* Tailwind gray-400 */
+  --offer-code-scratch-bg: #F3F4F6; /* Tailwind gray-100 */
+  --offer-code-scratch-text: #4B5563; /* Tailwind gray-700 */
+  --offer-code-separator-color: var(--neutral-white); /* White for separator */
+
+  /* Terms & Conditions Link */
+  --terms-link-text: var(--text-muted); /* #666666 */
+  --terms-link-hover-text: var(--primary-orange);
+  --terms-message-text: #6B7280; /* Tailwind gray-500 */
+
+  /* Modal Colors */
+  --modal-backdrop-bg: rgba(0, 0, 0, 0.6);
+  --modal-bg: var(--neutral-white);
+  --modal-heading-text: #1F2937; /* Tailwind gray-800 */
+  --modal-close-button-text: #6B7280; /* Tailwind gray-500 */
+  --modal-close-button-hover-text: #374151; /* Tailwind gray-700 */
+  --modal-logo-border: #E5E7EB; /* Tailwind gray-200, used in StoreList as well */
+  --modal-store-name-text: #1F2937; /* Tailwind gray-900 */
+  --modal-offer-text-description: #374151; /* Tailwind gray-700 */
+  --modal-label-text: #374151; /* Tailwind gray-700 */
+  --modal-code-input-border: #D1D5DB; /* Tailwind gray-300 */
+  --modal-code-input-bg: #F9FAFB; /* Tailwind gray-50 */
+  --modal-code-input-text: #1F2937; /* Tailwind gray-800 */
+  --modal-code-input-placeholder: #9CA3AF; /* Tailwind gray-400 */
+  --modal-copy-button-bg: var(--primary-orange);
+  --modal-copy-button-hover-bg: var(--secondary-black);
+  --modal-copy-button-text: var(--neutral-white);
+  --modal-instructions-text: #6B7280; /* Tailwind gray-500 */
+  --modal-terms-border: #E5E7EB; /* Tailwind gray-200 */
+  --modal-terms-text: #4B5563; /* Tailwind gray-600 */
+}
+
+/* --- */
+
+/* Custom Scrollbar Styles */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--card-border);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--primary-orange);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-black);
+}
+
+/* --- */
+
+/* Global placeholder styling */
+input::placeholder {
+  color: var(--search-input-placeholder);
+}
+
+/* --- */
+
+

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Models\{Store ,Blog,Category};
-
 class HomeController extends Controller
 {
 
@@ -25,8 +24,13 @@ class HomeController extends Controller
     }
 
     public function AllStorePage() {
+        $stores = Store::latest()->get();
+        $stores->transform(function($query){
+            $query->imageUrl = asset($query->thumbnail);
+            return $query;
+        });
         return Inertia::render("User/AllStorePage",[
-            'stores' => Store::latest()->get()
+            'allStores' => $stores
         ]);
 
     }
