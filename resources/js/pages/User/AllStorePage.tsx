@@ -10,161 +10,13 @@ interface Stores {
   imageUrl : string | null ,
 }
 interface Props {
-  allStores : Stores[]
+  allStores : Stores[],
 }
 const AllStorePage = ({ allStores }: Props) => {
-  const {url} = usePage();
-  const [stores, setStores] = useState([]); // Stores will be fetched from backend
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortOrder, setSortOrder] = useState('offers'); // 'offers' or 'name'
-   const dummyBackendStores = [
-        {
-          id: 'store-1',
-          name: 'Amazon',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
-          description: 'Find everything you need, from books and electronics to home goods and fashion, with fast shipping and great deals.',
-          totalOffers: 120,
-          categories: ['Electronics', 'Books', 'Home', 'Fashion'],
-          affiliateLink: 'https://www.amazon.com',
-          averageRating: 4.7, // Added dummy rating
-          totalReviews: 500, // Added dummy reviews count
-        },
-        {
-          id: 'store-2',
-          name: 'Walmart',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Walmart_logo.svg',
-          description: 'Your one-stop shop for groceries, electronics, apparel, and more, offering everyday low prices.',
-          totalOffers: 95,
-          categories: ['Groceries', 'Home', 'Electronics', 'Apparel'],
-          affiliateLink: 'https://www.walmart.com',
-          averageRating: 4.2, // Added dummy rating
-          totalReviews: 300, // Added dummy reviews count
-        },
-        {
-          id: 'store-3',
-          name: 'Target',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Target_Corporation_logo_%28vector%29.svg/2048px-Target_Corporation_logo_%28vector%29.svg.png',
-          description: 'Expect More. Pay Less. Shop Target for great deals on home decor, clothing, electronics, and baby products.',
-          totalOffers: 80,
-          categories: ['Home', 'Apparel', 'Baby', 'Electronics'],
-          affiliateLink: 'https://www.target.com',
-          averageRating: 4.5, // Added dummy rating
-          totalReviews: 250, // Added dummy reviews count
-        },
-        {
-          id: 'store-4',
-          name: 'Best Buy',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f6/Best_Buy_Logo.svg',
-          description: 'Shop for electronics, computers, appliances, cell phones, video games & more new tech. In-store pickup & free shipping.',
-          totalOffers: 60,
-          categories: ['Electronics', 'Appliances', 'Tech'],
-          affiliateLink: 'https://www.bestbuy.com',
-          averageRating: 4.6,
-          totalReviews: 180,
-        },
-        {
-          id: 'store-5',
-          name: 'Sephora',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Sephora_logo.svg/2560px-Sephora_logo.svg.png',
-          description: 'Your ultimate destination for beauty products, fragrances, and skincare from top brands.',
-          totalOffers: 45,
-          categories: ['Beauty', 'Skincare', 'Fragrance'],
-          affiliateLink: 'https://www.sephora.com',
-          averageRating: 4.8,
-          totalReviews: 210,
-        },
-        {
-          id: 'store-6',
-          name: 'Nike',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Nike_logo_black.svg',
-          description: 'Shop for Nike shoes, clothing and gear. Get the latest innovation in sports footwear and apparel.',
-          totalOffers: 30,
-          categories: ['Apparel', 'Sporting Goods', 'Shoes'],
-          affiliateLink: 'https://www.nike.com',
-          averageRating: 4.7,
-          totalReviews: 150,
-        },
-        {
-          id: 'store-7',
-          name: 'Home Depot',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5f/The_Home_Depot_logo.svg',
-          description: 'Shop for all your home improvement needs. Find tools, appliances, building supplies, and more.',
-          totalOffers: 70,
-          categories: ['Home Improvement', 'Hardware', 'Garden'],
-          affiliateLink: 'https://www.homedepot.com',
-          averageRating: 4.3,
-          totalReviews: 100,
-        },
-        {
-          id: 'store-8',
-          name: 'Macy\'s',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Macy%27s_Logo.svg/2560px-Macy%27s_Logo.svg.png',
-          description: 'Shop for the latest fashion trends, home decor, and beauty products from top brands at Macy\'s.',
-          totalOffers: 55,
-          categories: ['Fashion', 'Apparel', 'Home', 'Beauty'],
-          affiliateLink: 'https://www.macys.com',
-          averageRating: 4.1,
-          totalReviews: 90,
-        },
-        {
-          id: 'store-9',
-          name: 'Chewy',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/Chewy_Logo.svg/1280px-Chewy_Logo.svg.png',
-          description: 'Your online pet store for pet food, supplies, and more, delivered right to your door.',
-          totalOffers: 40,
-          categories: ['Pet Supplies', 'Pet Food'],
-          affiliateLink: 'https://www.chewy.com',
-          averageRating: 4.9,
-          totalReviews: 110,
-        },
-        {
-          id: 'store-10',
-          name: 'Expedia',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Expedia_Logo.svg/2560px-Expedia_Logo.svg.png',
-          description: 'Book flights, hotels, rental cars, and vacation packages for your next adventure.',
-          totalOffers: 25,
-          categories: ['Travel', 'Flights', 'Hotels'],
-          affiliateLink: 'https://www.expedia.com',
-          averageRating: 4.0,
-          totalReviews: 70,
-        },
-        {
-          id: 'store-11',
-          name: 'Kohl\'s',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Kohl%27s_logo.svg/2560px-Kohl%27s_logo.svg.png',
-          description: 'Shop for clothes, shoes, home, bedding, jewelry, and more. Find great deals and earn Kohl\'s Cash.',
-          totalOffers: 65,
-          categories: ['Apparel', 'Home', 'Jewelry'],
-          affiliateLink: 'https://www.kohls.com',
-          averageRating: 4.2,
-          totalReviews: 85,
-        },
-        {
-          id: 'store-12',
-          name: 'Zappos',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Zappos_logo.svg/2560px-Zappos_logo.svg.png',
-          description: 'The best place to shop for shoes, clothing, and accessories online. Free shipping and returns.',
-          totalOffers: 35,
-          categories: ['Shoes', 'Apparel', 'Accessories'],
-          affiliateLink: 'https://www.zappos.com',
-          averageRating: 4.6,
-          totalReviews: 95,
-        },
-        { // Added The Body Shop here to ensure consistency
-          id: 'the-body-shop',
-          name: 'The Body Shop',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d2/The_Body_Shop_logo.svg',
-          description: 'The Body Shop International plc is a British cosmetics, skin care and perfume company. It was founded in 1976 by Anita Roddick.',
-          totalOffers: 3,
-          categories: ['Beauty', 'Skincare', 'Cosmetics'],
-          affiliateLink: 'https://www.thebodyshop.com/',
-          averageRating: 4.5,
-          totalReviews: 128,
-        },
-      ];
   // Dummy fetch function - REPLACE WITH YOUR ACTUAL API CALL
   // const fetchStores = useCallback(async () => {
   //   setLoading(true);
@@ -180,7 +32,7 @@ const AllStorePage = ({ allStores }: Props) => {
   //     // setStores(data);
 
   //     // Dummy data for demonstration until backend is ready
-   
+
 
   //     await new Promise(resolve => setTimeout(resolve, 500)); // Simulate network delay
   //     setStores(dummyBackendStores); // Use dummy data for now
@@ -196,13 +48,7 @@ const AllStorePage = ({ allStores }: Props) => {
 
 
   // Get unique categories from fetched stores data
-  const allCategories = useMemo(() => {
-    const categories = new Set();
-    stores.forEach(store => {
-      store.categories.forEach(cat => categories.add(cat));
-    });
-    return ['All', ...Array.from(categories).sort()];
-  }, [stores]);
+
 
   // Helper function to render star ratings
   const renderStars = (rating) => {
@@ -289,7 +135,7 @@ const AllStorePage = ({ allStores }: Props) => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
         {/* Breadcrumbs */}
         <nav className="text-sm mb-6">
-         
+
           <span className="mx-2" style={{ color: 'var(--breadcrumb-separator-color)' }}>&gt;</span>
           <span className="font-semibold" style={{ color: 'var(--main-heading-color)' }}>All Stores</span>
         </nav>
@@ -340,28 +186,7 @@ const AllStorePage = ({ allStores }: Props) => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-            {/* Category Filter */}
-            <div className="relative w-full sm:w-auto">
-              <select
-                className="block appearance-none w-full border py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:bg-white focus:ring-2"
-                style={{
-                  backgroundColor: 'var(--form-input-bg)',
-                  borderColor: 'var(--form-input-border)',
-                  color: 'var(--form-input-text)',
-                }}
-                onFocus={(e) => e.currentTarget.style.borderColor = 'var(--primary-orange)'}
-                onBlur={(e) => e.currentTarget.style.borderColor = 'var(--form-input-border)'}
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-              >
-                {allCategories.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2" style={{ color: 'var(--form-input-text)' }}>
-                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-              </div>
-            </div>
+
 
             {/* Sort By */}
             <div className="relative w-full sm:w-auto">
@@ -430,7 +255,7 @@ const AllStorePage = ({ allStores }: Props) => {
                                 </span>
                               ))} */}
                             </div>
-            
+
                             {/* NEWLY ADDED: Rating Section */}
                             <div className="flex items-center justify-center mb-2"> {/* Added margin-bottom */}
                               {store.averageRating && (
@@ -445,12 +270,12 @@ const AllStorePage = ({ allStores }: Props) => {
                                 ({store.totalReviews || 0})
                               </span>
                             </div>
-            
+
                             <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
                               <span className="font-semibold" style={{ color: 'var(--text-highlight)' }}>{store.totalOffers}</span> Offers Available
                             </p>
                             <a
-                              href={store.affiliateLink}
+                              href={'/store/'+ store.slug}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="mt-auto font-bold py-2 px-5 rounded-md transition-colors duration-200 text-sm w-full"

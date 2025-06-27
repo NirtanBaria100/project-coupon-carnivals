@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
-use App\Models\{Store ,Blog,Category};
+use App\Models\{Store ,Blog,Category, Coupon};
 class HomeController extends Controller
 {
 
@@ -12,8 +12,16 @@ class HomeController extends Controller
         return Inertia::render("Web/Index");
     }
     public function StorePage($slug) {
+        $store = Store::latest()->where('slug', $slug)->first();
+        $storeCoupons = DB::table('coupon_store')->where('store_id', $)
+        $coupons = Coupon::whereHas('stores' , function($query) use($slug){
+            $query->where('slug', $slug );
+        })->with(['stores' => function($query) use($slug){
+            $query->where('slug', $slug );
+        }])->get();
+        dd($coupons);
         return Inertia::render("User/StorePage",[
-            'store' => Store::latest()->where('slug', $slug)->first()
+            'store' => $store
         ]);
     }
     public function CategoryPage() {
@@ -30,7 +38,7 @@ class HomeController extends Controller
             return $query;
         });
         return Inertia::render("User/AllStorePage",[
-            'allStores' => $stores
+            'allStores' => $stores,
         ]);
 
     }

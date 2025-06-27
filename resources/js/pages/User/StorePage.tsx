@@ -5,7 +5,7 @@ import { Link } from '@inertiajs/react';
 import OfferCard from '@/Components/OfferCard';
 
 // IMPORTANT: Import the AppLayout component
-import AppLayout from '@/layouts/app-layout'; // Adjust path if your layout is elsewhere
+// import AppLayout from '@/layouts/app-layout'; // Adjust path if your layout is elsewhere
 interface Store {
     name  : string
   }
@@ -19,7 +19,7 @@ const StorePage = ({ storeName , stores }) => { // Removed ':string' as it's not
     // Handle cases where storeName might be kebab-cased or camelCase
     return name.split(/(?=[A-Z])|-/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   };
-  
+
   const formattedStoreName = formatStoreName(storeName);
 
   // Dummy data for offers on a store page
@@ -40,7 +40,7 @@ const StorePage = ({ storeName , stores }) => { // Removed ':string' as it's not
 
   return (
     // Wrap the entire content of StorePage with AppLayout
-    <AppLayout>
+    // <AppLayout>
       <div className="bg-gray-100 pb-8 min-h-screen">
         <div className="container mx-auto px-4 py-8">
           {/* Breadcrumbs */}
@@ -137,7 +137,7 @@ const StorePage = ({ storeName , stores }) => { // Removed ':string' as it's not
 
         </div>
       </div>
-    </AppLayout>
+    // </AppLayout>
   );
 };
 
