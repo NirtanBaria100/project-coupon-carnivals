@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Models\{Store ,Blog,Category, Coupon};
+use Carbon\Carbon;
 class HomeController extends Controller
 {
 
@@ -15,6 +16,10 @@ class HomeController extends Controller
         $store = Store::latest()->where('slug', $slug)->first();
         $storeCoupons = \DB::table('coupon_store')->where('store_id', $store->id)->pluck('coupon_id');
         $coupons = Coupon::whereIn('id', $storeCoupons)->get();
+        $coupons->transform(function($query){
+            $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
+            return $query;
+        });
         if(!empty($store)){
             $store->thumbnail = asset($store->thumbnail);
         }

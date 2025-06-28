@@ -4,18 +4,22 @@ import { ChevronDownIcon } from '@heroicons/react/24/solid'; // Make sure @heroi
 
 const OfferCard = ({
   featured_image,
-  offerText,
-  endDate,
-  showCode,
-  offerValue, // offerValue will be either the code or the URL
+  title,
+  coupon_type,
+  code = '',
   isExpired,
-  tags = []
+  is_verified,
+  is_featured,
+  is_exclusive, // offerValue will be either the code or the URL
+  expires,
+  storeName,
+  tags = [],
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [copyStatus, setCopyStatus] = useState('');
   const [showTermsMessage, setShowTermsMessage] = useState(false);
-
+  const offerValue = code ;
   const handleCopyCode = () => {
     navigator.clipboard.writeText(offerValue)
       .then(() => {
@@ -50,19 +54,23 @@ const OfferCard = ({
     }
   };
   // --------------------------------------------------------
-
-  const buttonText = showCode ? 'Show Code' : 'Get Offer';
+  const buttonText = coupon_type  == 'code' ? 'Show Code' : 'Get Offer';
   const buttonBgColor = isExpired ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600';
   const buttonTextColor = 'text-white';
-
-  const storeName = "The Body Shop"; // This can be passed as a prop too
   const defaultStoreLogo = "https://via.placeholder.com/100x100?text=Store+Logo";
   const defaultStoreImage = "https://via.placeholder.com/150x150?text=Brand+Image";
-
+  if(is_verified) {
+    tags.push('verified');
+  }
+  if(is_exclusive){
+    tags.push('exclusive')
+  }
+  if(is_featured){
+    tags.push('featured')
+  }
   const getPartialCode = useCallback(() => {
-    return showCode && offerValue ? offerValue.substring(0, 3).toUpperCase() : '---';
-  }, [showCode, offerValue]);
-
+    return coupon_type == 'code' && offerValue ? offerValue.substring(0, 3).toUpperCase() : '---';
+  }, [coupon_type == 'code', offerValue]);
   const getTagStyle = (tag) => {
     switch (tag.toLowerCase()) {
       case 'verified':
@@ -78,7 +86,7 @@ const OfferCard = ({
 
   // Determine if a tag should blink
   const shouldBlink = (tag) => {
-    return tag.toLowerCase() === 'verified' || tag.toLowerCase() === 'exclusive';
+    return tag.toLowerCase() === 'verified' || tag.toLowerCase() === 'exclusive' || tag.toLowerCase() == 'featured';
   };
 
   return (
@@ -97,9 +105,9 @@ const OfferCard = ({
 
       {/* Middle Section: Offer Description */}
       <div className="flex-grow p-5 flex flex-col justify-center">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{offerText}</h3>
-        <p className={`text-sm ${isExpired ? 'text-red-500 font-bold' : 'text-gray-600'}`}>
-          {isExpired ? 'Expired' : `Expires: ${endDate}`}
+        <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
+        <p className={`text-sm ${isExpired  ? 'text-red-500 font-bold' : 'text-gray-600'}`}>
+          {isExpired ? 'Expired' : `Expires: ${expires}`}
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           {tags.map((tag, index) => (
@@ -115,11 +123,11 @@ const OfferCard = ({
 
       {/* Right Section: Button & Terms */}
       <div className="relative flex-shrink-0 w-1/4 flex flex-col items-center justify-center p-2 sm:p-4">
-        {showCode ? (
+        {coupon_type == 'code' ? (
           // Container for the button and the sliding code part
           <div
             className={`relative w-full max-w-[160px] h-[45px] overflow-hidden group
-              ${isExpired ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+              ${isExpired? 'cursor-not-allowed' : 'cursor-pointer'}`}
             onMouseEnter={() => !isExpired && setIsHovered(true)}
             onMouseLeave={() => !isExpired && setIsHovered(false)}
             onClick={handleOfferButtonClick} // This will now always open Google and the modal
@@ -137,7 +145,7 @@ const OfferCard = ({
                 z-20
                 `}
             >
-              <span className="uppercase text-center text-sm tracking-wider px-2 whitespace-nowrap">
+              <span classNam    e="uppercase text-center text-sm tracking-wider px-2 whitespace-nowrap">
                 {buttonText}
               </span>
             </button>
@@ -149,7 +157,7 @@ const OfferCard = ({
                 flex items-center justify-center text-lg
                 transition-transform duration-300 ease-in-out
                 ${isHovered && !isExpired ? 'translate-x-0' : 'translate-x-full'}
-                ${isExpired ? 'translate-x-0 opacity-100' : ''}
+                ${isExpired? 'translate-x-0 opacity-100' : ''}
                 z-10
                 `}
             >
@@ -161,7 +169,7 @@ const OfferCard = ({
               className={`absolute right-[60px] top-0 h-full w-px
                 bg-white bg-opacity-70 border-r border-dashed border-white
                 transition-opacity duration-300 ease-in-out
-                ${isHovered && !isExpired ? 'opacity-100' : 'opacity-0'}
+                ${isHovered && isExpired ? 'opacity-100' : 'opacity-0'}
                 ${isExpired ? 'opacity-100' : ''}
                 z-30
                 `}
@@ -175,7 +183,7 @@ const OfferCard = ({
             className={`relative ${buttonBgColor} ${buttonTextColor} font-extrabold py-3 px-6 rounded-md transition-colors duration-200
               ${isExpired ? 'opacity-60' : ''} w-full max-w-[160px]
               `}
-            disabled={isExpired}
+            disabled={isExpired ? true : false}
           >
             {buttonText}
           </button>
@@ -216,12 +224,12 @@ const OfferCard = ({
             </div>
 
             <div className="flex flex-col items-center mb-6">
-              <img src={storeLogo || defaultStoreImage} alt={storeName} className="w-24 h-24 rounded-full mb-4 border-2 border-gray-200 shadow-sm" />
+              <img src={featured_image || defaultStoreImage} alt={storeName} className="w-24 h-24 rounded-full mb-4 border-2 border-gray-200 shadow-sm" />
               <h3 className="2xl font-semibold text-gray-900 mb-1">{storeName}</h3>
-              <p className="text-gray-700 text-center text-lg leading-snug">{offerText}</p>
+              <p className="text-gray-700 text-center text-lg leading-snug">{title}</p>
             </div>
 
-            {showCode ? (
+            {coupon_type == 'code' ? (
               <div className="mt-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Your Coupon Code:
@@ -266,7 +274,7 @@ const OfferCard = ({
             <div className="mt-6 pt-4 border-t border-gray-200 text-gray-600 text-sm">
               <p className="font-semibold mb-2">Full Terms & Conditions:</p>
               <ul className="list-disc list-inside text-xs space-y-1">
-                <li>Offer valid until {endDate}.</li>
+                <li>Offer valid until {expires}.</li>
                 <li>Limited to one use per customer.</li>
                 <li>Cannot be combined with other promotions.</li>
                 <li>Applicable to online purchases only.</li>
