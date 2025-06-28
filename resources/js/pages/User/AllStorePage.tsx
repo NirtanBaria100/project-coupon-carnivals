@@ -1,7 +1,7 @@
 // src/components/AllStorePage.jsx
-import { usePage } from '@inertiajs/react';
+import WebLayout from '@/layouts/web-layout';
+import { Link } from '@inertiajs/react';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Link} from 'react-router-dom';
 interface Stores {
   id: number,
   name: string | null,
@@ -131,12 +131,13 @@ const AllStorePage = ({ allStores }: Props) => {
   }
 
   return (
+    <WebLayout>
     <div className="pb-12 font-sans" style={{ backgroundColor: 'var(--page-bg)' }}>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
         {/* Breadcrumbs */}
         <nav className="text-sm mb-6">
-
-          <span className="mx-2" style={{ color: 'var(--breadcrumb-separator-color)' }}>&gt;</span>
+          <a href='/' target='_blank' className='mx-2'  style={{ color: 'var(--breadcrumb-separator-color)' }}>Home</a>
+          <a  style={{ color: 'var(--breadcrumb-separator-color)' }}>&gt;</a> &nbsp;
           <span className="font-semibold" style={{ color: 'var(--main-heading-color)' }}>All Stores</span>
         </nav>
 
@@ -274,7 +275,7 @@ const AllStorePage = ({ allStores }: Props) => {
                             <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
                               <span className="font-semibold" style={{ color: 'var(--text-highlight)' }}>{store.totalOffers}</span> Offers Available
                             </p>
-                            <a
+                            <Link
                               href={'/store/'+ store.slug}
                               target="_blank"
                               rel="noopener noreferrer"
@@ -284,7 +285,7 @@ const AllStorePage = ({ allStores }: Props) => {
                               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--primary-orange)'}
                             >
                               Visit Store
-                            </a>
+                            </Link>
                           </div>
             ))}
           </div>
@@ -306,7 +307,7 @@ const AllStorePage = ({ allStores }: Props) => {
           </div>
         )}
       </div>
-    </div>
+    </div></WebLayout>
   );
 };
 

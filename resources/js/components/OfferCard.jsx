@@ -1,17 +1,17 @@
 // resources/js/Components/OfferCard.jsx
 import React, { useState, useCallback } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/solid'; // Make sure @heroicons/react is installed
-
 const OfferCard = ({
   featured_image,
   title,
   coupon_type,
-  code = '',
+  code ,
   isExpired,
   is_verified,
   is_featured,
   is_exclusive, // offerValue will be either the code or the URL
   expires,
+  affiliate_irl,
   storeName,
   tags = [],
 }) => {
@@ -27,7 +27,6 @@ const OfferCard = ({
         setTimeout(() => setCopyStatus(''), 2000);
       })
       .catch(err => {
-        console.error('Failed to copy text: ', err);
         setCopyStatus('Failed to copy!');
       });
   };
@@ -38,24 +37,21 @@ const OfferCard = ({
 
   const handleOfferButtonClick = () => {
     if (!isExpired) {
-      // Always open google.com in a new tab when the main button is clicked
-      window.open('https://www.google.com', '_blank');
-
-      // Always open the modal after opening the Google link
+      if(offerValue){
+        navigator.clipboard.writeText(offerValue)
+      }
       setIsModalOpen(true);
     }
   };
 
-  // --- NEW FUNCTION TO CLOSE MODAL ON BACKDROP CLICK ---
   const handleBackdropClick = (e) => {
-    // Only close if the click originated directly on the backdrop, not on the modal content itself
-    if (e.target.classList.contains('bg-opacity-60')) { // Targeting the specific backdrop class
+    if (e.target.classList.contains('bg-opacity-60')) {
       setIsModalOpen(false);
     }
   };
   // --------------------------------------------------------
   const buttonText = coupon_type  == 'code' ? 'Show Code' : 'Get Offer';
-  const buttonBgColor = isExpired ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600';
+  const buttonBgColor = isExpired ? 'bg-gray-400 cursor-not-allowed' : 'primary-button-bg hover:bg-blue-600';
   const buttonTextColor = 'text-white';
   const defaultStoreLogo = "https://via.placeholder.com/100x100?text=Store+Logo";
   const defaultStoreImage = "https://via.placeholder.com/150x150?text=Brand+Image";
@@ -133,22 +129,22 @@ const OfferCard = ({
             onClick={handleOfferButtonClick} // This will now always open Google and the modal
           >
             {/* The Main "Show Code" Button that slides */}
-            <button
-              type="button"
+            <a
+              href={affiliate_irl} target='_blank'
               disabled={isExpired}
               className={`absolute inset-0 w-full h-full
                 ${buttonBgColor} ${buttonTextColor} font-extrabold rounded-md
-                flex items-center justify-center
+                flex items-center justify-center cursor-pointer
                 transition-transform duration-300 ease-in-out
                 ${isHovered && !isExpired ? '-translate-x-[60px]' : 'translate-x-0'}
                 ${isExpired ? 'opacity-60' : ''}
                 z-20
                 `}
             >
-              <span classNam    e="uppercase text-center text-sm tracking-wider px-2 whitespace-nowrap">
+              <span className="uppercase cursor-pointer text-center text-sm tracking-wider px-2 whitespace-nowrap">
                 {buttonText}
               </span>
-            </button>
+            </a>
 
             {/* The Scratched Code Part that slides in from the right */}
             <div
@@ -178,15 +174,15 @@ const OfferCard = ({
           </div>
         ) : (
           // Regular "Get Offer" button
-          <button
+          <a href={affiliate_irl} target='_blank'
             onClick={handleOfferButtonClick} // This will now always open Google and the modal
-            className={`relative ${buttonBgColor} ${buttonTextColor} font-extrabold py-3 px-6 rounded-md transition-colors duration-200
+            className={`relative ${buttonBgColor} ${buttonTextColor} font-extrabold text-center py-3 px-6 rounded-md cursor-pointer transition-colors duration-200
               ${isExpired ? 'opacity-60' : ''} w-full max-w-[160px]
               `}
             disabled={isExpired ? true : false}
           >
             {buttonText}
-          </button>
+          </a>
         )}
 
         {/* View Terms & Conditions with inline message */}
@@ -244,7 +240,7 @@ const OfferCard = ({
                   />
                   <button
                     onClick={handleCopyCode}
-                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                    className="bg-green-600 hover:bg-green-700 cursor-pointer  text-white font-bold py-3 px-5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
                   >
                     {copyStatus || 'Copy Code'}
                   </button>
@@ -260,7 +256,7 @@ const OfferCard = ({
                 </p>
                 {/* This button inside the modal also directs to Google.com */}
                 <a
-                  href="https://www.google.com"
+                  href={affiliate_irl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-6 block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"

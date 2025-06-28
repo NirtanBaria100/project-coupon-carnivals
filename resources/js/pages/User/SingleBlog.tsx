@@ -1,9 +1,10 @@
+import WebLayout from '@/layouts/web-layout'
 import React from 'react'
 
 export default function SingleBlog() {
   return (
-    <div>
+    <WebLayout>
         <h1>Single Blog</h1>
-    </div>
+    </WebLayout>
   )
 }

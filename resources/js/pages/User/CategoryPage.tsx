@@ -6,6 +6,7 @@ import OfferCard from '@/Components/OfferCard';
 
 // IMPORTANT: Import the AppLayout component
 import AppLayout from '@/layouts/app-layout'; // Adjust path if your layout is elsewhere
+import WebLayout from '@/layouts/web-layout';
 
 // Accept props from the Inertia controller, including categoryName
 const CategoryPage = ({ categoryName }) => {
@@ -30,8 +31,8 @@ const CategoryPage = ({ categoryName }) => {
   ];
 
   return (
-    // Wrap the entire content of CategoryPage with AppLayout
-    <AppLayout>
+
+    <WebLayout>
       <div className="bg-gray-100 pb-8 min-h-screen">
         <div className="container mx-auto px-4 py-8">
           {/* Breadcrumbs */}
@@ -97,7 +98,7 @@ const CategoryPage = ({ categoryName }) => {
           </div>
         </div>
       </div>
-    </AppLayout>
+    </WebLayout>
   );
 };
 

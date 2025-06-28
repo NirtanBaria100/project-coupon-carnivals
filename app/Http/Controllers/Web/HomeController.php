@@ -13,23 +13,33 @@ class HomeController extends Controller
         return Inertia::render("Web/Index");
     }
     public function StorePage($slug) {
+        $store = Store::latest()->where('slug', $slug)->select(['affiliate_irl','name','desc','extra_info','thumbnail'])->first();
+        $similarStores  = Store::latest()->whereNot('slug', $slug)->select(['name','slug'])->limit(5)->get();
         $store = Store::latest()->where('slug', $slug)->first();
         $storeCoupons = \DB::table('coupon_store')->where('store_id', $store->id)->pluck('coupon_id');
-        $coupons = Coupon::whereIn('id', $storeCoupons)->get();
+        $coupons = Coupon::whereIn('id', $storeCoupons)->whereDate('expires', '>', Carbon::now())->get();
+        $expiredCoupons = Coupon::whereIn('id', $storeCoupons)->whereDate('expires', '<=', Carbon::now())->get();
         $coupons->transform(function($query){
             $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
+            $query->expires   = Carbon::parse($query->expires)->format('F d , Y');
             return $query;
         });
         if(!empty($store)){
             $store->thumbnail = asset($store->thumbnail);
         }
         return Inertia::render("User/StorePage",[
-            'store' => $store,
+            'stores' => $store,
             'coupons'=> $coupons,
+            'expiredCoupons'=> $expiredCoupons,
+            'similarStores' => $similarStores
         ]);
     }
-    public function CategoryPage() {
-
+    public function CategoryPage($slug) {
+        $category = Category::latest()->where('slug', $slug)->first();
+        if(!empty($category)){
+        $categoryCoupons = \DB::table('coupon_store')->where('category_id', $category->id)->pluck('coupon_id');
+        $coupons = Coupon::whereIn('id', $categoryCoupons)->whereDate('expires', '>', Carbon::now())->get();
+        }
         return Inertia::render("User/CategoryPage" ,[
             'categories' => Category::latest()->get()
         ]);
@@ -46,12 +56,7 @@ class HomeController extends Controller
         ]);
 
     }
-    public function SingleCategoryPage($slug){
-        return Inertia::render("User/SingleCategoryPage",[
-            'category' => Category::latest()->where('slug', $slug)->first()
-        ]);
 
-    }
 
     public function AllBlogs(){
         return Inertia::render("User/BlogPage",[

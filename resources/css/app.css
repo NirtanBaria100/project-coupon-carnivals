@@ -170,16 +170,16 @@
 :root {
   /* Core Brand Colors */
   /* orange */
-  --primary-orange: #FF6700; 
-   --secondary-black: #000000; 
+  --primary-orange: #FF6700;
+   --secondary-black: #000000;
     /*blue  */
-   /* --primary-orange: #007BFF; 
+   /* --primary-orange: #007BFF;
   --secondary-black: #212529;  */
   /* green */
-    /* --primary-orange: #4CAF50; 
+    /* --primary-orange: #4CAF50;
    --secondary-black: #3E2723;  */
 /* sea green */
-   /* --primary-orange: #00BCD4; 
+   /* --primary-orange: #00BCD4;
   --secondary-black: #000000; */
 /* maroon */
     /* --primary-orange: #880E4F;Deep Burgundy 8 */
@@ -350,7 +350,9 @@
 }
 
 /* --- */
-
+.primary-button-bg {
+    background-color: var(--primary-orange)
+}
 /* Custom Scrollbar Styles */
 .custom-scrollbar::-webkit-scrollbar {
   height: 6px;
