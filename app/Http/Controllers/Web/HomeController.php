@@ -13,15 +13,14 @@ class HomeController extends Controller
     }
     public function StorePage($slug) {
         $store = Store::latest()->where('slug', $slug)->first();
-        $storeCoupons = DB::table('coupon_store')->where('store_id', $)
-        $coupons = Coupon::whereHas('stores' , function($query) use($slug){
-            $query->where('slug', $slug );
-        })->with(['stores' => function($query) use($slug){
-            $query->where('slug', $slug );
-        }])->get();
-        dd($coupons);
+        $storeCoupons = \DB::table('coupon_store')->where('store_id', $store->id)->pluck('coupon_id');
+        $coupons = Coupon::whereIn('id', $storeCoupons)->get();
+        if(!empty($store)){
+            $store->thumbnail = asset($store->thumbnail);
+        }
         return Inertia::render("User/StorePage",[
-            'store' => $store
+            'store' => $store,
+            'coupons'=> $coupons,
         ]);
     }
     public function CategoryPage() {

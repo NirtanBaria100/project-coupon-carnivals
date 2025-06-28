@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/solid'; // Make sure @heroicons/react is installed
 
 const OfferCard = ({
-  storeLogo,
+  featured_image,
   offerText,
   endDate,
   showCode,
@@ -87,7 +87,7 @@ const OfferCard = ({
       <div className="flex-shrink-0 w-1/4 p-4 flex flex-col items-center justify-center border-r border-gray-100 bg-gray-50">
         <div className="w-24 h-24 bg-white flex items-center justify-center rounded-full overflow-hidden shadow-inner mb-2">
           <img
-            src={storeLogo || defaultStoreLogo}
+            src={featured_image || defaultStoreLogo}
             alt="Store Logo"
             className="w-full h-full object-contain p-2"
           />
