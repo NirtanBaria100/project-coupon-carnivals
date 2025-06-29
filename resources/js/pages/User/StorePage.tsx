@@ -78,13 +78,13 @@ const StorePage = ({ coupons , stores , expiredCoupons , similarStores}:Props) =
             {/* Left Column: Offers List */}
             <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8 pb-8">
               {coupons.length > 0 ? coupons.map((offer, index) => (
-                <OfferCard key={index} storeName={stores.name}  affiliate_irl={stores.affiliate_irl} {...offer} />
+                <OfferCard key={index} storeName={stores.name}  {...offer} />
               )) :  <span className="text-red-500">No  Coupons Available</span>}
               <p className="text-gray-600 mt-8 mb-4 text-center sm:text-left font-semibold border-b pb-2">
                 These offers have expired, but may still work
               </p>
               {expiredCoupons.length > 0 ? expiredCoupons.map((offer, index) => (
-                <OfferCard key={index} storeName={stores.name} affiliate_irl={stores.affiliate_irl} {...offer} />
+                <OfferCard key={index} storeName={stores.name} {...offer} />
               )) : <>
               <span className="text-red-500">No Expired Coupons Available</span>
               </>}

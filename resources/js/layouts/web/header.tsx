@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { UserIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'; // UserIcon is kept
 import promocarnivals2Logo from '@/assets/promocarnivals2.png'; // Import the logo directly
 
 const Header = () => {
+  const { categories } = usePage().props;
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -185,13 +186,10 @@ const Header = () => {
         <div className="relative pt-4 pb-2 text-center mt-4">
           <nav className="w-full overflow-x-auto custom-scrollbar pb-2">
             <ul className="flex justify-start sm:justify-center flex-wrap gap-2 sm:gap-3 text-sm font-medium">
-              {[
-                "Electronics", "Fashion", "Home & Garden", "Food & Drink",
-                "Travel", "Health", "Kitchen & Kitchenware", "Beauty"
-              ].map((category) => (
-                <li key={category}>
+              {categories.map((category) => (
+                <li key={category.id}>
                   <Link
-                    href={`/category/${category.replace(/ & /g, '-').toLowerCase()}`}
+                    href={`/category/${category.slug}`}
                     className="flex items-center px-3 py-1.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap"
                     style={{
                       backgroundColor: 'var(--category-button-bg-default)',
@@ -206,7 +204,7 @@ const Header = () => {
                       e.currentTarget.style.color = 'var(--category-button-text-default)';
                     }}
                   >
-                    {category}
+                    {category.name}
                   </Link>
                 </li>
               ))}

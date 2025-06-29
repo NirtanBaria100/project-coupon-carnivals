@@ -36,12 +36,15 @@ class HomeController extends Controller
     }
     public function CategoryPage($slug) {
         $category = Category::latest()->where('slug', $slug)->first();
+        $coupons  = [];
         if(!empty($category)){
-        $categoryCoupons = \DB::table('coupon_store')->where('category_id', $category->id)->pluck('coupon_id');
+        $categoryCoupons = \DB::table('category_coupon')->where('category_id', $category->id)->pluck('coupon_id');
         $coupons = Coupon::whereIn('id', $categoryCoupons)->whereDate('expires', '>', Carbon::now())->get();
         }
+
         return Inertia::render("User/CategoryPage" ,[
-            'categories' => Category::latest()->get()
+            'category' => $category,
+            'coupons' => $coupons
         ]);
     }
 

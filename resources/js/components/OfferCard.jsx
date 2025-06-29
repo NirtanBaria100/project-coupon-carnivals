@@ -11,7 +11,7 @@ const OfferCard = ({
   is_featured,
   is_exclusive, // offerValue will be either the code or the URL
   expires,
-  affiliate_irl,
+  coupon_url,
   storeName,
   tags = [],
 }) => {
@@ -130,7 +130,7 @@ const OfferCard = ({
           >
             {/* The Main "Show Code" Button that slides */}
             <a
-              href={affiliate_irl} target='_blank'
+              href={coupon_url} target='_blank'
               disabled={isExpired}
               className={`absolute inset-0 w-full h-full
                 ${buttonBgColor} ${buttonTextColor} font-extrabold rounded-md
@@ -174,7 +174,7 @@ const OfferCard = ({
           </div>
         ) : (
           // Regular "Get Offer" button
-          <a href={affiliate_irl} target='_blank'
+          <a href={coupon_url} target='_blank'
             onClick={handleOfferButtonClick} // This will now always open Google and the modal
             className={`relative ${buttonBgColor} ${buttonTextColor} font-extrabold text-center py-3 px-6 rounded-md cursor-pointer transition-colors duration-200
               ${isExpired ? 'opacity-60' : ''} w-full max-w-[160px]
@@ -256,7 +256,7 @@ const OfferCard = ({
                 </p>
                 {/* This button inside the modal also directs to Google.com */}
                 <a
-                  href={affiliate_irl}
+                  href={coupon_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-6 block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
