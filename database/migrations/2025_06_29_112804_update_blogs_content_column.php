@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('blogs', function(Blueprint $tb){
             $tb->longText('content')->change();
-            $tb->unsignedBigInteger('author_id')->nullable();
         });
     }
 
@@ -22,8 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('blogs', function(Blueprint $tb){
-            $tb->dropColumn('author_id');
-        });
+
     }
 };
