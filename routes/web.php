@@ -20,6 +20,7 @@ Route::prefix("")->name("home.")->group(function () {
     Route::get("/category/{slug}", [HomeController::class, 'CategoryPage']);
     Route::get("/blog/{slug}", [HomeController::class, 'singleBlog']);
     Route::get("/all/blogs", [HomeController::class, 'AllBlogs']);
+    Route::get("/blogs/category/{category}", [HomeController::class, 'AllBlogs']);
 });
 
     // Admin Dashboard or Home

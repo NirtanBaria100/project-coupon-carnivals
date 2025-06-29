@@ -21,21 +21,17 @@ interface Stores {
     name: string | null,
     slug: string | null,
 }
+interface Blogs {
+    title : string | null,
+    slug : string | null,
+}
 interface Props {
     featured_coupons: Coupons[],
-    popular_stores: Stores[]
+    popular_stores: Stores[],
+    blogs : Blogs[]
 }
-const HomePage = ({ featured_coupons, popular_stores }: Props) => {
-    // Dummy data for Offers (replace with real data later) - UNTOUCHED
-    const homePageOffers = [
-        { storeLogo: 'https://via.placeholder.com/100x100?text=Cettire', offerText: 'Up to 20% OFF New Season', endDate: 'Wed, 14 May, 2025', showCode: true, offerValue: 'TRIP20', tags: ['Verified', 'Exclusive', 'Featured'] },
-        { storeLogo: 'https://via.placeholder.com/100x100?text=Trip', offerText: 'Trip.com Rewards: Up to 20% Off Hotels + 60% More Trip Coins', endDate: 'Wed, 14 May, 2025', showCode: false, tags: ['Verified', 'Featured'] },
-        { storeLogo: 'https://via.placeholder.com/100x100?text=Target', offerText: 'Up to 50% Off Home Items', endDate: 'Wed, 14 May, 2025', showCode: false, tags: ['Verified'] },
-        { storeLogo: 'https://via.placeholder.com/100x100?text=Quest', offerText: 'Shop events selection of women\'s health finds and more', endDate: 'Wed, 14 May, 2025', showCode: false, tags: ['Exclusive'] },
-        { storeLogo: 'https://via.placeholder.com/100x100?text=Stanley', offerText: '20% OFF Japan Mug & Cups', endDate: 'Wed, 14 May, 2025', showCode: false, tags: ['Verified'] },
-        { storeLogo: 'https://via.placeholder.com/100x100?text=Amazon', offerText: 'Shop first order with Email Sign Up', endDate: 'Wed, 14 May, 2025', showCode: false, tags: ['Verified'] },
-        { storeLogo: 'https://via.placeholder.com/100x100?text=Casify', offerText: 'Mother\'s Day Sale: Buy 2+ Get 20% Off', endDate: 'Wed, 14 May, 2025', showCode: false, tags: ['Featured'] },
-    ];
+const HomePage = ({ featured_coupons, popular_stores , blogs }: Props) => {
+
     const { categories } = usePage().props;
     const popularCategories = categories.filter(e => e.is_popular == true);
     // Carousel state and logic START - MODIFIED
@@ -246,9 +242,9 @@ const HomePage = ({ featured_coupons, popular_stores }: Props) => {
                             Popular Posts From Our Blog
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                            {[...Array(4)].map((_, i) => (
+                            {blogs.map((blog, i) => (
                                 <Link
-                                    href={`/blog/post/${i + 1}`}
+                                    href={`/blog/${blog.slug}`}
                                     key={i}
                                     className="rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 block"
                                     style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}
@@ -261,7 +257,7 @@ const HomePage = ({ featured_coupons, popular_stores }: Props) => {
                                         <img src={'https://picsum.photos/id/1019/400/250'} alt={`Blog Post ${i + 1}`} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="p-4">
-                                        <p className="text-base font-semibold mb-2" style={{ color: 'var(--blog-card-text)' }}>Blog Post Title {i + 1}</p>
+                                        <p className="text-base font-semibold mb-2" style={{ color: 'var(--blog-card-text)' }}>{blog.title}</p>
                                         <p className="text-sm" style={{ color: 'var(--blog-card-description)' }}>Short description of the blog post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                     </div>
                                 </Link>
@@ -271,7 +267,7 @@ const HomePage = ({ featured_coupons, popular_stores }: Props) => {
                         {/* See All Blogs Button */}
                         <div className="text-center mt-10">
                             <Link
-                                href="/blogs"
+                                href="/all/blogs"
                                 className="inline-block font-bold py-3 px-8 rounded-full text-lg shadow-lg transform transition-transform duration-300 hover:scale-105"
                                 style={{
                                     backgroundColor: 'var(--banner-button-bg)', // Using banner button colors for consistency

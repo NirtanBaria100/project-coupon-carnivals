@@ -37,7 +37,9 @@ class Category extends Model
     {
         return $this->belongsTo(Category::class, 'parent_cat');
     }
-
+    public function blogs() {
+        return $this->hasMany(Blog::class , 'category_id', 'id');
+    }
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_cat');

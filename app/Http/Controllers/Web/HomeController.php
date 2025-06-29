@@ -11,10 +11,12 @@ class HomeController extends Controller
 
     public function Index(){
         $featuredCoupons = Coupon::where(['is_featured'=>1,'is_published'=>1])->latest()->limit(10)->get();
-        $similarStores  = Store::latest()->whereNot('is_featured',1)->select(['name','slug','id'])->limit(5)->get();
+        $similarStores   = Store::latest()->whereNot('is_featured',1)->select(['name','slug','id'])->limit(5)->get();
+        $blogs           = Blog::latest()->where('is_published',1)->limit(6)->get();
         return Inertia::render("Web/Index",[
             'featured_coupons' => $featuredCoupons,
             'popular_stores' => $similarStores,
+            'blogs'=> $blogs
         ]);
     }
     public function StorePage($slug) {
@@ -66,15 +68,28 @@ class HomeController extends Controller
     }
 
 
-    public function AllBlogs(){
+    public function AllBlogs($category = null){
+        $blogs           = Blog::latest()->where('is_published',1)->with('category')->limit(12);
+        if(!empty($category)){
+            $blogs->whereHas('category', function($query) use ($category) {
+                $query->where('slug', $category);
+            });
+        }
+        $blogs = $blogs->get();
         return Inertia::render("User/BlogPage",[
-            'blogs' => Blog::latest()->get()
+            'blogs' => $blogs
         ]);
 
     }
+
     public function singleBlog($slug){
+        $post        = Blog::latest()->where('slug', $slug)->with('category')->first();
+        $recentPost  = Blog::latest()->whereNot('slug', $slug)->with('category')->get();
+        $categories = Category::whereHas('blogs')->select(['name','id','slug'])->limit(5)->get();
         return Inertia::render("User/SingleBlog",[
-            'blogs' => Blog::latest()->where('slug', $slug)->first()
+            'post' => $post,
+            'categories'=> $categories,
+            'recentPost' => $recentPost,
         ]);
 
     }

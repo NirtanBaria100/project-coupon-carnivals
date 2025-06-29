@@ -156,7 +156,7 @@ const Header = () => {
             {/* Added ml-auto on small screens to push it to the right if search bar takes full width */}
             <div className="flex-shrink-0 flex items-center space-x-1 sm:ml-auto md:ml-0">
               <Link
-                href="/blogs"
+                href="/all/blogs"
                 className="font-medium text-sm whitespace-nowrap transition-colors duration-300"
                 style={{ color: 'var(--text-default)' }}
                 onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-accent-hover)'}
