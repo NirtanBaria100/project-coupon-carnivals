@@ -6,7 +6,7 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
-
+use App\Models\Category;
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -38,11 +38,12 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
-
+        $category  = Category::latest()->select(['slug','name'])->limit(8)->get();
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
+            'categories' => $category,
             'auth' => [
                 'user' => $request->user(),
             ],

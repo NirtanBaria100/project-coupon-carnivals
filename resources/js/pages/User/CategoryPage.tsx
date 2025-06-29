@@ -1,43 +1,57 @@
 // resources/js/Pages/CategoryPage.jsx
 
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import OfferCard from '@/Components/OfferCard';
 
 // IMPORTANT: Import the AppLayout component
 import AppLayout from '@/layouts/app-layout'; // Adjust path if your layout is elsewhere
-
+import WebLayout from '@/layouts/web-layout';
+interface SingleCategory {
+    name : string | null,
+    slug : string | null,
+    desc : string | null,
+    icon: string | null,
+}
+interface Coupons {
+        featured_image: string | null,
+        title:string  | null,
+        coupon_type:string  | null,
+        code:string  | null,
+        coupon_url:string  | null,
+        is_verified: boolean | false,
+        is_exclusive: boolean | false,
+        is_featured: boolean | false,
+        isExpired: boolean | false,
+        expires: Date,
+}
+interface Props {
+    coupons: Coupons,
+    category : SingleCategory,
+}
 // Accept props from the Inertia controller, including categoryName
-const CategoryPage = ({ categoryName }) => {
+const CategoryPage = ({ categoryName , category , coupons}:Props) => {
+  const {categories} = usePage().props;
+  const popularCategories =  categories.filter(e => e.slug != category.slug) ;
   const formatCategoryName = (name) => {
     if (!name) return 'Category';
     // Ensure the name is formatted correctly for display
     return name.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   };
 
-  const formattedCategoryName = formatCategoryName(categoryName);
+  const formattedCategoryName = formatCategoryName(category.name);
 
-  // Dummy data for offers on a category page (replace with real data later)
-  const categoryOffers = [
-    { storeLogo: 'https://via.placeholder.com/60x60?text=StoreA', offerText: 'New Customers - 10% off your first order', endDate: 'Valid Until 2025', showCode: true, offerValue: 'FIRST10', tags: ['Verified', 'Exclusive'] },
-    { storeLogo: 'https://via.placeholder.com/60x60?text=StoreB', offerText: 'Exclusive! - 11% off sitewide', endDate: 'Valid Until 2025', showCode: true, offerValue: 'SITE11', tags: ['Verified', 'Featured'] },
-    { storeLogo: 'https://via.placeholder.com/60x60?text=StoreC', offerText: 'Free Shipping when you spend $75+ with Shop Now!', endDate: 'Some restrictions apply', showCode: false, tags: ['Verified'] },
-    { storeLogo: 'https://via.placeholder.com/60x60?text=StoreD', offerText: 'Free Shipping on Orders $49+', endDate: 'Valid Until 2025', showCode: true, offerValue: 'SHIPFREE', tags: ['Verified', 'Exclusive'] },
-    { storeLogo: 'https://via.placeholder.com/60x60?text=StoreE', offerText: '$5 OFF $25+ Order with Email Sign Up', endDate: 'Valid Until 2025', showCode: false, tags: ['Verified'] },
-    { storeLogo: 'https://via.placeholder.com/60x60?text=StoreF', offerText: 'Free Shipping on All Orders $45+', endDate: 'Valid Until 2025', showCode: false, tags: ['Verified', 'Exclusive'] },
-    { storeLogo: 'https://via.placeholder.com/60x60?text=StoreG', offerText: 'Free Shipping on $75+ order', endDate: 'Valid Until 2025', showCode: false, tags: ['Verified'] },
-    { storeLogo: 'https://via.placeholder.com/60x60?text=StoreH', offerText: 'Free Shipping on $29+ order', endDate: 'Valid Until 2025', showCode: false, tags: ['Verified', 'Exclusive'] },
-  ];
+
 
   return (
-    // Wrap the entire content of CategoryPage with AppLayout
-    <AppLayout>
+
+    <WebLayout>
       <div className="bg-gray-100 pb-8 min-h-screen">
         <div className="container mx-auto px-4 py-8">
           {/* Breadcrumbs */}
           <nav className="text-sm text-gray-600 mb-6">
             <Link href="/" className="hover:underline">Home</Link> &gt;
-            <span className="ml-1 font-semibold">{formattedCategoryName}</span>
+            <span className="ml-1 font-semibold">{category.name}</span>
           </nav>
 
           {/* Category Header - Adjusted for responsiveness */}
@@ -48,10 +62,10 @@ const CategoryPage = ({ categoryName }) => {
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 leading-tight">
-                DISCOUNT CODES AND VOUCHERS FOR <br className="md:hidden" /> {formattedCategoryName.toUpperCase()}
+                DISCOUNT CODES AND VOUCHERS FOR <br className="md:hidden" /> {category?.name.toUpperCase()}
               </h1>
               <p className="text-gray-600 text-sm sm:text-base">
-                We have 564 live discount codes & deals in {formattedCategoryName}.
+                We have {coupons.length} live discount codes & deals in {category?.name}.
               </p>
             </div>
           </div>
@@ -60,7 +74,7 @@ const CategoryPage = ({ categoryName }) => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column: Offer Cards */}
             <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8">
-              {categoryOffers.map((offer, index) => (
+              {coupons.map((offer, index) => (
                 <OfferCard key={index} {...offer} />
               ))}
             </div>
@@ -71,7 +85,7 @@ const CategoryPage = ({ categoryName }) => {
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <h3 className="text-xl font-bold text-gray-800 mb-4">About {formattedCategoryName} Category</h3>
                 <p className="text-gray-700 text-sm leading-relaxed">
-                  Explore the best deals and discount codes in the **{formattedCategoryName}** category. Whether you're looking for home decor, gardening tools, or outdoor essentials, find verified vouchers and promotional offers from leading brands. Our team constantly updates this section to ensure you have access to the freshest and most reliable discounts. Save big on everything for your home and garden!
+                 {category.desc}
                 </p>
               </div>
 
@@ -79,11 +93,26 @@ const CategoryPage = ({ categoryName }) => {
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Popular Categories</h3>
                 <ul className="space-y-3">
-                  {[...Array(5)].map((_, i) => (
-                    <li key={i} className="text-gray-700 hover:text-blue-600 cursor-pointer text-sm">
-                      <Link href={`/category/popular-category-${i + 1}`}>Popular Category {i + 1}</Link>
-                    </li>
-                  ))}
+                    {popularCategories.map((category) => (
+                                  <li key={category.id}>
+                                    <Link
+                                      href={`/category/${category.slug}`}
+                                      className="flex items-center px-3 py-1.5 transition-all duration-300 whitespace-nowrap"
+                                      style={{
+                                        backgroundColor: 'var(--category-button-bg-default)',
+                                        color: 'var(--category-button-text-default)'
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.color = 'var(--category-button-bg-hover)';
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.color = 'var(--category-button-text-default)';
+                                      }}
+                                    >
+                                      {category.name}
+                                    </Link>
+                                  </li>
+                                ))}
                 </ul>
               </div>
             </div>
@@ -97,7 +126,7 @@ const CategoryPage = ({ categoryName }) => {
           </div>
         </div>
       </div>
-    </AppLayout>
+    </WebLayout>
   );
 };
 
