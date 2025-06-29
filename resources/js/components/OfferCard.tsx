@@ -1,6 +1,6 @@
-// resources/js/Components/OfferCard.jsx
+// src/components/OfferCard.jsx
 import React, { useState, useCallback } from 'react';
-import { ChevronDownIcon } from '@heroicons/react/24/solid'; // Make sure @heroicons/react is installed
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 
 const OfferCard = ({
   storeLogo,
@@ -51,9 +51,9 @@ const OfferCard = ({
   };
   // --------------------------------------------------------
 
-  const buttonText = showCode ? 'Show Code' : 'Get Offer';
-  const buttonBgColor = isExpired ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600';
-  const buttonTextColor = 'text-white';
+  // UI Change: Button colors updated to new palette
+  const buttonBgColor = isExpired ? 'bg-[var(--offer-button-disabled-bg)] cursor-not-allowed' : 'bg-[var(--offer-button-bg)]';
+  const buttonTextColor = 'text-[var(--offer-button-text)]';
 
   const storeName = "The Body Shop"; // This can be passed as a prop too
   const defaultStoreLogo = "https://via.placeholder.com/100x100?text=Store+Logo";
@@ -63,42 +63,51 @@ const OfferCard = ({
     return showCode && offerValue ? offerValue.substring(0, 3).toUpperCase() : '---';
   }, [showCode, offerValue]);
 
+  // UI Change: Tag styles updated to new palette
   const getTagStyle = (tag) => {
     switch (tag.toLowerCase()) {
       case 'verified':
-        return 'bg-green-100 text-green-800 font-medium';
+        return 'bg-[var(--tag-verified-bg)] text-[var(--tag-verified-text)] font-medium';
       case 'exclusive':
-        return 'bg-purple-100 text-purple-800 font-medium';
+        return 'bg-[var(--tag-exclusive-bg)] text-[var(--tag-exclusive-text)] font-medium';
       case 'featured':
-        return 'bg-yellow-100 text-yellow-800 font-medium';
+        return 'bg-[var(--tag-featured-bg)] text-[var(--tag-featured-text)] font-medium';
+      case 'new':
+        return 'bg-[var(--tag-new-bg)] text-[var(--tag-new-text)] font-medium';
       default:
-        return 'bg-gray-100 text-gray-700 font-medium';
+        return 'bg-[var(--tag-default-bg)] text-[var(--tag-default-text)] font-medium';
     }
   };
 
-  // Determine if a tag should blink
+  // Determine if a tag should blink - UNTOUCHED LOGIC
   const shouldBlink = (tag) => {
     return tag.toLowerCase() === 'verified' || tag.toLowerCase() === 'exclusive';
   };
 
   return (
-    <div className={`relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex mb-6 overflow-hidden ${isExpired ? 'opacity-70 grayscale' : ''}`}>
+    <div
+      className={`relative rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex mb-6 overflow-hidden ${isExpired ? 'opacity-70 grayscale' : ''}`}
+      style={{ backgroundColor: 'var(--offer-card-bg)' }}
+    >
       {/* Left Section: Logo & Text */}
-      <div className="flex-shrink-0 w-1/4 p-4 flex flex-col items-center justify-center border-r border-gray-100 bg-gray-50">
-        <div className="w-24 h-24 bg-white flex items-center justify-center rounded-full overflow-hidden shadow-inner mb-2">
+      <div
+        className="flex-shrink-0 w-1/4 p-4 flex flex-col items-center justify-center border-r"
+        style={{ borderColor: 'var(--offer-card-border)', backgroundColor: 'var(--offer-card-left-section-bg)' }}
+      >
+        <div className="w-24 h-24 bg-[var(--offer-card-bg)] flex items-center justify-center rounded-full overflow-hidden shadow-inner mb-2">
           <img
             src={storeLogo || defaultStoreLogo}
             alt="Store Logo"
             className="w-full h-full object-contain p-2"
           />
         </div>
-        <p className="text-center text-sm font-semibold text-gray-700 mt-1">{storeName}</p>
+        <p className="text-center text-sm font-semibold" style={{ color: 'var(--offer-card-store-name-text)' }}>{storeName}</p>
       </div>
 
       {/* Middle Section: Offer Description */}
       <div className="flex-grow p-5 flex flex-col justify-center">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{offerText}</h3>
-        <p className={`text-sm ${isExpired ? 'text-red-500 font-bold' : 'text-gray-600'}`}>
+        <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--offer-card-offer-heading-text)' }}>{offerText}</h3>
+        <p className={`text-sm ${isExpired ? 'font-bold' : ''}`} style={{ color: isExpired ? 'var(--offer-card-expired-text)' : 'var(--offer-card-expires-text)' }}>
           {isExpired ? 'Expired' : `Expires: ${endDate}`}
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
@@ -119,7 +128,7 @@ const OfferCard = ({
           // Container for the button and the sliding code part
           <div
             className={`relative w-full max-w-[160px] h-[45px] overflow-hidden group
-              ${isExpired ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+              ${isExpired ? 'cursor-not-allowed' : 'cursor-pointer'} rounded-md`}
             onMouseEnter={() => !isExpired && setIsHovered(true)}
             onMouseLeave={() => !isExpired && setIsHovered(false)}
             onClick={handleOfferButtonClick} // This will now always open Google and the modal
@@ -136,22 +145,25 @@ const OfferCard = ({
                 ${isExpired ? 'opacity-60' : ''}
                 z-20
                 `}
+              // Handle hover background for the button itself if it's not disabled
+              onMouseEnter={(e) => !isExpired && (e.currentTarget.style.backgroundColor = 'var(--offer-button-hover-bg)')}
+              onMouseLeave={(e) => !isExpired && (e.currentTarget.style.backgroundColor = 'var(--offer-button-bg)')}
             >
               <span className="uppercase text-center text-sm tracking-wider px-2 whitespace-nowrap">
-                {buttonText}
+                Show Code
               </span>
             </button>
 
             {/* The Scratched Code Part that slides in from the right */}
             <div
               className={`absolute top-0 right-0 h-full w-[60px]
-                bg-gray-200 text-gray-700 font-extrabold rounded-r-md
+                font-extrabold rounded-r-md
                 flex items-center justify-center text-lg
                 transition-transform duration-300 ease-in-out
                 ${isHovered && !isExpired ? 'translate-x-0' : 'translate-x-full'}
                 ${isExpired ? 'translate-x-0 opacity-100' : ''}
-                z-10
-                `}
+                z-10`}
+              style={{ backgroundColor: 'var(--offer-code-scratch-bg)', color: 'var(--offer-code-scratch-text)' }}
             >
               <span className="whitespace-nowrap">{getPartialCode()}</span>
             </div>
@@ -159,12 +171,13 @@ const OfferCard = ({
             {/* Vertical Dashed Separator */}
             <div
               className={`absolute right-[60px] top-0 h-full w-px
-                bg-white bg-opacity-70 border-r border-dashed border-white
+                bg-opacity-70 border-r border-dashed
                 transition-opacity duration-300 ease-in-out
                 ${isHovered && !isExpired ? 'opacity-100' : 'opacity-0'}
                 ${isExpired ? 'opacity-100' : ''}
                 z-30
                 `}
+              style={{ backgroundColor: 'var(--offer-code-separator-color)', borderColor: 'var(--offer-code-separator-color)' }}
             ></div>
 
           </div>
@@ -176,8 +189,11 @@ const OfferCard = ({
               ${isExpired ? 'opacity-60' : ''} w-full max-w-[160px]
               `}
             disabled={isExpired}
+            // Handle hover background for the button itself if it's not disabled
+            onMouseEnter={(e) => !isExpired && (e.currentTarget.style.backgroundColor = 'var(--offer-button-hover-bg)')}
+            onMouseLeave={(e) => !isExpired && (e.currentTarget.style.backgroundColor = 'var(--offer-button-bg)')}
           >
-            {buttonText}
+            Get Offer
           </button>
         )}
 
@@ -185,13 +201,16 @@ const OfferCard = ({
         <div className="mt-4 text-center w-full">
           <button
             onClick={handleViewTermsClick}
-            className="text-xs text-blue-600 underline cursor-pointer hover:text-blue-800 flex items-center justify-center mx-auto"
+            className="text-xs underline cursor-pointer flex items-center justify-center mx-auto transition-colors duration-300"
+            style={{ color: 'var(--terms-link-text)' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--terms-link-hover-text)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--terms-link-text)'}
           >
             View Terms & Conditions
             <ChevronDownIcon className={`ml-1 w-3 h-3 transition-transform duration-200 ${showTermsMessage ? 'rotate-180' : ''}`} />
           </button>
           {showTermsMessage && (
-            <p className="text-xs text-gray-500 mt-1 italic transition-opacity duration-300 ease-in-out">
+            <p className="text-xs mt-1 italic transition-opacity duration-300 ease-in-out" style={{ color: 'var(--terms-message-text)' }}>
               Terms & conditions apply.
             </p>
           )}
@@ -201,53 +220,76 @@ const OfferCard = ({
       {/* Modal */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 flex items-center justify-center z-50 p-4 font-sans"
+          style={{ backgroundColor: 'var(--modal-backdrop-bg)' }}
           onClick={handleBackdropClick}
         >
-          <div className="bg-white p-6 rounded-lg shadow-2xl max-w-md w-full animate-scaleIn">
+          <div
+            className="p-6 rounded-lg shadow-2xl max-w-md w-full animate-scaleIn"
+            style={{ backgroundColor: 'var(--modal-bg)' }}
+          >
             <div className="flex justify-between items-center mb-6 border-b pb-4">
-              <h2 className="text-2xl font-bold text-gray-800">Offer Details</h2>
+              <h2 className="text-2xl font-bold" style={{ color: 'var(--modal-heading-text)' }}>Offer Details</h2>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-gray-500 hover:text-gray-700 text-3xl font-semibold leading-none"
+                className="text-3xl font-semibold leading-none"
+                style={{ color: 'var(--modal-close-button-text)' }}
+                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--modal-close-button-hover-text)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--modal-close-button-text)'}
               >
                 &times;
               </button>
             </div>
 
             <div className="flex flex-col items-center mb-6">
-              <img src={storeLogo || defaultStoreImage} alt={storeName} className="w-24 h-24 rounded-full mb-4 border-2 border-gray-200 shadow-sm" />
-              <h3 className="2xl font-semibold text-gray-900 mb-1">{storeName}</h3>
-              <p className="text-gray-700 text-center text-lg leading-snug">{offerText}</p>
+              <img
+                src={storeLogo || defaultStoreImage}
+                alt={storeName}
+                className="w-24 h-24 rounded-full mb-4 border-2 shadow-sm"
+                style={{ borderColor: 'var(--modal-logo-border)' }}
+              />
+              <h3 className="2xl font-semibold mb-1" style={{ color: 'var(--modal-store-name-text)' }}>{storeName}</h3>
+              <p className="text-center text-lg leading-snug" style={{ color: 'var(--modal-offer-text-description)' }}>{offerText}</p>
             </div>
 
             {showCode ? (
               <div className="mt-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
+                <label className="block text-sm font-bold mb-2" style={{ color: 'var(--modal-label-text)' }}>
                   Your Coupon Code:
                 </label>
-                <div className="flex items-center border-2 border-dashed border-gray-300 rounded-lg overflow-hidden bg-gray-50">
+                <div
+                  className="flex items-center border-2 border-dashed rounded-lg overflow-hidden"
+                  style={{ borderColor: 'var(--modal-code-input-border)', backgroundColor: 'var(--modal-code-input-bg)' }}
+                >
                   <input
                     type="text"
                     readOnly
                     value={offerValue}
-                    className="flex-grow p-3 text-xl font-mono bg-transparent outline-none text-gray-800 placeholder-gray-400"
+                    className="flex-grow p-3 text-xl font-mono bg-transparent outline-none"
+                    style={{ color: 'var(--modal-code-input-text)', '::placeholder': { color: 'var(--modal-code-input-placeholder)' } }}
                     placeholder="No code available"
                   />
                   <button
                     onClick={handleCopyCode}
-                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                    className="font-bold py-3 px-5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                    style={{
+                      backgroundColor: 'var(--modal-copy-button-bg)',
+                      color: 'var(--modal-copy-button-text)',
+                      '--tw-ring-color': 'var(--modal-copy-button-bg)'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--modal-copy-button-hover-bg)'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--modal-copy-button-bg)'}
                   >
                     {copyStatus || 'Copy Code'}
                   </button>
                 </div>
-                <p className="text-xs text-gray-500 mt-3 text-center">
+                <p className="text-xs mt-3 text-center" style={{ color: 'var(--modal-instructions-text)' }}>
                   Click "Copy Code" and paste it at checkout.
                 </p>
               </div>
             ) : (
               <>
-                <p className="mt-4 text-gray-700 text-center text-base">
+                <p className="mt-4 text-center text-base" style={{ color: 'var(--modal-offer-text-description)' }}>
                   Click the button below to go to the store and get this offer!
                 </p>
                 {/* This button inside the modal also directs to Google.com */}
@@ -255,7 +297,14 @@ const OfferCard = ({
                   href="https://www.google.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  className="mt-6 block w-full text-center font-bold py-3 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                  style={{
+                    backgroundColor: 'var(--modal-copy-button-bg)',
+                    color: 'var(--modal-copy-button-text)',
+                    '--tw-ring-color': 'var(--modal-copy-button-bg)'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--modal-copy-button-hover-bg)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--modal-copy-button-bg)'}
                   onClick={() => setIsModalOpen(false)} // Close modal on click
                 >
                   Go to Offer Page
@@ -263,7 +312,10 @@ const OfferCard = ({
               </>
             )}
 
-            <div className="mt-6 pt-4 border-t border-gray-200 text-gray-600 text-sm">
+            <div
+              className="mt-6 pt-4 border-t text-sm"
+              style={{ borderColor: 'var(--modal-terms-border)', color: 'var(--modal-terms-text)' }}
+            >
               <p className="font-semibold mb-2">Full Terms & Conditions:</p>
               <ul className="list-disc list-inside text-xs space-y-1">
                 <li>Offer valid until {endDate}.</li>
