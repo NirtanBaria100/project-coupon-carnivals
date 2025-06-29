@@ -6,9 +6,9 @@ import WebLayout from "@/layouts/web-layout";
 interface Post {
     title: string | null,
     content: string | null,
-    imageURL:string|null,
+    imageURL: string | null,
     date: string | null,
-    author: string |null,
+    author: string | null,
 }
 interface RecentPost {
     title: string | null,
@@ -36,7 +36,7 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
             >
                 <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
                     {/* Breadcrumbs */}
-                    <nav className="text-sm mb-6">
+                    <nav className="text-sm  mb-6">
                         <Link
                             href="/"
                             className="transition-colors duration-300"
@@ -113,7 +113,11 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
                                     </span>
                                 </span>
                                 <span>•</span>
-                                <span>{post.date}</span>
+                                <span>Published Date:{" "}
+                                <span
+                                    className="font-semibold"
+                                    style={{ color: "var(--primary-orange)" }}
+                                >{post.date}</span></span>
                                 <span>•</span>
                                 <span>
                                     Category:
@@ -128,10 +132,11 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
                             </div>
 
                             <img src={post.imageURL}
-                                  alt={post.title}
-                                 className="w-full h-auto rounded-lg mb-8 shadow-md"
+                                alt={post.title}
+                                className="w-full h-auto rounded-lg mb-8 shadow-md"
                             />
-
+                            <h1>Description:</h1>
+                            <hr /> <br />
                             {/* The dangerouslySetInnerHTML content will directly use the inline styles defined in dummyPosts */}
                             <div
                                 className="prose max-w-none leading-relaxed"
@@ -148,57 +153,7 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
 
                         {/* Sidebar */}
                         <div className="lg:col-span-1 space-y-8 mt-8 lg:mt-0">
-                            {/* Search Blog */}
-                            <div
-                                className="p-6 rounded-lg shadow-lg border"
-                                style={{
-                                    backgroundColor: "var(--card-bg)",
-                                    borderColor: "var(--card-border)",
-                                }}
-                            >
-                                <h3
-                                    className="text-xl font-bold mb-4"
-                                    style={{ color: "var(--heading-color)" }}
-                                >
-                                    Search Blog
-                                </h3>
-                                <div className="relative">
-                                    <input
-                                        type="text"
-                                        placeholder="Search posts..."
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
-                                        style={{
-                                            backgroundColor: "var(--form-input-bg)",
-                                            color: "var(--form-input-text)",
-                                            borderColor: "var(--form-input-border)",
-                                            "--tw-ring-color": "var(--primary-orange)", // Tailwind ring color
-                                        }}
-                                    />
-                                    <button
-                                        className="absolute right-0 top-0 mt-2 mr-3 transition-colors duration-200"
-                                        style={{ color: "var(--search-icon-color)" }}
-                                        onMouseEnter={(e) =>
-                                            (e.currentTarget.style.color = "var(--primary-orange)")
-                                        }
-                                        onMouseLeave={(e) =>
-                                            (e.currentTarget.style.color = "var(--search-icon-color)")
-                                        }
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-5 w-5"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
+
 
                             {/* Recent Posts */}
                             <div
@@ -243,7 +198,7 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
                                                 </p>
                                             </li>
                                         )
-                                    ):<span className="text-red-500">No Recent Posts Available</span>}
+                                    ) : <span className="text-red-500">No Recent Posts Available</span>}
                                 </ul>
                             </div>
 

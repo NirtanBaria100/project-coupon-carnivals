@@ -39,8 +39,7 @@ const AllStorePage = ({ allStores }: Props) => {
             await new Promise(resolve => setTimeout(resolve, 500)); // Simulate network delay
             setStores(allStores); // Use dummy data for now
         } catch (err) {
-            console.error("Failed to fetch stores:", err);
-            setError("Failed to load stores. Please try again later.");
+         
         } finally {
             setLoading(false);
         }

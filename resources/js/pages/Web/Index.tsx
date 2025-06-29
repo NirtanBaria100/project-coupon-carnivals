@@ -136,14 +136,13 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                 </div>
                 {/* Banners Slider Section END */}
 
-                <div className="container mx-auto px-4 md:px-6 lg:px-8">
+                <div className="container mx-auto">
                     {/* Main Content Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
                         {/* Left Column: Offers List */}
                         <div className="lg:col-span-2">
                             <div
-                                className="p-6 sm:p-8 rounded-lg shadow-lg mb-8"
-                                style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}
+                                className="p-2 sm:p-8  mb-8"
                             >
                                 <h2
                                     className="text-2xl font-extrabold mb-6 border-l-4 pl-4"
@@ -162,6 +161,11 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
 
                         {/* Right Column: Popular Sections */}
                         <div className="lg:col-span-1 space-y-8 mt-8 lg:mt-0">
+                        <h2
+                                className="text-2xl font-extrabold mb-6 border-l-4 pl-4"
+                                style={{ color: 'var(--main-heading-color)', borderColor: 'var(--heading-border-accent)' }}
+                            >
+                                Popular Stores & Categories</h2>
                             {/* Popular Stores */}
                             <div
                                 className="p-6 rounded-lg shadow-lg"
