@@ -10,7 +10,12 @@ class HomeController extends Controller
 {
 
     public function Index(){
-        return Inertia::render("Web/Index");
+        $featuredCoupons = Coupon::where(['is_featured'=>1,'is_published'=>1])->latest()->limit(10)->get();
+        $similarStores  = Store::latest()->whereNot('is_featured',1)->select(['name','slug','id'])->limit(5)->get();
+        return Inertia::render("Web/Index",[
+            'featured_coupons' => $featuredCoupons,
+            'popular_stores' => $similarStores,
+        ]);
     }
     public function StorePage($slug) {
         $store = Store::latest()->where('slug', $slug)->select(['affiliate_irl','name','desc','extra_info','thumbnail'])->first();

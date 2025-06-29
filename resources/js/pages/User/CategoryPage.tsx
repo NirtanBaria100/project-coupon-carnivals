@@ -27,6 +27,7 @@ interface Coupons {
         isExpired: boolean | false,
         expires: Date,
 }
+
 interface Props {
     coupons: Coupons,
     category : SingleCategory,
