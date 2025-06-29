@@ -11,7 +11,9 @@ interface SingleCategory {
     name : string | null,
     slug : string | null,
     desc : string | null,
+    image_icon : string | null,
     icon: string | null,
+    is_popular: boolean | false,
 }
 interface Coupons {
         featured_image: string | null,
@@ -32,7 +34,7 @@ interface Props {
 // Accept props from the Inertia controller, including categoryName
 const CategoryPage = ({ categoryName , category , coupons}:Props) => {
   const {categories} = usePage().props;
-  const popularCategories =  categories.filter(e => e.slug != category.slug) ;
+  const popularCategories =  categories.filter(e => e.slug != category.slug && e.is_popular == true) ;
   const formatCategoryName = (name) => {
     if (!name) return 'Category';
     // Ensure the name is formatted correctly for display
@@ -56,9 +58,9 @@ const CategoryPage = ({ categoryName , category , coupons}:Props) => {
 
           {/* Category Header - Adjusted for responsiveness */}
           <div className="flex flex-col md:flex-row items-center md:space-x-4 mb-8 text-center md:text-left">
-            <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 mb-4 md:mb-0 flex-shrink-0">
+            <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden shadow-sm flex items-center justify-center text-gray-600 mb-4 md:mb-0 flex-shrink-0">
               {/* Category Icon/Image Placeholder */}
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2H7a2 2 0 00-2 2v2m7-7V3"></path></svg>
+                <img src={category.image_icon} alt={category.name} />
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 leading-tight">
@@ -74,9 +76,9 @@ const CategoryPage = ({ categoryName , category , coupons}:Props) => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column: Offer Cards */}
             <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8">
-              {coupons.map((offer, index) => (
+              {coupons.length > 0 ? coupons.map((offer, index) => (
                 <OfferCard key={index} {...offer} />
-              ))}
+              )) : <span className='text-red-500'>No Coupons Available</span>}
             </div>
 
             {/* Right Column: Sidebar */}
@@ -93,7 +95,7 @@ const CategoryPage = ({ categoryName , category , coupons}:Props) => {
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Popular Categories</h3>
                 <ul className="space-y-3">
-                    {popularCategories.map((category) => (
+                    {popularCategories.length > 0 ? popularCategories.map((category) => (
                                   <li key={category.id}>
                                     <Link
                                       href={`/category/${category.slug}`}
@@ -112,7 +114,7 @@ const CategoryPage = ({ categoryName , category , coupons}:Props) => {
                                       {category.name}
                                     </Link>
                                   </li>
-                                ))}
+                                )) : <span className='text-red-500'>No Popular Categories Available</span>}
                 </ul>
               </div>
             </div>

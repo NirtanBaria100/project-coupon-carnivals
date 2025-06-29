@@ -64,17 +64,17 @@ const Footer = () => {
           <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>Amazing Discounts</h3>
           <ul className="space-y-3">
             {/* Link default color: lighter gray, hover color: orange */}
-            <li><Link to="#" className="text-sm transition-colors duration-300"
+            <li><Link href="#" className="text-sm transition-colors duration-300"
               style={{ color: 'var(--footer-text-secondary)' }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
             >Link 1</Link></li>
-            <li><Link to="#" className="text-sm transition-colors duration-300"
+            <li><Link href="#" className="text-sm transition-colors duration-300"
               style={{ color: 'var(--footer-text-secondary)' }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
             >Link 2</Link></li>
-            <li><Link to="#" className="text-sm transition-colors duration-300"
+            <li><Link href="#" className="text-sm transition-colors duration-300"
               style={{ color: 'var(--footer-text-secondary)' }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
@@ -86,27 +86,27 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>Information</h3>
           <ul className="space-y-3">
-            <li><Link to="/privacy-policy" className="text-sm transition-colors duration-300"
+            <li><Link href="/privacy-policy" className="text-sm transition-colors duration-300"
               style={{ color: 'var(--footer-text-secondary)' }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
             >Privacy Policy</Link></li>
-            <li><Link to="/terms-of-use" className="text-sm transition-colors duration-300"
+            <li><Link href="/terms-of-use" className="text-sm transition-colors duration-300"
               style={{ color: 'var(--footer-text-secondary)' }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
             >Terms of Use</Link></li>
-            <li><Link to="/faq" className="text-sm transition-colors duration-300"
+            <li><Link href="/faq" className="text-sm transition-colors duration-300"
               style={{ color: 'var(--footer-text-secondary)' }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
             >FAQ's</Link></li>
-            <li><Link to="/brands" className="text-sm transition-colors duration-300"
+            <li><Link href="/stores" className="text-sm transition-colors duration-300"
               style={{ color: 'var(--footer-text-secondary)' }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
             >All Brands</Link></li>
-            <li><Link to="/blogs" className="text-sm transition-colors duration-300"
+            <li><Link href="/all/blogs" className="text-sm transition-colors duration-300"
               style={{ color: 'var(--footer-text-secondary)' }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
@@ -118,12 +118,12 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>More From Us</h3>
           <ul className="space-y-3">
-            <li><Link to="/how-we-make-money" className="text-sm transition-colors duration-300"
+            <li><Link href="/how-we-make-money" className="text-sm transition-colors duration-300"
               style={{ color: 'var(--footer-text-secondary)' }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
             >How we make money</Link></li>
-            <li><Link to="/how-to-use-coupons" className="text-sm transition-colors duration-300"
+            <li><Link href="/how-to-use-coupons" className="text-sm transition-colors duration-300"
               style={{ color: 'var(--footer-text-secondary)' }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
