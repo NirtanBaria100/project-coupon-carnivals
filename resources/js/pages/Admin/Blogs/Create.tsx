@@ -26,7 +26,7 @@ export default function Create({ categories , csrfToken }: CreateProps) {
         title: '',
         slug: '',
         content: '',
-        image: '',
+        image: null as File | null,
         is_published: false,
         category_id: '',
         focus_keyphrase: '',
@@ -39,6 +39,10 @@ export default function Create({ categories , csrfToken }: CreateProps) {
         setData(name, value);
     };
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0] || null;
+        setData('image', file);
+    };
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         post(route('admin.blogs.store'));
@@ -74,12 +78,17 @@ export default function Create({ categories , csrfToken }: CreateProps) {
 
                             <label className="block font-medium">Content</label>
                             <RichTextEditor content={content} setContent={setContent} setFormData={setData}  name={'content'}  csrfToken={csrfToken} path={'blogs'}/>
-                            <Input name="image" placeholder="Image URL" value={data.image} onChange={handleChange} />
-
+                            <Input
+                                type="file"
+                                name="image"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                className="w-full rounded border px-3 py-2"
+                            />
                             <Input name="seo_title" placeholder="SEO Title" value={data.seo_title} onChange={handleChange} />
                             <Input name="focus_keyphrase" placeholder="Focus Keyphrase" value={data.focus_keyphrase} onChange={handleChange} />
                             <Textarea name="meta_description" placeholder="Meta Description" value={data.meta_description} onChange={handleChange} />
-                           
+
                         </div>
 
                         <div className="space-y-6 rounded-xl bg-white p-4 shadow-md md:p-6 dark:bg-black">

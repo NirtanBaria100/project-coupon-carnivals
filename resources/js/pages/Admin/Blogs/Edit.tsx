@@ -80,7 +80,7 @@ export default function Edit({ blog, categories }: Props) {
 
                 <div>
                     <Label>Image URL</Label>
-                    <Input value={data.image ?? ''} onChange={(e) => setData('image', e.target.value)} />
+                    <Input type="file" onChange={(e) => setData('image', e.target.value)} />
                 </div>
 
                 <div>

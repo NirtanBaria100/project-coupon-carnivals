@@ -32,7 +32,7 @@ class BlogsController extends Controller
             'title' => 'required|string|max:255|unique:blogs,title',
             'slug' => 'required|string|max:255|unique:blogs,slug',
             'content' => 'required|string',
-            'image' => 'nullable|string',
+            'image' => 'nullable',
             'is_published' => 'boolean',
             'category_id' => 'nullable|exists:categories,id',
             'focus_keyphrase' => 'nullable|string',
