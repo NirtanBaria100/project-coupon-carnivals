@@ -1,6 +1,10 @@
+// src/components/HomePage.jsx
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from '@inertiajs/react';
+import banner1Image from '@/assets/banner 1.png'; // Import the banner image directly
+import banner2Image from '@/assets/banner 2.png'; // Import the banner image directly
 import OfferCard from '@/Components/OfferCard';
-import { Link } from 'react-router-dom';
+import WebLayout from '@/layouts/web-layout';
 
 const HomePage = () => {
   // Dummy data for Offers (replace with real data later) - UNTOUCHED
@@ -14,30 +18,11 @@ const HomePage = () => {
     { storeLogo: 'https://via.placeholder.com/100x100?text=Casify', offerText: 'Mother\'s Day Sale: Buy 2+ Get 20% Off', endDate: 'Wed, 14 May, 2025', showCode: false, tags: ['Featured'] },
   ];
 
-  // Carousel state and logic START - UNTOUCHED
+  // Carousel state and logic START - MODIFIED
   const [currentSlide, setCurrentSlide] = useState(0);
   const bannerData = [
-    {
-      image: "https://picsum.photos/1200/320?random=1",
-      heading: "MEGA SAVINGS WEEK!",
-      subheading: "Exclusive offers on top brands.",
-      buttonText: "Shop Now",
-      buttonLink: "/category/new-arrivals"
-    },
-    {
-      image: "https://picsum.photos/1200/320?random=2",
-      heading: "Travel Deals Await",
-      subheading: "Book your next adventure with huge discounts.",
-      buttonText: "Find Flights",
-      buttonLink: "/category/travel"
-    },
-    {
-      image: "https://picsum.photos/1200/320?random=3",
-      heading: "Unlock Special Discounts",
-      subheading: "Sign up and get 15% off your first purchase!",
-      buttonText: "Register Now",
-      buttonLink: "/register"
-    },
+    { image: banner1Image }, // Use the imported image
+    { image: banner2Image }, // Use the imported image again for the second slide
   ];
   const totalSlides = bannerData.length;
 
@@ -56,7 +41,8 @@ const HomePage = () => {
   // Carousel state and logic END
 
   return (
-    <div className="pb-12 font-sans" style={{ backgroundColor: 'var(--page-bg)' }}>
+    <WebLayout>
+          <div className="pb-12 font-sans" style={{ backgroundColor: 'var(--page-bg)' }}>
       {/* Banners Slider Section START */}
       <div className="w-full h-80 sm:h-96 md:h-[450px] lg:h-[550px] xl:h-[650px] overflow-hidden relative shadow-lg mb-10">
         <div
@@ -65,35 +51,16 @@ const HomePage = () => {
         >
           {bannerData.map((banner, index) => (
             <div key={index} className="carousel-item h-full w-full flex-shrink-0 relative">
-              <img src={banner.image} alt={`Banner ${index + 1}`} className="absolute inset-0 w-full h-full object-cover" />
+              <img src={banner.image} alt={`Banner ${index + 1}`} className="absolute inset-0 w-full h-full object-contain" />
 
-              {/* Overlay Text and Button */}
+              {/* Overlay (now empty as heading, subheading, and button are removed) */}
+              {/* The overlay div itself remains to maintain the dark overlay effect if 'var(--banner-overlay-bg)' is semi-transparent.
+                  If you want to remove the overlay entirely, you can remove this div as well. */}
               <div
-                className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 z-10"
-                style={{ backgroundColor: 'var(--banner-overlay-bg)' }}
+                className="absolute inset-0" // Removed flex, items-center, justify-center, text-center, p-4, z-10
+
               >
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-5 drop-shadow-md leading-tight max-w-4xl" style={{ color: 'var(--banner-text-color)' }}>
-                  {banner.heading}
-                </h2>
-                <p className="text-md sm:text-lg md:text-xl lg:text-2xl mb-5 sm:mb-10 font-light drop-shadow-sm px-2 max-w-2xl" style={{ color: 'var(--banner-text-color)' }}>
-                  {banner.subheading}
-                </p>
-                <Link
-                  to={banner.buttonLink}
-                  className="inline-block font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full text-md sm:text-lg shadow-xl transform transition-transform duration-300 hover:scale-105 border-2 border-transparent hover:border-white"
-                  style={{
-                    backgroundColor: 'var(--banner-button-bg)',
-                    color: 'var(--banner-button-text)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--banner-button-bg-hover)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--banner-button-bg)';
-                  }}
-                >
-                  {banner.buttonText}
-                </Link>
+                {/* Heading, Subheading, and Button are removed from here */}
               </div>
             </div>
           ))}
@@ -248,7 +215,8 @@ const HomePage = () => {
                   className="w-full h-36 flex items-center justify-center text-sm"
                   style={{ backgroundColor: 'var(--blog-placeholder-bg)', color: 'var(--text-muted)' }}
                 >
-                  <img src={`https://picsum.photos/1200/320?random=${i + 1}`} alt={`Blog Post ${i + 1}`} className="w-full h-full object-cover" />
+                  {/* Using the same banner1Image for blog placeholders as well, for consistency */}
+                  <img src={'https://picsum.photos/id/1019/400/250'} alt={`Blog Post ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4">
                   <p className="text-base font-semibold mb-2" style={{ color: 'var(--blog-card-text)' }}>Blog Post Title {i + 1}</p>
@@ -290,6 +258,7 @@ const HomePage = () => {
         </div>
       </div>
     </div>
+    </WebLayout>
   );
 };
 
