@@ -22,15 +22,15 @@ interface Stores {
     slug: string | null,
 }
 interface Blogs {
-    title : string | null,
-    slug : string | null,
+    title: string | null,
+    slug: string | null,
 }
 interface Props {
     featured_coupons: Coupons[],
     popular_stores: Stores[],
-    blogs : Blogs[]
+    blogs: Blogs[]
 }
-const HomePage = ({ featured_coupons, popular_stores , blogs }: Props) => {
+const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
 
     const { categories } = usePage().props;
     const popularCategories = categories.filter(e => e.is_popular == true);

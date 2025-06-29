@@ -70,6 +70,10 @@ class HomeController extends Controller
 
     public function AllBlogs($category = null){
         $blogs           = Blog::latest()->where('is_published',1)->with('category')->limit(12);
+        $blogs->transform(function($query){
+            $query->title = \Str::limit($query->title , 80  ,'...');
+            return $query;
+        });
         if(!empty($category)){
             $blogs->whereHas('category', function($query) use ($category) {
                 $query->where('slug', $category);
@@ -85,6 +89,10 @@ class HomeController extends Controller
     public function singleBlog($slug){
         $post        = Blog::latest()->where('slug', $slug)->with('category')->first();
         $recentPost  = Blog::latest()->whereNot('slug', $slug)->with('category')->get();
+        $recentPost->transform(function($query){
+            $query->title = \Str::limit($query->title , 140  ,'...');
+            return $query;
+        });
         $categories = Category::whereHas('blogs')->select(['name','id','slug'])->limit(5)->get();
         return Inertia::render("User/SingleBlog",[
             'post' => $post,

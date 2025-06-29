@@ -4,11 +4,11 @@ import { Link } from "@inertiajs/react";
 import WebLayout from "@/layouts/web-layout";
 
 const dummyPosts = [
-  {
-    id: "1",
-    title: "Top 10 Ways to Save on Groceries in 2025",
-    imageUrl: "https://picsum.photos/id/1015/800/450",
-    content: `
+    {
+        id: "1",
+        title: "Top 10 Ways to Save on Groceries in 2025",
+        imageUrl: "https://picsum.photos/id/1015/800/450",
+        content: `
       <p class="mb-4" style="color: var(--text-default);">Saving money on groceries is a goal for many households, and with a few smart strategies, you can significantly reduce your weekly or monthly food budget without sacrificing quality or nutrition. Here are our top 10 tested ways to save:</p>
 
       <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">1. Plan Your Meals in Advance</h3>
@@ -43,325 +43,334 @@ const dummyPosts = [
 
       <p class="mb-4" style="color: var(--text-default);">By implementing these strategies, you'll be well on your way to becoming a grocery-saving expert! Happy shopping!</p>
     `,
-    date: "June 20, 2025",
-    author: "Admin",
-    category: "Shopping Tips",
-    tags: ["Groceries", "Saving", "Budgeting", "Food", "Tips"],
-  },
-  {
-    id: "2",
-    title: "Seasonal Sales You Cannot Miss This Summer",
-    imageUrl: "https://picsum.photos/id/1016/800/450",
-    content: `<p style="color: var(--text-default);">Content for seasonal sales...</p>`,
-    date: "June 15, 2025",
-    author: "Admin",
-    category: "Sales & Deals",
-    tags: ["Sales", "Summer", "Deals"],
-  },
-  {
-    id: "3",
-    title: "Decoding Coupon Terms & Conditions: A Simple Guide",
-    imageUrl: "https://picsum.photos/id/1018/800/450",
-    content: `<p style="color: var(--text-default);">Content for coupon terms...</p>`,
-    date: "June 10, 2025",
-    author: "Admin",
-    category: "Coupon Guide",
-    tags: ["Coupons", "Guide", "Terms"],
-  },
-  // Add more dummy posts as needed for related posts
+        date: "June 20, 2025",
+        author: "Admin",
+        category: "Shopping Tips",
+        tags: ["Groceries", "Saving", "Budgeting", "Food", "Tips"],
+    },
+    {
+        id: "2",
+        title: "Seasonal Sales You Cannot Miss This Summer",
+        imageUrl: "https://picsum.photos/id/1016/800/450",
+        content: `<p style="color: var(--text-default);">Content for seasonal sales...</p>`,
+        date: "June 15, 2025",
+        author: "Admin",
+        category: "Sales & Deals",
+        tags: ["Sales", "Summer", "Deals"],
+    },
+    {
+        id: "3",
+        title: "Decoding Coupon Terms & Conditions: A Simple Guide",
+        imageUrl: "https://picsum.photos/id/1018/800/450",
+        content: `<p style="color: var(--text-default);">Content for coupon terms...</p>`,
+        date: "June 10, 2025",
+        author: "Admin",
+        category: "Coupon Guide",
+        tags: ["Coupons", "Guide", "Terms"],
+    },
+    // Add more dummy posts as needed for related posts
 ];
 
 // Dummy comments for demonstration
 const dummyComments = [
-  {
-    id: 1,
-    author: "Jane Doe",
-    date: "June 22, 2025",
-    content: "This is a great article! Very helpful tips.",
-  },
-  {
-    id: 2,
-    author: "John Smith",
-    date: "June 21, 2025",
-    content: "I've tried some of these, and they really work. Thanks!",
-  },
+    {
+        id: 1,
+        author: "Jane Doe",
+        date: "June 22, 2025",
+        content: "This is a great article! Very helpful tips.",
+    },
+    {
+        id: 2,
+        author: "John Smith",
+        date: "June 21, 2025",
+        content: "I've tried some of these, and they really work. Thanks!",
+    },
 ];
 interface Post {
-    title : string | null,
-    content : string | null,
-
+    title: string | null,
+    content: string | null,
+}
+interface RecentPost {
+    title: string | null,
+    slug: string | null,
+    id: number | null
+}
+interface Category {
+    name: string | null,
+    slug: string | null,
+    id: number | null
 }
 interface Props {
-    post : Post[]
+    post: Post[],
+    recentPost: RecentPost[],
+    categories: Category[]
 }
-const SingleBlog = ({post}:Props) => {
+const SingleBlog = ({ post, categories, recentPost }: Props) => {
 
 
-  return (
-    <WebLayout>
-          <div
-              className="pb-12 font-sans"
-              style={{ backgroundColor: "var(--page-bg)" }}
-          >
-              <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
-                  {/* Breadcrumbs */}
-                  <nav className="text-sm mb-6">
-                      <Link
-                          href="/"
-                          className="transition-colors duration-300"
-                          style={{ color: "var(--text-muted)" }}
-                          onMouseEnter={(e) =>
-                              (e.currentTarget.style.color = "var(--text-accent-hover)")
-                          }
-                          onMouseLeave={(e) =>
-                              (e.currentTarget.style.color = "var(--text-muted)")
-                          }
-                      >
-                          Home
-                      </Link>
-                      <span
-                          className="mx-2"
-                          style={{ color: "var(--breadcrumb-separator-color)" }}
-                      >
-                          &gt;
-                      </span>
-                      <Link
-                          href='/all/blogs'
+    return (
+        <WebLayout>
+            <div
+                className="pb-12 font-sans"
+                style={{ backgroundColor: "var(--page-bg)" }}
+            >
+                <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
+                    {/* Breadcrumbs */}
+                    <nav className="text-sm mb-6">
+                        <Link
+                            href="/"
+                            className="transition-colors duration-300"
+                            style={{ color: "var(--text-muted)" }}
+                            onMouseEnter={(e) =>
+                                (e.currentTarget.style.color = "var(--text-accent-hover)")
+                            }
+                            onMouseLeave={(e) =>
+                                (e.currentTarget.style.color = "var(--text-muted)")
+                            }
+                        >
+                            Home
+                        </Link>
+                        <span
+                            className="mx-2"
+                            style={{ color: "var(--breadcrumb-separator-color)" }}
+                        >
+                            &gt;
+                        </span>
+                        <Link
+                            href='/all/blogs'
 
-                          className="transition-colors duration-300"
-                          style={{ color: "var(--text-muted)" }}
-                          onMouseEnter={(e) =>
-                              (e.currentTarget.style.color = "var(--text-accent-hover)")
-                          }
-                          onMouseLeave={(e) =>
-                              (e.currentTarget.style.color = "var(--text-muted)")
-                          }
-                      >
-                          Blogs
-                      </Link>
-                      <span
-                          className="mx-2"
-                          style={{ color: "var(--breadcrumb-separator-color)" }}
-                      >
-                          &gt;
-                      </span>
-                      <span
-                          className="font-semibold line-clamp-1"
-                          style={{ color: "var(--main-heading-color)" }}
-                      >
-                          {post.title}
-                      </span>
-                  </nav>
+                            className="transition-colors duration-300"
+                            style={{ color: "var(--text-muted)" }}
+                            onMouseEnter={(e) =>
+                                (e.currentTarget.style.color = "var(--text-accent-hover)")
+                            }
+                            onMouseLeave={(e) =>
+                                (e.currentTarget.style.color = "var(--text-muted)")
+                            }
+                        >
+                            Blogs
+                        </Link>
+                        <span
+                            className="mx-2"
+                            style={{ color: "var(--breadcrumb-separator-color)" }}
+                        >
+                            &gt;
+                        </span>
+                        <span
+                            className="font-semibold line-clamp-1"
+                            style={{ color: "var(--main-heading-color)" }}
+                        >
+                            {post.title}
+                        </span>
+                    </nav>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                      {/* Main Blog Content */}
-                      <div
-                          className="lg:col-span-2 p-6 sm:p-8 rounded-lg shadow-lg border"
-                          style={{
-                              backgroundColor: "var(--card-bg)",
-                              borderColor: "var(--card-border)",
-                          }}
-                      >
-                          <h1
-                              className="text-3xl sm:text-4xl font-extrabold mb-4 leading-tight"
-                              style={{ color: "var(--main-heading-color)" }}
-                          >
-                              {post.title}
-                          </h1>
-                          <div
-                              className="flex items-center text-sm mb-6 space-x-4"
-                              style={{ color: "var(--text-muted)" }}
-                          >
-                              <span>
-                                  By{" "}
-                                  <span
-                                      className="font-semibold"
-                                      style={{ color: "var(--primary-orange)" }}
-                                  >
-                                      {post.author}
-                                  </span>
-                              </span>
-                              <span>•</span>
-                              <span>{post.date}</span>
-                              <span>•</span>
-                              <span>
-                                  Category:
-                                  <Link
-                                      href={`/blogs/category/${post.category.slug}`}
-                                      className="hover:underline"
-                                      style={{ color: "var(--primary-orange)" }}
-                                  >
-                                      {post.category.name}
-                                  </Link>
-                              </span>
-                          </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Main Blog Content */}
+                        <div
+                            className="lg:col-span-2 p-6 sm:p-8 rounded-lg shadow-lg border"
+                            style={{
+                                backgroundColor: "var(--card-bg)",
+                                borderColor: "var(--card-border)",
+                            }}
+                        >
+                            <h1
+                                className="text-3xl sm:text-4xl font-extrabold mb-4 leading-tight"
+                                style={{ color: "var(--main-heading-color)" }}
+                            >
+                                {post.title}
+                            </h1>
+                            <div
+                                className="flex items-center text-sm mb-6 space-x-4"
+                                style={{ color: "var(--text-muted)" }}
+                            >
+                                <span>
+                                    By{" "}
+                                    <span
+                                        className="font-semibold"
+                                        style={{ color: "var(--primary-orange)" }}
+                                    >
+                                        {post.author}
+                                    </span>
+                                </span>
+                                <span>•</span>
+                                <span>{post.date}</span>
+                                <span>•</span>
+                                <span>
+                                    Category:
+                                    <Link
+                                        href={`/blogs/category/${post.category.slug}`}
+                                        className="hover:underline"
+                                        style={{ color: "var(--primary-orange)" }}
+                                    >
+                                        {post.category.name}
+                                    </Link>
+                                </span>
+                            </div>
 
-                          <img
-                              src={'/'}
-                              alt={post.title}
-                              className="w-full h-auto rounded-lg mb-8 shadow-md"
-                          />
+                            <img
+                                src={'/'}
+                                alt={post.title}
+                                className="w-full h-auto rounded-lg mb-8 shadow-md"
+                            />
 
-                          {/* The dangerouslySetInnerHTML content will directly use the inline styles defined in dummyPosts */}
-                          <div
-                              className="prose max-w-none leading-relaxed"
-                              style={{ color: "var(--text-default)" }}
-                              dangerouslySetInnerHTML={{ __html: post.content }}
-                          >
-                              {/* Blog content will be injected here */}
-                          </div>
+                            {/* The dangerouslySetInnerHTML content will directly use the inline styles defined in dummyPosts */}
+                            <div
+                                className="prose max-w-none leading-relaxed"
+                                style={{ color: "var(--text-default)" }}
+                                dangerouslySetInnerHTML={{ __html: post.content }}
+                            >
+                                {/* Blog content will be injected here */}
+                            </div>
 
-                          {/* Comments Section - ADDED HERE */}
+                            {/* Comments Section - ADDED HERE */}
 
-                          {/* End Comments Section */}
-                      </div>
+                            {/* End Comments Section */}
+                        </div>
 
-                      {/* Sidebar */}
-                      <div className="lg:col-span-1 space-y-8 mt-8 lg:mt-0">
-                          {/* Search Blog */}
-                          <div
-                              className="p-6 rounded-lg shadow-lg border"
-                              style={{
-                                  backgroundColor: "var(--card-bg)",
-                                  borderColor: "var(--card-border)",
-                              }}
-                          >
-                              <h3
-                                  className="text-xl font-bold mb-4"
-                                  style={{ color: "var(--heading-color)" }}
-                              >
-                                  Search Blog
-                              </h3>
-                              <div className="relative">
-                                  <input
-                                      type="text"
-                                      placeholder="Search posts..."
-                                      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
-                                      style={{
-                                          backgroundColor: "var(--form-input-bg)",
-                                          color: "var(--form-input-text)",
-                                          borderColor: "var(--form-input-border)",
-                                          "--tw-ring-color": "var(--primary-orange)", // Tailwind ring color
-                                      }}
-                                  />
-                                  <button
-                                      className="absolute right-0 top-0 mt-2 mr-3 transition-colors duration-200"
-                                      style={{ color: "var(--search-icon-color)" }}
-                                      onMouseEnter={(e) =>
-                                          (e.currentTarget.style.color = "var(--primary-orange)")
-                                      }
-                                      onMouseLeave={(e) =>
-                                          (e.currentTarget.style.color = "var(--search-icon-color)")
-                                      }
-                                  >
-                                      <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          className="h-5 w-5"
-                                          viewBox="0 0 20 20"
-                                          fill="currentColor"
-                                      >
-                                          <path
-                                              fillRule="evenodd"
-                                              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                              clipRule="evenodd"
-                                          />
-                                      </svg>
-                                  </button>
-                              </div>
-                          </div>
+                        {/* Sidebar */}
+                        <div className="lg:col-span-1 space-y-8 mt-8 lg:mt-0">
+                            {/* Search Blog */}
+                            <div
+                                className="p-6 rounded-lg shadow-lg border"
+                                style={{
+                                    backgroundColor: "var(--card-bg)",
+                                    borderColor: "var(--card-border)",
+                                }}
+                            >
+                                <h3
+                                    className="text-xl font-bold mb-4"
+                                    style={{ color: "var(--heading-color)" }}
+                                >
+                                    Search Blog
+                                </h3>
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        placeholder="Search posts..."
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
+                                        style={{
+                                            backgroundColor: "var(--form-input-bg)",
+                                            color: "var(--form-input-text)",
+                                            borderColor: "var(--form-input-border)",
+                                            "--tw-ring-color": "var(--primary-orange)", // Tailwind ring color
+                                        }}
+                                    />
+                                    <button
+                                        className="absolute right-0 top-0 mt-2 mr-3 transition-colors duration-200"
+                                        style={{ color: "var(--search-icon-color)" }}
+                                        onMouseEnter={(e) =>
+                                            (e.currentTarget.style.color = "var(--primary-orange)")
+                                        }
+                                        onMouseLeave={(e) =>
+                                            (e.currentTarget.style.color = "var(--search-icon-color)")
+                                        }
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="h-5 w-5"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
 
-                          {/* Recent Posts */}
-                          <div
-                              className="p-6 rounded-lg shadow-lg border"
-                              style={{
-                                  backgroundColor: "var(--card-bg)",
-                                  borderColor: "var(--card-border)",
-                              }}
-                          >
-                              <h3
-                                  className="text-xl font-bold mb-4"
-                                  style={{ color: "var(--heading-color)" }}
-                              >
-                                  Recent Posts
-                              </h3>
-                              <ul className="space-y-3">
-                                  {dummyPosts.slice(0, 5).map(
-                                      (
-                                          p,
-                                          index // Show top 5 recent posts
-                                      ) => (
-                                          <li key={index}>
-                                              <Link
-                                                  href={`/blog/${p.id}`}
-                                                  className="text-sm transition-colors duration-300"
-                                                  style={{ color: "var(--text-muted)" }}
-                                                  onMouseEnter={(e) =>
-                                                  (e.currentTarget.style.color =
-                                                      "var(--text-accent-hover)")
-                                                  }
-                                                  onMouseLeave={(e) =>
-                                                      (e.currentTarget.style.color = "var(--text-muted)")
-                                                  }
-                                              >
-                                                  {p.title}
-                                              </Link>
-                                              <p
-                                                  className="text-xs mt-1"
-                                                  style={{ color: "var(--text-muted)" }}
-                                              >
-                                                  {p.date}
-                                              </p>
-                                          </li>
-                                      )
-                                  )}
-                              </ul>
-                          </div>
+                            {/* Recent Posts */}
+                            <div
+                                className="p-6 rounded-lg shadow-lg border"
+                                style={{
+                                    backgroundColor: "var(--card-bg)",
+                                    borderColor: "var(--card-border)",
+                                }}
+                            >
+                                <h3
+                                    className="text-xl font-bold mb-4"
+                                    style={{ color: "var(--heading-color)" }}
+                                >
+                                    Recent Posts
+                                </h3>
+                                <ul className="space-y-3">
+                                    {recentPost.map(
+                                        (
+                                            p,
+                                            index // Show top 5 recent posts
+                                        ) => (
+                                            <li key={index}>
+                                                <Link
+                                                    href={`/blog/${p.id}`}
+                                                    className="text-sm transition-colors duration-300"
+                                                    style={{ color: "var(--text-muted)" }}
+                                                    onMouseEnter={(e) =>
+                                                    (e.currentTarget.style.color =
+                                                        "var(--text-accent-hover)")
+                                                    }
+                                                    onMouseLeave={(e) =>
+                                                        (e.currentTarget.style.color = "var(--text-muted)")
+                                                    }
+                                                >
+                                                    {p.title}
+                                                </Link>
+                                                <p
+                                                    className="text-xs mt-1"
+                                                    style={{ color: "var(--text-muted)" }}
+                                                >
+                                                    {p.date}
+                                                </p>
+                                            </li>
+                                        )
+                                    )}
+                                </ul>
+                            </div>
 
-                          {/* Blog Categories */}
-                          <div
-                              className="p-6 rounded-lg shadow-lg border"
-                              style={{
-                                  backgroundColor: "var(--card-bg)",
-                                  borderColor: "var(--card-border)",
-                              }}
-                          >
-                              <h3
-                                  className="text-xl font-bold mb-4"
-                                  style={{ color: "var(--heading-color)" }}
-                              >
-                                  Blog Categories
-                              </h3>
-                              <ul className="space-y-3">
-                                  {Array.from(new Set(dummyPosts.map((p) => p.category))).map(
-                                      (category, index) => (
-                                          <li key={index}>
-                                              <Link
-                                                  href={`/blog/category/${category
-                                                      .toLowerCase()
-                                                      .replace(/\s/g, "-")}`}
-                                                  className="text-sm transition-colors duration-300"
-                                                  style={{ color: "var(--text-muted)" }}
-                                                  onMouseEnter={(e) =>
-                                                  (e.currentTarget.style.color =
-                                                      "var(--text-accent-hover)")
-                                                  }
-                                                  onMouseLeave={(e) =>
-                                                      (e.currentTarget.style.color = "var(--text-muted)")
-                                                  }
-                                              >
-                                                  {category}
-                                              </Link>
-                                          </li>
-                                      )
-                                  )}
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-    </WebLayout>
-  );
+                            {/* Blog Categories */}
+                            <div
+                                className="p-6 rounded-lg shadow-lg border"
+                                style={{
+                                    backgroundColor: "var(--card-bg)",
+                                    borderColor: "var(--card-border)",
+                                }}
+                            >
+                                <h3
+                                    className="text-xl font-bold mb-4"
+                                    style={{ color: "var(--heading-color)" }}
+                                >
+                                    Blog Categories
+                                </h3>
+                                <ul className="space-y-2">
+                                    {categories.length > 0 ? categories.map((category) => (
+                                        <li key={category.id}>
+                                            <Link
+                                                href={`/blogs/category/${category.slug}`}
+                                                className="flex items-center px-2 py-1 transition-all duration-300 whitespace-nowrap"
+                                                style={{
+                                                    backgroundColor: 'var(--category-button-bg-default)',
+                                                    color: 'var(--category-button-text-default)'
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.color = 'var(--category-button-bg-hover)';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.color = 'var(--category-button-text-default)';
+                                                }}
+                                            >
+                                                {category.name}
+                                            </Link>
+                                        </li>
+                                    )) : <span className='text-red-500'>No Popular Categories Available</span>}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </WebLayout>
+    );
 };
 
 export default SingleBlog;
