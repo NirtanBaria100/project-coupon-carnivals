@@ -6,7 +6,9 @@ import WebLayout from '@/layouts/web-layout';
 interface Blogs {
     title: string | null,
     slug: string | null,
-    created_at : string | null,
+    author:[],
+    date:string|null,
+    imageURL:string|null,
     category: [],
 }
 interface Props {
@@ -54,7 +56,7 @@ const BlogPage = ({ blogs }: Props) => {
                                 style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
                             >
                                 <Link href={`/blog/${post.slug}`}>
-                                    <img src={'https://picsum.photos/id/1020/400/250'} alt={post.title} className="w-full h-48 object-cover" />
+                                    <img src={post.imageURL} alt={post.title} className="w-full h-48 object-cover" />
                                 </Link>
                                 <div className="p-5">
                                     <div className="text-xs font-semibold uppercase mb-2" style={{ color: 'var(--primary-orange)' }}>
@@ -78,8 +80,8 @@ const BlogPage = ({ blogs }: Props) => {
                                     </h3>
                                     <p className="text-sm mb-4 line-clamp-3" style={{ color: 'var(--text-muted)' }}>Tsete</p>
                                     <div className="flex justify-between items-center text-xs" style={{ color: 'var(--text-muted)' }}>
-                                        <span>By "Admin"</span>
-                                        <span>{post.created_at}</span>
+                                        <span>By {post.author.name}</span>
+                                        <span>{post.date}</span>
                                     </div>
                                 </div>
                             </div>

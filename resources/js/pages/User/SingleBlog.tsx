@@ -3,92 +3,12 @@ import React from "react";
 import { Link } from "@inertiajs/react";
 import WebLayout from "@/layouts/web-layout";
 
-const dummyPosts = [
-    {
-        id: "1",
-        title: "Top 10 Ways to Save on Groceries in 2025",
-        imageUrl: "https://picsum.photos/id/1015/800/450",
-        content: `
-      <p class="mb-4" style="color: var(--text-default);">Saving money on groceries is a goal for many households, and with a few smart strategies, you can significantly reduce your weekly or monthly food budget without sacrificing quality or nutrition. Here are our top 10 tested ways to save:</p>
-
-      <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">1. Plan Your Meals in Advance</h3>
-      <p class="mb-4" style="color: var(--text-default);">One of the most effective ways to save is to create a weekly meal plan. This helps you buy only what you need, reducing impulse purchases and food waste. Check your pantry and fridge first to incorporate ingredients you already have.</p>
-
-      <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">2. Make a Shopping List and Stick to It</h3>
-      <p class="mb-4" style="color: var(--text-default);">Once your meal plan is set, create a detailed shopping list. Avoid Browse aisles aimlessly, as this often leads to buying unnecessary items. Stick strictly to your list to stay within budget.</p>
-
-      <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">3. Shop with a Full Stomach</h3>
-      <p class="mb-4" style="color: var(--text-default);">Never go grocery shopping when you're hungry. Studies show that people tend to buy more, and often unhealthy, food when their stomach is empty. Eat a snack or a meal before heading to the store.</p>
-
-      <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">4. Compare Prices and Buy in Bulk (Wisely)</h3>
-      <p class="mb-4" style="color: var(--text-default);">Don't be afraid to compare prices between different brands and even different stores. For non-perishable items or those you use frequently, buying in bulk can save money, but only if you have space to store them and will use them before they expire.</p>
-
-      <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">5. Use Coupons and Loyalty Programs</h3>
-      <p class="mb-4" style="color: var(--text-default);">Embrace coupons, whether they are digital or paper. Sign up for your favorite grocery store's loyalty program to get exclusive discounts and personalized offers. Many stores have apps that make this process seamless.</p>
-
-      <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">6. Cook More at Home</h3>
-      <p class="mb-4" style="color: var(--text-default);">Eating out or ordering takeout frequently can quickly deplete your budget. Cooking meals at home is almost always cheaper and often healthier. Meal prepping on weekends can save time during busy weekdays.</p>
-
-      <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">7. Reduce Food Waste</h3>
-      <p class="mb-4" style="color: var(--text-default);">Food waste is money waste. Learn how to properly store fresh produce, repurpose leftovers, and understand "best by" dates. Composting can also reduce waste and benefit your garden.</p>
-
-      <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">8. Buy Generic or Store Brands</h3>
-      <p class="mb-4" style="color: var(--text-default);">Often, store brands are produced by the same manufacturers as their name-brand counterparts but are sold at a lower price. Give them a try for staples like sugar, flour, spices, and cereals.</p>
-
-      <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">9. Shop Seasonal Produce</h3>
-      <p class="mb-4" style="color: var(--text-default);">Fruits and vegetables are typically cheaper and taste better when they are in season. Check local farmers' markets for even better deals on fresh, seasonal produce.</p>
-
-      <h3 class="text-xl font-bold mb-3 mt-6" style="color: var(--primary-orange);">10. Track Your Spending</h3>
-      <p class="mb-4" style="color: var(--text-default);">Keep a record of your grocery expenses for a few weeks to identify areas where you might be overspending. This awareness can help you make more informed decisions and stick to your budget.</p>
-
-      <p class="mb-4" style="color: var(--text-default);">By implementing these strategies, you'll be well on your way to becoming a grocery-saving expert! Happy shopping!</p>
-    `,
-        date: "June 20, 2025",
-        author: "Admin",
-        category: "Shopping Tips",
-        tags: ["Groceries", "Saving", "Budgeting", "Food", "Tips"],
-    },
-    {
-        id: "2",
-        title: "Seasonal Sales You Cannot Miss This Summer",
-        imageUrl: "https://picsum.photos/id/1016/800/450",
-        content: `<p style="color: var(--text-default);">Content for seasonal sales...</p>`,
-        date: "June 15, 2025",
-        author: "Admin",
-        category: "Sales & Deals",
-        tags: ["Sales", "Summer", "Deals"],
-    },
-    {
-        id: "3",
-        title: "Decoding Coupon Terms & Conditions: A Simple Guide",
-        imageUrl: "https://picsum.photos/id/1018/800/450",
-        content: `<p style="color: var(--text-default);">Content for coupon terms...</p>`,
-        date: "June 10, 2025",
-        author: "Admin",
-        category: "Coupon Guide",
-        tags: ["Coupons", "Guide", "Terms"],
-    },
-    // Add more dummy posts as needed for related posts
-];
-
-// Dummy comments for demonstration
-const dummyComments = [
-    {
-        id: 1,
-        author: "Jane Doe",
-        date: "June 22, 2025",
-        content: "This is a great article! Very helpful tips.",
-    },
-    {
-        id: 2,
-        author: "John Smith",
-        date: "June 21, 2025",
-        content: "I've tried some of these, and they really work. Thanks!",
-    },
-];
 interface Post {
     title: string | null,
     content: string | null,
+    imageURL:string|null,
+    date: string | null,
+    author: string |null,
 }
 interface RecentPost {
     title: string | null,
@@ -106,7 +26,7 @@ interface Props {
     categories: Category[]
 }
 const SingleBlog = ({ post, categories, recentPost }: Props) => {
-
+    console.log(post);
 
     return (
         <WebLayout>
@@ -189,7 +109,7 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
                                         className="font-semibold"
                                         style={{ color: "var(--primary-orange)" }}
                                     >
-                                        {post.author}
+                                        {post.author.name.toUpperCase()}
                                     </span>
                                 </span>
                                 <span>•</span>
@@ -207,10 +127,9 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
                                 </span>
                             </div>
 
-                            <img
-                                src={'/'}
-                                alt={post.title}
-                                className="w-full h-auto rounded-lg mb-8 shadow-md"
+                            <img src={post.imageURL}
+                                  alt={post.title}
+                                 className="w-full h-auto rounded-lg mb-8 shadow-md"
                             />
 
                             {/* The dangerouslySetInnerHTML content will directly use the inline styles defined in dummyPosts */}
@@ -296,7 +215,7 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
                                     Recent Posts
                                 </h3>
                                 <ul className="space-y-3">
-                                    {recentPost.map(
+                                    {recentPost.length > 0 ? recentPost.map(
                                         (
                                             p,
                                             index // Show top 5 recent posts
@@ -324,7 +243,7 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
                                                 </p>
                                             </li>
                                         )
-                                    )}
+                                    ):<span className="text-red-500">No Recent Posts Available</span>}
                                 </ul>
                             </div>
 

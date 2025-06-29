@@ -24,6 +24,7 @@ interface Stores {
 interface Blogs {
     title: string | null,
     slug: string | null,
+    imageURL: string|null
 }
 interface Props {
     featured_coupons: Coupons[],
@@ -254,7 +255,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                                         style={{ backgroundColor: 'var(--blog-placeholder-bg)', color: 'var(--text-muted)' }}
                                     >
                                         {/* Using the same banner1Image for blog placeholders as well, for consistency */}
-                                        <img src={'https://picsum.photos/id/1019/400/250'} alt={`Blog Post ${i + 1}`} className="w-full h-full object-cover" />
+                                        <img src={blog.imageURL} alt={`Blog Post ${i + 1}`} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="p-4">
                                         <p className="text-base font-semibold mb-2" style={{ color: 'var(--blog-card-text)' }}>{blog.title}</p>

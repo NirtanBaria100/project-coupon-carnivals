@@ -13,6 +13,11 @@ class HomeController extends Controller
         $featuredCoupons = Coupon::where(['is_featured'=>1,'is_published'=>1])->latest()->limit(10)->get();
         $similarStores   = Store::latest()->whereNot('is_featured',1)->select(['name','slug','id'])->limit(5)->get();
         $blogs           = Blog::latest()->where('is_published',1)->limit(6)->get();
+        $blogs->transform(function($query){
+            $query->title = \Str::limit($query->title , 80  ,'...');
+            $query->imageURL = asset($query->image);
+            return $query;
+        });
         return Inertia::render("Web/Index",[
             'featured_coupons' => $featuredCoupons,
             'popular_stores' => $similarStores,
@@ -58,7 +63,8 @@ class HomeController extends Controller
     public function AllStorePage() {
         $stores = Store::latest()->get();
         $stores->transform(function($query){
-            $query->imageUrl = asset($query->thumbnail);
+            $query->totalOffers = $query->coupons->count();
+            $query->imageURL = asset($query->thumbnail);
             return $query;
         });
         return Inertia::render("User/AllStorePage",[
@@ -69,17 +75,19 @@ class HomeController extends Controller
 
 
     public function AllBlogs($category = null){
-        $blogs           = Blog::latest()->where('is_published',1)->with('category')->limit(12);
-        $blogs->transform(function($query){
-            $query->title = \Str::limit($query->title , 80  ,'...');
-            return $query;
-        });
+        $blogs           = Blog::latest()->where('is_published',1)->with('author')->with('category')->limit(12);
         if(!empty($category)){
             $blogs->whereHas('category', function($query) use ($category) {
                 $query->where('slug', $category);
             });
         }
         $blogs = $blogs->get();
+        $blogs->transform(function($query){
+            $query->title = \Str::limit($query->title , 80  ,'...');
+            $query->imageURL = asset($query->image);
+            $query->date = Carbon::parse($query->created_at)->format('F d,Y');
+            return $query;
+        });
         return Inertia::render("User/BlogPage",[
             'blogs' => $blogs
         ]);
@@ -87,12 +95,14 @@ class HomeController extends Controller
     }
 
     public function singleBlog($slug){
-        $post        = Blog::latest()->where('slug', $slug)->with('category')->first();
+        $post        = Blog::latest()->where('slug', $slug)->with('author')->with('category')->first();
         $recentPost  = Blog::latest()->whereNot('slug', $slug)->with('category')->get();
         $recentPost->transform(function($query){
             $query->title = \Str::limit($query->title , 140  ,'...');
             return $query;
         });
+        $post->imageURL = asset($post->image);
+        $post->date = Carbon::parse($post->created_at)->format('F d,Y');
         $categories = Category::whereHas('blogs')->select(['name','id','slug'])->limit(5)->get();
         return Inertia::render("User/SingleBlog",[
             'post' => $post,

@@ -77,7 +77,7 @@ export default function Create({ categories , csrfToken }: CreateProps) {
                             <Input name="slug" placeholder="Slug" required value={data.slug} onChange={handleChange} />
 
                             <label className="block font-medium">Content</label>
-                            <RichTextEditor content={content} setContent={setContent} setFormData={setData}  name={'content'}  csrfToken={csrfToken} path={'blogs'}/>
+                            <RichTextEditor content={content} setContent={setContent} setFormData={setData} name={'content'} csrfToken={csrfToken} path={'post'}/>
                             <Input
                                 type="file"
                                 name="image"

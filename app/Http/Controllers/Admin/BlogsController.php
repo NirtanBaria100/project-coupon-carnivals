@@ -32,7 +32,7 @@ class BlogsController extends Controller
             'title' => 'required|string|max:255|unique:blogs,title',
             'slug' => 'required|string|max:255|unique:blogs,slug',
             'content' => 'required|string',
-            'image' => 'nullable',
+            'image' => 'required|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
             'is_published' => 'boolean',
             'category_id' => 'nullable|exists:categories,id',
             'focus_keyphrase' => 'nullable|string',
@@ -41,12 +41,14 @@ class BlogsController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('blogs', 'public');
+            $file = $request->file('image');
+            $filename = Str::slug($request->title) . '-' . time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('post/', $filename, 'public'); // stores in storage/app/public/images
+            $validated['image'] = '/storage/' . $path; // public URL
         }
-
         $validated['user_id'] = auth()->id();
         $validated['published_at'] = $validated['is_published'] ? now() : null;
-
+        $validated['author_id'] = auth()->user()->id;
         Blog::create($validated);
 
         return redirect()->route('admin.blogs.index')->with('success', 'Blog created successfully.');
@@ -67,7 +69,7 @@ class BlogsController extends Controller
             'title' => 'required|string|max:255|unique:blogs,title,' . $blog->id,
             'slug' => 'required|string|max:255|unique:blogs,slug,' . $blog->id,
             'content' => 'required|string',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
             'is_published' => 'boolean',
             'category_id' => 'nullable|exists:categories,id',
             'focus_keyphrase' => 'nullable|string',
@@ -76,8 +78,11 @@ class BlogsController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-    $validated['image'] = $request->file('image')->store('blogs', 'public');
-}
+            $file = $request->file('image');
+            $filename = Str::slug($request->title) . '-' . time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('post/', $filename, 'public'); // stores in storage/app/public/images
+            $validated['image'] = '/storage/' . $path; // public URL
+        }
         $validated['published_at'] = $validated['is_published'] ? now() : null;
 
         $blog->update($validated);
