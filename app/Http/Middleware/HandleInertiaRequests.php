@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
         $category  = Category::latest()->select(['slug','name','is_popular'])->limit(8)->get();
-        $coupons   = Coupon::latest()->where('is_featured',1)->limit(3)->get();
+        $coupons   = Coupon::latest()->where(['is_featured'=> 1, 'coupon_type'=>'deal'])->limit(5)->get();
         return [
             ...parent::share($request),
             'name' => config('app.name'),
