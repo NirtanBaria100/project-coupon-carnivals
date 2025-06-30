@@ -27,8 +27,6 @@ class HomeController extends Controller
     }
     public function StorePage($slug) {
         $store = Store::latest()->where('slug', $slug)->select(['id','affiliate_irl','name','desc','extra_info','thumbnail'])->first();
-
-
         $similarStores  = Store::latest()->whereNot('slug', $slug)->select(['name','slug'])->limit(5)->get();
         $store = Store::latest()->where('slug', $slug)->first();
         $storeCoupons = \DB::table('coupon_store')->where('store_id', $store->id)->pluck('coupon_id');

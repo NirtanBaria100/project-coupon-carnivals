@@ -19,7 +19,7 @@ interface Store {
     affiliate_irl: string | null,
     desc: string | null,
     extra_info: string | null,
-    ratings:number | 0
+    ratings: number | 0
 }
 
 interface Coupon {
@@ -59,7 +59,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) =>
 
     const [userRating, setUserRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
-    const { data, post, setData , reset} = useForm({
+    const { data, post, setData, reset } = useForm({
         store_id: stores.id,
         ratings: stores.ratings
     });
@@ -69,23 +69,26 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) =>
     }, [stores.name]);
 
     // Handle click on a star
-    const handleClickStar = (rating: number) => {
-        setUserRating(rating);
-        setData('ratings', rating);
+    const [pendingRating, setPendingRating] = useState<number | null>(null);
 
-        if (stores.id) {
+    useEffect(() => {
+        if (pendingRating !== null && data.ratings === pendingRating) {
             post(route('ratings.store'), {
-                data: {
-                    store_id: stores.id,
-                    ratings: rating, // <- use direct clicked value here
-                },
                 forceFormData: true,
                 onSuccess: () => {
                     toast.success('Thanks for Your Ratings!', { position: toastDirection });
+                    setPendingRating(null); // reset
                 },
             });
         }
+    }, [data.ratings, pendingRating]);
+
+    const handleClickStar = (rating: number) => {
+        setUserRating(rating);
+        setData('ratings', rating);
+        setPendingRating(rating);
     };
+
     // Helper function to render star icons
     const renderStars = (currentRating: number, setRating: React.Dispatch<React.SetStateAction<number>>, interactive: boolean = false) => {
         const stars = [];
