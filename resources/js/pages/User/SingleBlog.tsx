@@ -26,7 +26,6 @@ interface Props {
     categories: Category[]
 }
 const SingleBlog = ({ post, categories, recentPost }: Props) => {
-    console.log(post);
 
     return (
         <WebLayout>

@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
-use App\Models\{Store ,Blog,Category, Coupon};
+use App\Models\{Store ,Blog,Category, Coupon , Rating};
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
@@ -25,7 +26,9 @@ class HomeController extends Controller
         ]);
     }
     public function StorePage($slug) {
-        $store = Store::latest()->where('slug', $slug)->select(['affiliate_irl','name','desc','extra_info','thumbnail'])->first();
+        $store = Store::latest()->where('slug', $slug)->select(['id','affiliate_irl','name','desc','extra_info','thumbnail'])->first();
+
+
         $similarStores  = Store::latest()->whereNot('slug', $slug)->select(['name','slug'])->limit(5)->get();
         $store = Store::latest()->where('slug', $slug)->first();
         $storeCoupons = \DB::table('coupon_store')->where('store_id', $store->id)->pluck('coupon_id');
@@ -38,6 +41,7 @@ class HomeController extends Controller
         });
         if(!empty($store)){
             $store->thumbnail = asset($store->thumbnail);
+            $store->ratings = $store->storeRatings->sum('ratings');
         }
         return Inertia::render("User/StorePage",[
             'stores' => $store,
@@ -111,5 +115,15 @@ class HomeController extends Controller
         ]);
 
     }
+    public function storeRating(Request $request){
+        $data = $request->except('_token');
+        $data['ip_address'] = $request->ip();
+        $store = Rating::updateOrCreate(['ip_address'=> $data['ip_address']], $data);
 
+        if ($store) {
+            return redirect()->back()->with('success','Thanks for your Ratings..!');
+        } else {
+            return redirect()->back()->with(['error' => true], 500);
+        }
+    }
 }

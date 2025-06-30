@@ -24,4 +24,8 @@ class Store extends Model
     {
         return $this->belongsToMany(Coupon::class);
     }
+
+    public function storeRatings(){
+        return $this->hasMany(Rating::class,'store_id','id');
+    }
 }

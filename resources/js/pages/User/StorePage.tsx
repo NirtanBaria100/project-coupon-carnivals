@@ -3,7 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import OfferCard from '@/components/OfferCard';
 import WebLayout from '@/layouts/web-layout';
-import { Link } from '@inertiajs/react'; // Import Link for Inertia.js navigation
+import { Link, useForm } from '@inertiajs/react'; // Import Link for Inertia.js navigation
+import { toastDirection } from '@/lib/utils/Constants';
+import toast from 'react-hot-toast';
 
 interface SimilarStore {
     name: string | null,
@@ -11,11 +13,13 @@ interface SimilarStore {
 }
 
 interface Store {
+    id: number | null,
     name: string | null,
     thumbnail: string | null,
     affiliate_irl: string | null,
     desc: string | null,
     extra_info: string | null,
+    ratings:number | 0
 }
 
 interface Coupon {
@@ -52,29 +56,33 @@ interface Props {
 }
 
 const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) => {
+
     const [userRating, setUserRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
-
+    const { data, post, setData , reset} = useForm({
+        store_id: stores.id,
+        ratings: userRating,
+    });
     // Load rating from local storage when the component mounts
     useEffect(() => {
-        if (stores.name) {
-            const storedRating = localStorage.getItem(`store_rating_${stores.name}`);
-            if (storedRating) {
-                setUserRating(parseInt(storedRating, 10));
-            }
-        }
+        setUserRating(stores.ratings);
     }, [stores.name]);
 
     // Handle click on a star
     const handleClickStar = (rating: number) => {
         setUserRating(rating);
-        if (stores.name) {
-            localStorage.setItem(`store_rating_${stores.name}`, rating.toString());
-            // You could also send this rating to your backend here
-            // Example: axios.post('/api/rate-store', { storeName: stores.name, rating: rating });
+        setData('ratings', userRating);
+
+        if (stores.id) {
+            post(route('ratings.store'), {
+                forceFormData: true,
+                onSuccess: () => {
+                    toast.success('Thanks for Your Ratings!', { position: toastDirection });
+                },
+            });
+            reset();
         }
     };
-
     // Helper function to render star icons
     const renderStars = (currentRating: number, setRating: React.Dispatch<React.SetStateAction<number>>, interactive: boolean = false) => {
         const stars = [];
@@ -82,11 +90,10 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) =>
             stars.push(
                 <svg
                     key={i}
-                    className={`h-7 w-7 transition-colors duration-200 ${
-                        (interactive ? (i <= (hoverRating || currentRating)) : (i <= currentRating))
-                            ? 'text-yellow-400'
-                            : 'text-gray-300'
-                    } ${interactive ? 'cursor-pointer' : ''}`}
+                    className={`h-7 w-7 transition-colors duration-200 ${(interactive ? (i <= (hoverRating || currentRating)) : (i <= currentRating))
+                        ? 'text-yellow-400'
+                        : 'text-gray-300'
+                        } ${interactive ? 'cursor-pointer' : ''}`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     onMouseEnter={interactive ? () => setHoverRating(i) : undefined}
@@ -135,7 +142,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) =>
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center justify-center font-bold py-3 px-8 rounded-md transition-colors duration-200 text-base min-w-[150px]" /* Increased padding, text size, and added min-width */
-                                        style={{ backgroundColor: 'var(--primary-orange)', color: 'var(--neutral-white)', margin: '35px'}}
+                                        style={{ backgroundColor: 'var(--primary-orange)', color: 'var(--neutral-white)', margin: '35px' }}
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--offer-button-hover-bg)'}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--primary-orange)'}
                                     >
