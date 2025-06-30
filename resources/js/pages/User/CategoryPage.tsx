@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import OfferCard from '@/Components/OfferCard';
+import OfferCard from '@/components/OfferCard';
 
 // IMPORTANT: Import the AppLayout component
 import AppLayout from '@/layouts/app-layout'; // Adjust path if your layout is elsewhere

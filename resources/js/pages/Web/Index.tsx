@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import banner1Image from '@/assets/banner 1.png'; // Import the banner image directly
 import banner2Image from '@/assets/banner 2.png'; // Import the banner image directly
-import OfferCard from '@/Components/OfferCard';
+import OfferCard from '@/components/OfferCard';
 import WebLayout from '@/layouts/web-layout';
 interface Coupons {
     featured_image: string | null,

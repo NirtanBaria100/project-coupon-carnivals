@@ -122,7 +122,7 @@ export default function Index() {
                             <TableHead onClick={() => handleSort('slug')} className="cursor-pointer">
                                 Slug {sort === 'slug' && (direction === 'asc' ? '↑' : '↓')}
                             </TableHead>
-                            <TableHead>Description</TableHead>
+                            {/* <TableHead>Description</TableHead> */}
                             <TableHead onClick={() => handleSort('is_featured')} className="cursor-pointer">
                                 Featured {sort === 'is_featured' && (direction === 'asc' ? '↑' : '↓')}
                             </TableHead>
@@ -152,7 +152,7 @@ export default function Index() {
                                 </TableCell>
                                 <TableCell>{store.name}</TableCell>
                                 <TableCell>{store.slug}</TableCell>
-                                <TableCell>{store.desc || '-'}</TableCell>
+                                {/* <TableCell>{store.desc || '-'}</TableCell> */}
                                 <TableCell>{store.is_featured ? 'Yes' : 'No'}</TableCell>
                                 <TableCell className="space-x-2 text-right">
                                     <Link href={`/admin/stores/${store.id}/edit`}>
