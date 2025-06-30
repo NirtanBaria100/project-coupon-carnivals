@@ -61,7 +61,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) =>
     const [hoverRating, setHoverRating] = useState(0);
     const { data, post, setData , reset} = useForm({
         store_id: stores.id,
-        ratings: userRating,
+        ratings: stores.ratings
     });
     // Load rating from local storage when the component mounts
     useEffect(() => {
@@ -71,16 +71,19 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) =>
     // Handle click on a star
     const handleClickStar = (rating: number) => {
         setUserRating(rating);
-        setData('ratings', userRating);
+        setData('ratings', rating);
 
         if (stores.id) {
             post(route('ratings.store'), {
+                data: {
+                    store_id: stores.id,
+                    ratings: rating, // <- use direct clicked value here
+                },
                 forceFormData: true,
                 onSuccess: () => {
                     toast.success('Thanks for Your Ratings!', { position: toastDirection });
                 },
             });
-            reset();
         }
     };
     // Helper function to render star icons

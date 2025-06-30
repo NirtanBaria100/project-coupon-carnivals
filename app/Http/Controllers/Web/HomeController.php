@@ -85,6 +85,9 @@ class HomeController extends Controller
                 $query->where('slug', $category);
             });
         }
+        if(request()->query('search')){
+            $blogs->where('title','LIKE','%'.request()->query('search').'%');
+        }
         $blogs = $blogs->get();
         $blogs->transform(function($query){
             $query->title = \Str::limit($query->title , 80  ,'...');
@@ -125,5 +128,10 @@ class HomeController extends Controller
         } else {
             return redirect()->back()->with(['error' => true], 500);
         }
+    }
+    public function searchBlogs(Request $request){
+            $search = $request->data['searchValue'];
+            $blogs = Blog::where('is_published', 1 )->where('title','LIKE','%'. $search . '%')->select(['title','slug'])->get();
+            return response()->json(['data'=> $blogs]);
     }
 }

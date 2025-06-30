@@ -21,6 +21,7 @@ Route::prefix("")->name("home.")->group(function () {
     Route::get("/blog/{slug}", [HomeController::class, 'singleBlog']);
     Route::get("/all/blogs", [HomeController::class, 'AllBlogs']);
     Route::get("/blogs/category/{category}", [HomeController::class, 'AllBlogs']);
+    Route::post("/search/blogs", [HomeController::class, 'searchBlogs']);
 });
 Route::prefix('/rating')->name('ratings.')->group(function(){
     Route::post('/store', [HomeController::class,'storeRating'])->name('store');

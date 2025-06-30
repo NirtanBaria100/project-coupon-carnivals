@@ -6,7 +6,7 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
-use App\Models\Category;
+use App\Models\{Category,Coupon};
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -39,11 +39,13 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
         $category  = Category::latest()->select(['slug','name','is_popular'])->limit(8)->get();
+        $coupons   = Coupon::latest()->where('is_featured',1)->limit(3)->get();
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'categories' => $category,
+            'amazing_discount' => $coupons,
             'auth' => [
                 'user' => $request->user(),
             ],
