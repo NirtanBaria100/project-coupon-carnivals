@@ -82,6 +82,7 @@ Route::prefix('/rating')->name('ratings.')->group(function(){
         Route::post('/create', [StoresController::class, "store"])->name('store');
         Route::delete('/{store}', [StoresController::class, 'destroy'])->name('destroy');
         Route::get('/{store}/edit', [StoresController::class, 'edit'])->name('edit');
+        Route::get('/{store}/ratings', [StoresController::class, 'ratings'])->name('ratings');
         Route::put('/{store}', [StoresController::class, 'update'])->name('update');
 
     });

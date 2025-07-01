@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Rating;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -30,7 +31,10 @@ class StoresController extends Controller
 
         // Paginate
         $stores = $query->paginate(50)->withQueryString();
-
+        $stores->getCollection()->transform(function ($query) {
+            $query->ratings = $query->storeRatings->sum('ratings');
+            return $query;
+        });
         return Inertia::render('Admin/Store/Index', [
             'stores' => $stores,
             'filters' => $request->only(['search', 'sort', 'direction']),
@@ -84,7 +88,7 @@ class StoresController extends Controller
     public function edit(Store $store)
     {
 
-        
+
 
         return Inertia::render('Admin/Store/Edit', [
             'store' => $store,
@@ -123,5 +127,28 @@ class StoresController extends Controller
         $store->delete();
 
         return redirect()->route('admin.stores.index')->with('success', 'Store deleted successfully.');
+    }
+    public function ratings(Request $request, $store_id = '')
+    {
+        $query = Rating::query()->where('store_id', $store_id);
+
+        // Search
+        if ($search = $request->input('search')) {
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('slug', 'like', "%{$search}%")
+                ->orWhere('desc', 'like', "%{$search}%");
+        }
+
+        // Sorting
+        $sortBy = $request->input('sort', 'created_at');
+        $sortDir = $request->input('direction', 'desc');
+        $query->orderBy($sortBy, $sortDir);
+
+        // Paginate
+        $ratings = $query->paginate(50)->withQueryString();
+        return Inertia::render('Admin/Store/Rating', [
+            'ratings' => $ratings,
+            'filters' => $request->only(['search', 'sort', 'direction']),
+        ]);
     }
 }

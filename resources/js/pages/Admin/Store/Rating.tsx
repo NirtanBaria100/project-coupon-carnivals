@@ -18,7 +18,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
-interface Store {
+interface Rating {
     id: number;
     name: string;
     slug: string;
@@ -28,7 +28,7 @@ interface Store {
     created_at: string;
     updated_at: string;
     thumbnail?: string;
-    ratings : number | 0,
+    ratings: number | 0,
 }
 
 interface PaginatedData<T> {
@@ -49,9 +49,9 @@ interface PaginatedData<T> {
     };
 }
 
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Stores', href: '/admin/stores' }];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Store Ratings', href: '/admin/stores' }];
 
-export default function Index() {
+export default function Rating() {
     const { props, url } = usePage<{
         stores: PaginatedData<Store>;
         filters: { search?: string; sort?: string; direction?: string };
@@ -134,67 +134,11 @@ export default function Index() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {stores.data.length === 0 && (
-                            <TableRow>
-                                <TableCell colSpan={6} className="py-6 text-center">
-                                    No stores found.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                        {stores.data.map((store) => (
-                            <TableRow key={store.id}>
-                                <TableCell>
-                                    {store.thumbnail ? (
-                                        <img
-                                            src={store.thumbnail.startsWith('http') ? store.thumbnail : `http://127.0.0.1:8000${store.thumbnail}`}
-                                            alt={store.name}
-                                            className="h-12 w-12 rounded object-cover"
-                                        />
-                                    ) : (
-                                        <span className="text-sm text-gray-400">No Image</span>
-                                    )}
-                                </TableCell>
-                                <TableCell>{store.name}</TableCell>
-                                <TableCell>{store.slug}</TableCell>
-                                <TableCell>  <Link href={`/admin/stores/${store.id}/ratings`}>
-                                    <Button style={{ cursor:'pointer' }} variant="outline" size="sm">
-                                        View ( {store.ratings} )
-                                    </Button>
-                                </Link></TableCell>
-                                <TableCell>{store.desc || '-'}</TableCell>
-                                <TableCell>{store.is_featured ? 'Yes' : 'No'}</TableCell>
-                                <TableCell className="space-x-2 text-right">
-                                    <Link href={`/admin/stores/${store.id}/edit`}>
-                                        <Button variant="outline" size="sm">
-                                            Edit
-                                        </Button>
-                                    </Link>
-                                    <AlertDialog>
-                                        <AlertDialogTrigger asChild>
-                                            <Button variant="destructive" size="sm">
-                                                Delete
-                                            </Button>
-                                        </AlertDialogTrigger>
-                                        <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                <AlertDialogDescription>
-                                                    This action will permanently delete this coupon. This cannot be undone.
-                                                </AlertDialogDescription>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                <AlertDialogAction onClick={() => deleteStore(store)}>Continue</AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                    </AlertDialog>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+
                     </TableBody>
                 </Table>
 
-                <Pagination meta={stores.meta} links={stores.links} />
+                <Pagination meta={ratings.meta} links={ratings.links} />
             </div>
         </AppLayout>
     );

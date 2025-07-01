@@ -39,7 +39,7 @@ class HomeController extends Controller
         });
         if(!empty($store)){
             $store->thumbnail = asset($store->thumbnail);
-            $store->ratings = $store->storeRatings->sum('ratings');
+            $store->ratings = $store->storeRatings->where('is_approved',1)->sum('ratings');
         }
         return Inertia::render("User/StorePage",[
             'stores' => $store,
