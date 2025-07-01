@@ -65,7 +65,8 @@ class CouponsController extends Controller
             $file = $request->file('featured_image');
             $filename = Str::slug($request->name) . '-' . time() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('coupons', $filename, 'public'); // stores in storage/app/public/thumbnails
-            $data['featured_image'] = '/storage/' . $path; // public URL
+             $appUrl = config("app.url");
+            $data['featured_image'] = $appUrl.'/storage/' . $path; // public URL
         }
         
         $coupon = Coupon::create($data);
@@ -146,7 +147,8 @@ class CouponsController extends Controller
             $file = $request->file('featured_image');
             $filename = Str::slug($request->name) . '-' . time() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('coupons', $filename, 'public'); // stores in storage/app/public/thumbnails
-            $validated['featured_image'] = '/storage/' . $path; // public URL
+             $appUrl = config("app.url");
+            $validated['featured_image'] = $appUrl.'/storage/' . $path; // public URL
         }
         
         // Ensure checkboxes are set correctly
