@@ -44,7 +44,8 @@ class BlogsController extends Controller
             $file = $request->file('image');
             $filename = Str::slug($request->title) . '-' . time() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('post/', $filename, 'public'); // stores in storage/app/public/images
-            $validated['image'] = '/storage/' . $path; // public URL
+            $appUrl = config("app.url");
+            $validated['image'] = $appUrl.'/storage/' . $path; // public URL
         }
         $validated['user_id'] = auth()->id();
         $validated['published_at'] = $validated['is_published'] ? now() : null;
@@ -81,7 +82,8 @@ class BlogsController extends Controller
             $file = $request->file('image');
             $filename = Str::slug($request->title) . '-' . time() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('post/', $filename, 'public'); // stores in storage/app/public/images
-            $validated['image'] = '/storage/' . $path; // public URL
+             $appUrl = config("app.url");
+            $validated['image'] = $appUrl.'/storage/' . $path; // public URL
         }
         $validated['published_at'] = $validated['is_published'] ? now() : null;
 

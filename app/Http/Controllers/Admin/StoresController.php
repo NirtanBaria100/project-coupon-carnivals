@@ -63,7 +63,8 @@ class StoresController extends Controller
             $file = $request->file('thumbnail');
             $filename = Str::slug($request->name) . '-' . time() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('thumbnails', $filename, 'public'); // stores in storage/app/public/thumbnails
-            $validated['thumbnail'] = '/storage/' . $path; // public URL
+            $appUrl = config("app.url");
+            $validated['thumbnail'] = $appUrl.'/storage/' . $path; // public URL
         }
 
         Store::create($validated);
@@ -108,7 +109,8 @@ class StoresController extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            $validated['thumbnail'] = '/storage/' . $request->file('thumbnail')->store('thumbnails', 'public');
+             $appUrl = config("app.url");
+            $validated['thumbnail'] = $appUrl.'/storage/' . $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
         $store->update($validated);
