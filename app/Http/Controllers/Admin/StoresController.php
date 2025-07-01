@@ -32,7 +32,7 @@ class StoresController extends Controller
         // Paginate
         $stores = $query->paginate(50)->withQueryString();
         $stores->getCollection()->transform(function ($query) {
-            $query->ratings = $query->storeRatings->sum('ratings');
+            $query->ratings = $query->storeRatings->count();
             return $query;
         });
         return Inertia::render('Admin/Store/Index', [
@@ -68,7 +68,7 @@ class StoresController extends Controller
             $filename = Str::slug($request->name) . '-' . time() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('thumbnails', $filename, 'public'); // stores in storage/app/public/thumbnails
             $appUrl = config("app.url");
-            $validated['thumbnail'] = $appUrl.'/storage/' . $path; // public URL
+            $validated['thumbnail'] = $appUrl . '/storage/' . $path; // public URL
         }
 
         Store::create($validated);
@@ -113,8 +113,8 @@ class StoresController extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-             $appUrl = config("app.url");
-            $validated['thumbnail'] = $appUrl.'/storage/' . $request->file('thumbnail')->store('thumbnails', 'public');
+            $appUrl = config("app.url");
+            $validated['thumbnail'] = $appUrl . '/storage/' . $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
         $store->update($validated);
@@ -133,12 +133,11 @@ class StoresController extends Controller
     public function ratings(Request $request, $store_id = '')
     {
         $query = Rating::query()->where('store_id', $store_id);
+        $storeName = Store::where('id',$store_id)->pluck('name');
 
         // Search
         if ($search = $request->input('search')) {
-            $query->where('name', 'like', "%{$search}%")
-                ->orWhere('slug', 'like', "%{$search}%")
-                ->orWhere('desc', 'like', "%{$search}%");
+            $query->where('ip_address', 'Like', "%{$search}%");
         }
 
         // Sorting
@@ -147,10 +146,30 @@ class StoresController extends Controller
         $query->orderBy($sortBy, $sortDir);
 
         // Paginate
-        $ratings = $query->paginate(50)->withQueryString();
+        $ratings = $query->paginate(20)->withQueryString();
+
         return Inertia::render('Admin/Store/Rating', [
             'ratings' => $ratings,
+            'store_id' => $store_id,
+            'store_name'=> $storeName[0],
             'filters' => $request->only(['search', 'sort', 'direction']),
         ]);
+    }
+    public function updateRatings(Request $request)
+    {
+        $data = $request->all();
+        $status = $data['data']['status'];
+        $id     = $data['data']['id'];
+        $updateStatus = Rating::where(['id' => $id])->update( [
+            'is_approved' => $status,
+        ]);
+        $status =  $status == 1 ? 'Approved' : ($status == 2 ? 'Rejected' :"added to Pending");
+        $message = 'Rating has been ' . $status;
+        return redirect()->back()->with( 'success',$message);
+    }
+    public function destroyRatings($id)
+    {
+        Rating::where(['id'=> $id])->delete();
+        return redirect()->back()->with('success', 'Store Rating deleted successfully.');
     }
 }

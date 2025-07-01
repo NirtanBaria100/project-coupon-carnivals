@@ -16,21 +16,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Badge, BadgeAlert, BadgeCheck, BadgeInfo, BadgeXIcon } from 'lucide-react';
 import { useState } from 'react';
 
 interface Rating {
     id: number;
-    name: string;
-    slug: string;
-    desc?: string;
-    home_url?: string;
-    is_featured: boolean;
-    created_at: string;
-    updated_at: string;
-    thumbnail?: string;
-    ratings: number | 0,
+    ip_address: string;
+    ratings?: number;
+    is_approved?: number;
 }
-
 interface PaginatedData<T> {
     data: T[];
     meta: {
@@ -53,42 +47,37 @@ const breadcrumbs: BreadcrumbItem[] = [{ title: 'Store Ratings', href: '/admin/s
 
 export default function Rating() {
     const { props, url } = usePage<{
-        stores: PaginatedData<Store>;
+        ratings: PaginatedData<Rating>;
+        store_id: number,
+        store_name: string,
         filters: { search?: string; sort?: string; direction?: string };
     }>();
-    const { stores, filters } = props;
+    const { ratings, filters, store_id, store_name } = props;
 
-    const [search, setSearch] = useState(filters.search && '');
     const [sort, setSort] = useState(filters.sort && 'created_at');
     const [direction, setDirection] = useState(filters.direction && 'desc');
-    const [page, setPage] = useState(new URLSearchParams(url.split('?')[1]).get('page') || '1');
+    const [localRatings, setLocalRatings] = useState<Rating[]>(props.ratings.data);
 
-    const handleSearch = () => {
-        setPage('1');
-        router.get(
-            '/admin/stores',
-            {
-                search,
-                sort,
-                direction,
-                page: 1,
-            },
-            {
-                preserveState: true,
-                replace: true,
-            },
-        );
-    };
+    const [page, setPage] = useState(new URLSearchParams(url.split('?')[1]).get('page') || '1');
 
     const handleSort = (column: string) => {
         const newDirection = sort === column && direction === 'asc' ? 'desc' : 'asc';
         setSort(column);
         setDirection(newDirection);
-        router.get(route('admin.stores.index'), { search, sort: column, direction: newDirection }, { preserveScroll: true });
+        router.get(route('admin.stores.ratings', store_id), { search, sort: column, direction: newDirection }, { preserveScroll: true });
     };
-
-    const deleteStore = (store: Store) => {
-        router.delete(route('admin.stores.destroy', store.id), { preserveScroll: true });
+    const changeStatus = (id: number, newStatus: number) => {
+        setLocalRatings(prev =>
+            prev.map(rating =>
+                rating.id === id ? { ...rating, is_approved: newStatus } : rating
+            )
+        );
+        router.post(route('admin.stores.update.ratings'), {
+            data: { id: id, status: newStatus }
+        })
+    };
+    const deleteRating = (rating: Rating) => {
+        router.get(route('admin.stores.ratings.destroy', rating.id), { preserveScroll: true });
     };
 
     return (
@@ -96,45 +85,71 @@ export default function Rating() {
             <Head title="Stores" />
             <div className="p-5">
                 <div className="mb-6 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">Stores</h1>
-                    <Link href="/admin/stores/create">
-                        <Button>Add Store</Button>
+                    <h1 className="text-2xl font-bold">Ratings for Store: ( {store_name} )</h1>
+                    <Link href="/admin/stores">
+                        <Button className='cursor-pointer'>Back to Listing</Button>
                     </Link>
                 </div>
-
-                <div className="mb-4 flex gap-2">
-                    <Input
-                        type="text"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Search stores..."
-                        className="w-full md:w-1/3"
-                    />
-                    <Button onClick={handleSearch}>Search</Button>
-                </div>
-
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Image</TableHead>
-                            <TableHead onClick={() => handleSort('name')} className="cursor-pointer">
-                                Name {sort === 'name' && (direction === 'asc' ? '↑' : '↓')}
-                            </TableHead>
-                            <TableHead onClick={() => handleSort('slug')} className="cursor-pointer">
-                                Slug {sort === 'slug' && (direction === 'asc' ? '↑' : '↓')}
+                            <TableHead onClick={() => handleSort('ip_address')} className="cursor-pointer">
+                                Ip Address {sort === 'ip_address' && (direction === 'asc' ? '↑' : '↓')}
                             </TableHead>
                             <TableHead onClick={() => handleSort('ratings')} className="cursor-pointer">
                                 Rating {sort === 'ratings' && (direction === 'asc' ? '↑' : '↓')}
                             </TableHead>
-                            <TableHead>Description</TableHead>
-                            <TableHead onClick={() => handleSort('is_featured')} className="cursor-pointer">
-                                Featured {sort === 'is_featured' && (direction === 'asc' ? '↑' : '↓')}
+                            <TableHead onClick={() => handleSort('is_approved')} className="cursor-pointer">
+                                Status {sort === 'is_approved' && (direction === 'asc' ? '↑' : '↓')}
                             </TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
+                        {localRatings.map((rating) => (
 
+                            <TableRow>
+                                <TableCell>{rating?.ip_address}</TableCell>
+                                <TableCell>{rating?.ratings}</TableCell>
+                                <TableCell>
+                                    <select
+                                        value={rating?.is_approved}
+                                        onChange={(e) => changeStatus(rating.id, parseInt(e.target.value))}
+                                        className="bg-transparent border rounded-2xl px-2 py-1 text-white"
+                                        style={{
+                                            backgroundColor:
+                                                'black'
+                                        }}
+                                    >
+                                        <option value={0}>Pending</option>
+                                        <option value={1}>Approved</option>
+                                        <option value={2}>Rejected</option>
+                                    </select>
+                                </TableCell>
+                                <TableCell className="space-x-2 text-right">
+                                    <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <Button variant="destructive" size="sm">
+                                                Delete
+                                            </Button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    This action will permanently delete this coupon. This cannot be undone.
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                <AlertDialogAction onClick={() => deleteRating(rating)}>Continue</AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                </TableCell>
+                            </TableRow>
+
+                        ))}
                     </TableBody>
                 </Table>
 

@@ -77,6 +77,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) =>
                 forceFormData: true,
                 onSuccess: () => {
                     toast.success('Thanks for Your Ratings!', { position: toastDirection });
+                  
                     setPendingRating(null); // reset
                 },
             });
@@ -194,7 +195,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) =>
                                     {renderStars(userRating, setUserRating, true)}
                                 </div>
                                 <p className="text-gray-500 text-sm mt-1 text-center">
-                                    {userRating > 0 ? `Your rating: ${userRating}.0` : 'Click stars to rate!'}
+                                    {userRating > 0 ? `User ratings: ${userRating}.0` : 'Click stars to rate!'}
                                 </p>
                             </div>
 

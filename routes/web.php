@@ -83,6 +83,8 @@ Route::prefix('/rating')->name('ratings.')->group(function(){
         Route::delete('/{store}', [StoresController::class, 'destroy'])->name('destroy');
         Route::get('/{store}/edit', [StoresController::class, 'edit'])->name('edit');
         Route::get('/{store}/ratings', [StoresController::class, 'ratings'])->name('ratings');
+        Route::get('/{store}/destroy/ratings', [StoresController::class, 'destroyRatings'])->name('ratings.destroy');
+        Route::post('/update-rating-status', [StoresController::class, 'updateRatings'])->name('update.ratings');
         Route::put('/{store}', [StoresController::class, 'update'])->name('update');
 
     });

@@ -163,32 +163,32 @@ export default function Index() {
                                 </Link></TableCell>
                                 <TableCell>{store.desc || '-'}</TableCell>
                                 <TableCell>{store.is_featured ? 'Yes' : 'No'}</TableCell>
-                                <TableCell className="space-x-2 text-right">
-                                    <Link href={`/admin/stores/${store.id}/edit`}>
-                                        <Button variant="outline" size="sm">
-                                            Edit
-                                        </Button>
-                                    </Link>
-                                    <AlertDialog>
-                                        <AlertDialogTrigger asChild>
-                                            <Button variant="destructive" size="sm">
-                                                Delete
+                                    <TableCell className="space-x-2 text-right">
+                                        <Link href={`/admin/stores/${store.id}/edit`}>
+                                            <Button variant="outline" size="sm">
+                                                Edit
                                             </Button>
-                                        </AlertDialogTrigger>
-                                        <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                <AlertDialogDescription>
-                                                    This action will permanently delete this coupon. This cannot be undone.
-                                                </AlertDialogDescription>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                <AlertDialogAction onClick={() => deleteStore(store)}>Continue</AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                    </AlertDialog>
-                                </TableCell>
+                                        </Link>
+                                        <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                                <Button variant="destructive" size="sm">
+                                                    Delete
+                                                </Button>
+                                            </AlertDialogTrigger>
+                                            <AlertDialogContent>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                                    <AlertDialogDescription>
+                                                        This action will permanently delete this coupon. This cannot be undone.
+                                                    </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                    <AlertDialogAction onClick={() => deleteStore(store)}>Continue</AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
+                                    </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
