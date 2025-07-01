@@ -49,15 +49,15 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:categories,slug',
-            'desc' => 'nullable|string',
-            'parent_cat' => 'nullable|exists:categories,id',
-            'icon' => 'required|string',
-            'image_icon' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
-            'single_line_desc' => 'nullable|string|max:255',
-            'is_popular' => 'boolean',
-            'focus_keyphrase' => 'required|string|max:255',
-            'seo_title' => 'nullable|string|max:255',
-            'meta_description' => 'nullable|string',
+            // 'desc' => 'nullable|string',
+            // 'parent_cat' => 'nullable|exists:categories,id',
+            // 'icon' => 'required|string',
+            // 'image_icon' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+            // 'single_line_desc' => 'nullable|string|max:255',
+            // 'is_popular' => 'boolean',
+            // 'focus_keyphrase' => 'required|string|max:255',
+            // 'seo_title' => 'nullable|string|max:255',
+            // 'meta_description' => 'nullable|string',
         ]);
 
 
@@ -89,15 +89,15 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
-            'desc' => 'nullable|string',
-            'parent_cat' => 'nullable',
-            'icon' => 'required|string',
-            'image_icon' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
-            'single_line_desc' => 'nullable|string|max:255',
-            'is_popular' => 'boolean',
-            'focus_keyphrase' => 'required|string|max:255',
-            'seo_title' => 'nullable|string|max:255',
-            'meta_description' => 'nullable|string',
+            // 'desc' => 'nullable|string',
+            // 'parent_cat' => 'nullable',
+            // 'icon' => 'required|string',
+            // 'image_icon' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
+            // 'single_line_desc' => 'nullable|string|max:255',
+            // 'is_popular' => 'boolean',
+            // 'focus_keyphrase' => 'required|string|max:255',
+            // 'seo_title' => 'nullable|string|max:255',
+            // 'meta_description' => 'nullable|string',
         ]);
 
        if ($request->hasFile('image_icon')) {

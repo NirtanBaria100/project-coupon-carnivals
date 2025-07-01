@@ -55,12 +55,12 @@ class StoresController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:stores,slug',
-            'desc' => 'required|nullable|string',
+            // 'desc' => 'required|nullable|string',
             'home_url' => 'required|nullable|url',
-            'affiliate_irl' => 'required|nullable|url',
-            'thumbnail' => 'required|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'is_featured' => 'boolean',
-            'extra_info' => 'nullable|string',
+            // 'affiliate_irl' => 'required|nullable|url',
+            // 'thumbnail' => 'required|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'is_featured' => 'boolean',
+            // 'extra_info' => 'nullable|string',
         ]);
 
         if ($request->hasFile('thumbnail')) {
@@ -101,15 +101,15 @@ class StoresController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:stores,slug,' . $store->id,
-            'desc' => 'nullable|string',
+            // 'desc' => 'nullable|string',
             'home_url' => 'nullable|url',
-            'affiliate_irl' => 'nullable|url',
-            'thumbnail' => 'nullable|image|max:2048',
-            'is_featured' => 'boolean',
-            'extra_info' => 'nullable|string',
-            'focus_keyphrase' => 'nullable|string|max:255',
-            'seo_title' => 'nullable|string|max:255',
-            'meta_description' => 'nullable|string|max:255',
+            // 'affiliate_irl' => 'nullable|url',
+            // 'thumbnail' => 'nullable|image|max:2048',
+            // 'is_featured' => 'boolean',
+            // 'extra_info' => 'nullable|string',
+            // 'focus_keyphrase' => 'nullable|string|max:255',
+            // 'seo_title' => 'nullable|string|max:255',
+            // 'meta_description' => 'nullable|string|max:255',
         ]);
 
         if ($request->hasFile('thumbnail')) {

@@ -7,7 +7,7 @@ import AppLayout from '@/layouts/app-layout';
 import { toastDirection } from '@/lib/utils/Constants';
 import { BreadcrumbItem } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
-import { FormEventHandler, useEffect } from 'react';
+import { FormEventHandler } from 'react';
 import toast from 'react-hot-toast';
 import Select from 'react-select';
 
@@ -49,7 +49,7 @@ export default function Edit({ stores, tags, categories, coupon }: EditProps) {
         coupon_type: coupon.coupon_type || '',
         code: coupon.code || '',
         coupon_url: coupon.coupon_url || '',
-        expires: coupon.expires || '',
+        expires: coupon.expires,
         featured_image: null as File | null,
         is_exclusive: coupon.is_exclusive || false,
         is_featured: coupon.is_featured || false,
@@ -82,15 +82,15 @@ export default function Edit({ stores, tags, categories, coupon }: EditProps) {
 
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        const formData = new FormData();
 
+        const formData = new FormData();
         formData.append('_method', 'PUT');
         formData.append('title', data.title);
         formData.append('long_desc', data.long_desc);
         formData.append('coupon_type', data.coupon_type);
         formData.append('code', data.code);
         formData.append('coupon_url', data.coupon_url);
-        formData.append('expires', data.expires);
+        formData.append('expires', data.expires || '');
         formData.append('is_exclusive', data.is_exclusive ? '1' : '0');
         formData.append('is_featured', data.is_featured ? '1' : '0');
         formData.append('is_verified', data.is_verified ? '1' : '0');
@@ -115,8 +115,6 @@ export default function Edit({ stores, tags, categories, coupon }: EditProps) {
             onError: (errors) => Object.values(errors).forEach((msg) => toast.error(msg, { position: toastDirection })),
         });
     };
-
-
 
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Coupons', href: '/admin/coupons/' },
