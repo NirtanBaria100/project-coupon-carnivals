@@ -32,14 +32,7 @@ const Footer = () => {
                         >
                             <FaFacebookF className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
                         </a>
-                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"
-                            className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
-                            style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-twitter-hover)'}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-icon-bg)'}
-                        >
-                            <FaTwitter className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
-                        </a>
+
                         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
                             className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
                             style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
@@ -48,38 +41,29 @@ const Footer = () => {
                         >
                             <FaInstagram className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
                         </a>
-                        <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" aria-label="Telegram"
-                            className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
-                            style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-telegram-hover)'}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-icon-bg)'}
-                        >
-                            <FaTelegramPlane className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
-                        </a>
+
                     </div>
                 </div>
 
                 {/* Amazing Discounts Column (No change requested) */}
                 <div>
                     {/* Heading: pure white */}
-                    <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>Amazing Discounts</h3>
+                    <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>Categories </h3>
                     <ul className="space-y-3">
-                        {amazing_discount.map((discount) => {
-                            return (
-                                <li key={discount.coupon_url}>
-                                    <a
-                                        href={discount.coupon_url}
-                                        target="_blank"
-                                        className="text-sm transition-colors duration-300"
-                                        style={{ color: 'var(--footer-text-secondary)' }}
-                                        onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--footer-link-hover)')}
-                                        onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--footer-text-secondary)')}
-                                    >
-                                        {discount.title}
-                                    </a>
-                                </li>
-                            );
-                        })}
+
+                                {/* // <li>
+                                //     <a
+                                //         href={discount.coupon_url}
+                                //         target="_blank"
+                                //         className="text-sm transition-colors duration-300"
+                                //         style={{ color: 'var(--footer-text-secondary)' }}
+                                //         onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--footer-link-hover)')}
+                                //         onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--footer-text-secondary)')}
+                                //     >
+                                //         {discount.title}
+                                //     </a>
+                                // </li> */}
+
                     </ul>
 
                 </div>

@@ -12,8 +12,10 @@ class HomeController extends Controller
 
     public function Index()
     {
-        $featuredCoupons = Coupon::where(['is_featured' => 1, 'is_published' => 1])->latest()->limit(10)->get();
-        $similarStores = Store::latest()->whereNot('is_featured', 1)->select(['name', 'slug', 'id'])->limit(5)->get();
+        $featuredCoupons = Coupon::where(['is_featured' => 1, 'is_published' => 1])->latest()->with('stores', function($query){
+            $query->first();
+        })->limit(30)->get();
+        $similarStores = Store::latest()->whereNot('is_featured', 1)->select(['name', 'slug', 'id'])->limit(8)->get();
         $blogs = Blog::latest()->where('is_published', 1)->limit(6)->get();
         $blogs->transform(function ($query) {
             $query->title = \Str::limit($query->title, 80, '...');

@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 // Assuming ChevronDownIcon comes from a library like @heroicons/react
 // If not, you'll need to provide its SVG or import it from wherever it's defined.
 import { ChevronDownIcon } from '@heroicons/react/24/solid'; // Adjust import path if needed
+import { Link } from '@inertiajs/react';
 
 const OfferCard = ({
     featured_image,
@@ -15,12 +16,17 @@ const OfferCard = ({
     expires, // Replaces endDate
     coupon_url, // The URL to visit for the offer
     storeName, // Replaces default "The Body Shop"
+    store_slug,
+    affiliate_url,
+    store,
+    type = 'store',
 }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [copyStatus, setCopyStatus] = useState('');
     const [showTermsMessage, setShowTermsMessage] = useState(false);
 
+    console.log(store_slug);
     // Use 'code' as offerValue for consistency with original modal logic
     const offerValue = code;
 
@@ -36,7 +42,6 @@ const OfferCard = ({
                 setCopyStatus('Failed to copy!');
             });
     };
-
     const handleViewTermsClick = () => {
         setShowTermsMessage((prev) => !prev);
     };
@@ -51,10 +56,7 @@ const OfferCard = ({
 
             // Open the offer URL in a new tab
             // This uses coupon_url from the backend props
-            if (coupon_url) {
-                window.open(coupon_url, '_blank');
-            }
-
+            window.open(affiliate_url, '_blank');
             // Always open the modal after opening the link/copying code
             setIsModalOpen(true);
         }
@@ -75,8 +77,8 @@ const OfferCard = ({
     const buttonTextColor = 'text-[var(--offer-button-text)]';
 
     // Default images for fallback
-    const defaultStoreLogo = 'https://via.placeholder.com/100x100?text=Store+Logo';
-    const defaultStoreImage = 'https://via.placeholder.com/150x150?text=Brand+Image';
+    const defaultStoreLogo = store.thumbnail;
+    const defaultStoreImage = store.thumbnail;
 
     // Tags array generation based on backend flags
     const tags = [];
@@ -110,7 +112,6 @@ const OfferCard = ({
                 return 'bg-[var(--tag-default-bg)] text-[var(--tag-default-text)] font-medium';
         }
     };
-
     // Determine if a tag should blink
     const shouldBlink = (tag) => {
         return tag.toLowerCase() === 'verified' || tag.toLowerCase() === 'exclusive' || tag.toLowerCase() === 'featured';
@@ -127,11 +128,14 @@ const OfferCard = ({
                 style={{ borderColor: 'var(--offer-card-border)', backgroundColor: 'var(--offer-card-left-section-bg)' }}
             >
                 <div className="mb-2 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-[var(--offer-card-bg)] shadow-inner">
-                    <img src={featured_image || defaultStoreLogo} alt={`${storeName} Logo`} className="h-full w-full object-contain p-2" />
+                    <Link href={type == 'stores' ? affiliate_url : store_slug}>
+                        <img src={type == 'stores' ?( featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-full w-full object-contain p-2" />
+                    </Link>
                 </div>
-                <p className="text-center text-sm font-semibold" style={{ color: 'var(--offer-card-store-name-text)' }}>
-                    {storeName}
-                </p>
+                <Link href={type == 'stores' ? affiliate_url : store_slug}>
+                    <p className="text-center text-sm font-semibold" style={{ color: 'var(--offer-card-store-name-text)' }}>
+                        {storeName}
+                    </p></Link>
             </div>
 
             {/* Middle Section: Offer Description */}
@@ -305,7 +309,7 @@ const OfferCard = ({
                                 </p>
                                 {/* This button inside the modal directs to the coupon_url */}
                                 <a
-                                    href={coupon_url}
+                                    href={affiliate_url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="focus:ring-opacity-50 mt-6 block w-full rounded-md py-3 text-center font-bold transition-colors duration-200 focus:ring-2 focus:outline-none"

@@ -302,10 +302,10 @@
   --offer-card-expires-text: #4B5563; /* Tailwind gray-600 */
 
   /* Tag Colors - Harmonized to Orange/Black/White Palette (These are more specific offer tags) */
-  --tag-verified-bg: #FFF3EB; /* Very light orange/cream */
-  --tag-verified-text: var(--primary-orange);
-  --tag-exclusive-bg: #EAEAEA; /* Light gray */
-  --tag-exclusive-text: var(--secondary-black);
+  --tag-verified-bg: #b4f8b4; /* Very light orange/cream */
+  --tag-verified-text: rgb(9, 90, 9);
+  --tag-exclusive-bg: #4cc6eb; /* Light gray */
+  --tag-exclusive-text:rgb(0, 102, 255);
   --tag-featured-bg: #FFEAD9; /* Another light orange/cream */
   --tag-featured-text: #E06C00; /* Darker orange */
   --tag-new-bg: #E5E7EB; /* Tailwind gray-200 */

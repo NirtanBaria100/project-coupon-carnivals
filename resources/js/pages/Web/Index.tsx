@@ -15,16 +15,18 @@ interface Coupons {
     is_exclusive: boolean | false,
     is_featured: boolean | false,
     isExpired: boolean | false,
+    stores:[],
     expires: Date,
 }
 interface Stores {
+    id: number | 0,
     name: string | null,
     slug: string | null,
 }
 interface Blogs {
     title: string | null,
     slug: string | null,
-    imageURL: string|null
+    imageURL: string | null
 }
 interface Props {
     featured_coupons: Coupons[],
@@ -32,14 +34,14 @@ interface Props {
     blogs: Blogs[]
 }
 const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
-
+    console.log(featured_coupons);
     const { categories } = usePage().props;
     const popularCategories = categories.filter(e => e.is_popular == true);
     // Carousel state and logic START - MODIFIED
     const [currentSlide, setCurrentSlide] = useState(0);
     const bannerData = [
-        { image: banner1Image }, // Use the imported image
-        { image: banner2Image }, // Use the imported image again for the second slide
+        { image: banner1Image , url : '#' }, // Use the imported image
+        { image: banner2Image , url : '/stores'}, // Use the imported image again for the second slide
     ];
     const totalSlides = bannerData.length;
 
@@ -61,24 +63,19 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
         <WebLayout>
             <div className="pb-12 font-sans" style={{ backgroundColor: 'var(--page-bg)' }}>
                 {/* Banners Slider Section START */}
-                <div className="w-full h-80 sm:h-96 md:h-[450px] lg:h-[550px] xl:h-[650px] overflow-hidden relative shadow-lg mb-10">
+                <div className="w-full h-60 sm:h-96 md:h-[450px] lg:h-[400px] xl:h-[550px] overflow-hidden relative shadow-lg mb-10">
                     <div
                         className="carousel-container h-full flex transition-transform duration-500 ease-in-out"
                         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                     >
                         {bannerData.map((banner, index) => (
                             <div key={index} className="carousel-item h-full w-full flex-shrink-0 relative">
-                                <img src={banner.image} alt={`Banner ${index + 1}`} className="absolute inset-0 w-full h-full object-contain" />
+                                <a href={banner.url}> <img src={banner.image} alt={`Banner ${index + 1}`} className="absolute inset-0 w-full h-full object-contain" /></a>
 
                                 {/* Overlay (now empty as heading, subheading, and button are removed) */}
                                 {/* The overlay div itself remains to maintain the dark overlay effect if 'var(--banner-overlay-bg)' is semi-transparent.
                   If you want to remove the overlay entirely, you can remove this div as well. */}
-                                <div
-                                    className="absolute inset-0" // Removed flex, items-center, justify-center, text-center, p-4, z-10
 
-                                >
-                                    {/* Heading, Subheading, and Button are removed from here */}
-                                </div>
                             </div>
                         ))}
                     </div>
@@ -153,7 +150,8 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                                 <div className="space-y-6">
                                     {/* OfferCard is a separate component, ensure its internal colors are also updated with variables */}
                                     {featured_coupons.length > 0 ? featured_coupons.map((offer, index) => (
-                                        <OfferCard key={index} {...offer} />
+
+                                        <OfferCard key={index} store={offer.stores[0]} affiliate_url={offer.coupon_url || offer.stores[0].affiliate_irl} store_slug={'/store/' + offer?.stores[0].slug || ''} {...offer} />
                                     )) : <span>No Featured Offers Available</span>}
                                 </div>
                             </div>
@@ -161,11 +159,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
 
                         {/* Right Column: Popular Sections */}
                         <div className="lg:col-span-1 space-y-8 mt-8 lg:mt-0">
-                        <h2
-                                className="text-2xl font-extrabold mb-6 border-l-4 pl-4"
-                                style={{ color: 'var(--main-heading-color)', borderColor: 'var(--heading-border-accent)' }}
-                            >
-                                Popular Stores & Categories</h2>
+
                             {/* Popular Stores */}
                             <div
                                 className="p-6 rounded-lg shadow-lg"
@@ -244,7 +238,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                             className="text-2xl font-extrabold mb-8 border-l-4 pl-4"
                             style={{ color: 'var(--main-heading-color)', borderColor: 'var(--heading-border-accent)' }}
                         >
-                            Popular Posts From Our Blog
+                            Savings tips from the blog
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             {blogs.map((blog, i) => (
@@ -259,7 +253,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                                         style={{ backgroundColor: 'var(--blog-placeholder-bg)', color: 'var(--text-muted)' }}
                                     >
                                         {/* Using the same banner1Image for blog placeholders as well, for consistency */}
-                                        <img src={blog.imageURL} alt={`Blog Post ${i + 1}`} className="w-full h-full object-cover" />
+                                        <img src={blog.imageURL || ""} alt={`Blog Post ${i + 1}`} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="p-4">
                                         <p className="text-base font-semibold mb-2" style={{ color: 'var(--blog-card-text)' }}>{blog.title}</p>

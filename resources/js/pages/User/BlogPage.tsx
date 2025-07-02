@@ -108,7 +108,7 @@ const BlogPage = ({ blogs }: Props) => {
                         <div className="relative w-full md:w-1/2">
                             <input
                                 type="text"
-                                placeholder="Search blogs by title ..." {/* Changed placeholder to reflect blogs */}
+                                placeholder="Search blogs by title ..."
                                 className="w-full rounded-md border px-4 py-2 focus:border-transparent focus:ring-2 focus:outline-none"
                                 style={{
                                     backgroundColor: 'var(--form-input-bg)',
@@ -214,11 +214,10 @@ const BlogPage = ({ blogs }: Props) => {
                                     <Link
                                         key={index}
                                         href={link.url || '#'} // Use '#' if url is null (for prev/next when not available)
-                                        className={`relative inline-flex items-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                                            link.active
-                                                ? 'bg-primary-orange border-primary-orange text-neutral-white' // Active link styles
-                                                : 'bg-neutral-white border-card-border text-text-muted' // Inactive link styles
-                                        }`}
+                                        className={`relative inline-flex items-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 ${link.active
+                                            ? 'bg-primary-orange border-primary-orange text-neutral-white' // Active link styles
+                                            : 'bg-neutral-white border-card-border text-text-muted' // Inactive link styles
+                                            }`}
                                         style={{
                                             backgroundColor: link.active ? 'var(--primary-orange)' : 'var(--neutral-white)',
                                             color: link.active ? 'var(--neutral-white)' : 'var(--text-muted)',
