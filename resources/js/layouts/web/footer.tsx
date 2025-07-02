@@ -1,7 +1,7 @@
 // src/components/Footer.jsx
 import { Link, usePage } from '@inertiajs/react';
 import { FaFacebookF, FaTwitter, FaInstagram, FaTelegramPlane } from 'react-icons/fa';
-import PromoCarnivalsIcon from '@/assets/promocarnivals (3).png'; // <--- IMPORTANT: Adjust this path to your actual logo image
+import PromoCarnivalsIcon from '@/assets/white logo.png'; // <--- IMPORTANT: Adjust this path to your actual logo image
 
 const Footer = () => {
     const { amazing_discount } = usePage().props;
@@ -14,8 +14,8 @@ const Footer = () => {
                     {/* Logo text: pure white */}
                     <h3 className="text-2xl font-bold mb-5 flex items-center" style={{ color: 'var(--footer-heading-color)' }}>
                         {/* PromoCarnivals Logo/Icon */}
-                        <img src={PromoCarnivalsIcon} alt="PromoCarnivals Logo" className="h-8 w-8 mr-2" /> {/* Adjust h-8 w-8 as needed */}
-                        PromoCarnivals
+                        <img src={PromoCarnivalsIcon} alt="PromoCarnivals Logo" className="h-20 w-auto mr-2" /> {/* Adjust h-8 w-8 as needed */}
+
                     </h3>
                     {/* Description text: lighter gray */}
                     <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--footer-text-secondary)' }}>
