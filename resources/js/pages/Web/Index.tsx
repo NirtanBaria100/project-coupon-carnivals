@@ -41,7 +41,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const bannerData = [
         { image: banner1Image , url : '#' }, // Use the imported image
-        { image: banner2Image , url : '/categories'}, // Use the imported image again for the second slide
+        { image: banner2Image , url : '/stores'}, // Use the imported image again for the second slide
     ];
     const totalSlides = bannerData.length;
 

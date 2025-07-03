@@ -40,9 +40,10 @@ interface Props {
 const BlogPage = ({ blogs }: Props) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('date'); // 'offers' or 'name'
-
+    console.log(blogs);
     // Use blogs.data for filtering and sorting
     const filteredAndSortedBlogs = useMemo(() => {
+
         let filtered = [...blogs.data]; // Create a copy to avoid mutating the original prop
 
         // Filter by search term

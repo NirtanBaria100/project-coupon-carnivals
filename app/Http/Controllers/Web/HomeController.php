@@ -96,7 +96,7 @@ class HomeController extends Controller
 
     public function AllBlogs($category = null)
     {
-        $blogs = Blog::latest()->where('is_published', 1)->with('author')->with('category')->limit(12);
+        $blogs = Blog::latest()->where('is_published', 1)->with('author')->with('category');
         if (!empty($category)) {
             $blogs->whereHas('category', function ($query) use ($category) {
                 $query->where('slug', $category);
@@ -105,8 +105,8 @@ class HomeController extends Controller
         if (request()->query('search')) {
             $blogs->where('title', 'LIKE', '%' . request()->query('search') . '%');
         }
-        $blogs = $blogs->get();
-        $blogs->transform(function ($query) {
+        $blogs = $blogs->paginate(30);
+        $blogs->getCollection()->transform(function ($query) {
             $query->title = \Str::limit($query->title, 80, '...');
             $query->imageURL = asset($query->image);
             $query->date = Carbon::parse($query->created_at)->format('F d,Y');

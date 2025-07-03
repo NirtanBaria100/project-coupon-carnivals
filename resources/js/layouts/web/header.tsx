@@ -165,23 +165,18 @@ const Header = () => {
                     {/* Right Section: Blog, Summer Sales, Exclusive Vouchers */}
                     {/* Adjusted gap-x here for tighter spacing between the links */}
                     <div className="flex items-center gap-x-2 flex-shrink-0 mt-4 md:mt-0"> {/* Added mt-4 for mobile spacing, removed md:gap-x-4 */}
-                        <Link href="/blog" className="font-medium text-sm whitespace-nowrap transition-colors duration-300" style={{ color: 'var(--text-default)' }}
+                        <Link href="/all/blogs" className="font-medium text-sm whitespace-nowrap transition-colors duration-300" style={{ color: 'var(--text-default)' }}
                             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-accent-hover)'}
                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-default)'}
                         >
                             <span className="inline-block align-middle mr-1" role="img" aria-label="blog-icon">📄</span>Blog
                         </Link>
-                        <Link href="/summer-sales" className="font-medium text-sm whitespace-nowrap transition-colors duration-300" style={{ color: 'var(--text-default)' }}
+
+                        <Link href="/categories" className="font-medium text-sm whitespace-nowrap transition-colors duration-300" style={{ color: 'var(--text-default)' }}
                             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-accent-hover)'}
                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-default)'}
                         >
-                            <span className="inline-block align-middle mr-1" role="img" aria-label="summer-sales-icon">☀️</span>Summer Sales
-                        </Link>
-                        <Link href="/exclusive-vouchers" className="font-medium text-sm whitespace-nowrap transition-colors duration-300" style={{ color: 'var(--text-default)' }}
-                            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-accent-hover)'}
-                            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-default)'}
-                        >
-                            <span className="inline-block align-middle mr-1" role="img" aria-label="exclusive-vouchers-icon">💰</span>Exclusive Vouchers
+                            <span className="inline-block align-middle mr-1" role="img" aria-label="exclusive-vouchers-icon">💰</span>Categories
                         </Link>
 
                         {/* ORIGINAL: SIGNIN with User Icon - UNCOMMENTED AND KEPT AS PER PREVIOUS INSTRUCTION */}
