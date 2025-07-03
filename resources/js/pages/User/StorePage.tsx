@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import OfferCard from '@/components/OfferCard';
 import WebLayout from '@/layouts/web-layout';
-import { Link, useForm } from '@inertiajs/react'; // Import Link for Inertia.js navigation
+import { Link, useForm } from '@inertiajs/react';
 import { toastDirection } from '@/lib/utils/Constants';
 import toast from 'react-hot-toast';
 
@@ -23,7 +23,7 @@ interface Store {
     affiliate_irl: string | null,
     desc: string | null,
     extra_info: string | null,
-    ratings: number | 0
+    ratings: number | 0 // This comes from backend as the store's average rating
     slug: string | null,
 }
 
@@ -54,7 +54,7 @@ interface ExpiredCoupon {
 }
 
 interface Props {
-    stores: Store, // Changed to single Store object based on usage
+    stores: Store,
     similarStores: SimilarStore[],
     coupons: Coupon[],
     expiredCoupons: ExpiredCoupon[],
@@ -69,12 +69,14 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
         store_id: stores.id,
         ratings: stores.ratings
     });
+
     // Load rating from local storage when the component mounts
     useEffect(() => {
+        // Initialize userRating with the store's average rating from props
         setUserRating(stores.ratings);
-    }, [stores.name]);
+    }, [stores.ratings]); // Depend on stores.ratings to update if it changes
 
-    // Handle click on a star
+    // Handle click on a star - this part still sends rating to backend
     const [pendingRating, setPendingRating] = useState<number | null>(null);
 
     useEffect(() => {
@@ -83,7 +85,6 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                 forceFormData: true,
                 onSuccess: () => {
                     toast.success('Thanks for Your Ratings!', { position: toastDirection });
-
                     setPendingRating(null); // reset
                 },
             });
@@ -97,7 +98,8 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
     };
 
     // Helper function to render star icons
-    const renderStars = (currentRating: number, setRating: React.Dispatch<React.SetStateAction<number>>, interactive: boolean = false) => {
+    // The `interactive` flag determines if the stars can be clicked/hovered for user input
+    const renderStars = (currentRating: number, interactive: boolean = false) => {
         const stars = [];
         for (let i = 1; i <= 5; i++) {
             stars.push(
@@ -137,9 +139,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                         <div className="w-32 h-32 flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200">
                             <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-full h-full object-contain p-2" />
                         </div>
-                        {/* Adjusted: Main content area with store name, description, and button */}
                         <div className="flex-grow flex flex-col sm:flex-row items-center sm:items-start sm:justify-between w-full">
-                            {/* Store Name and Description Group */}
                             <div className="text-center sm:text-left sm:flex-grow">
                                 <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
                                     {stores.name}
@@ -149,12 +149,12 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
 
                             {/* Visit Store Button */}
                             {stores.affiliate_irl && (
-                                <div className="mt-4 sm:mt-0 sm:ml-6 flex-shrink-0"> {/* Adjusted margin-left for more space */}
+                                <div className="mt-4 sm:mt-0 sm:ml-6 flex-shrink-0">
                                     <a
                                         href={stores.affiliate_irl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center font-bold py-3 px-8 rounded-md transition-colors duration-200 text-base min-w-[150px]" /* Increased padding, text size, and added min-width */
+                                        className="inline-flex items-center justify-center font-bold py-3 px-8 rounded-md transition-colors duration-200 text-base min-w-[150px]"
                                         style={{ backgroundColor: 'var(--primary-orange)', color: 'var(--neutral-white)', margin: '35px' }}
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--offer-button-hover-bg)'}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--primary-orange)'}
@@ -198,10 +198,11 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">Rate {stores?.name}</h3>
                                 <div className="flex justify-center mb-2">
-                                    {renderStars(userRating, setUserRating, true)}
+                                    {renderStars(userRating, true)} {/* Pass true to make stars interactive */}
                                 </div>
                                 <p className="text-gray-500 text-sm mt-1 text-center">
-                                    {userRating > 0 ? `User ratings: ${userRating}.0` : 'Click stars to rate!'}
+                                    {/* Static message for number of ratings */}
+                                    <span className="font-semibold text-gray-700">2,500</span> people rated this store!
                                 </p>
                             </div>
 
