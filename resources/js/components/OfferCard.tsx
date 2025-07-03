@@ -83,13 +83,13 @@ const OfferCard = ({
     // Tags array generation based on backend flags
     const tags = [];
     if (is_verified) {
-        tags.push('verified');
+        tags.push('Verified');
     }
     if (is_exclusive) {
-        tags.push('exclusive');
+        tags.push('Exclusive');
     }
     if (is_featured) {
-        tags.push('featured');
+        tags.push('Featured');
     }
 
     // Get partial code for the scratched effect
@@ -147,7 +147,7 @@ const OfferCard = ({
                     className={`text-sm ${isExpired ? 'font-bold' : ''}`}
                     style={{ color: isExpired ? 'var(--offer-card-expired-text)' : 'var(--offer-card-expires-text)' }}
                 >
-                    {isExpired ? 'Expired' : `Expires: ${expires == null ? 'N/A' : expires}`}
+                    {isExpired ? 'Expired' : ` ${expires == null ? '' : 'Expires: '+expires}`}
                 </p>
                 <div className="mt-3 flex flex-wrap justify-center gap-2 md:justify-start">
                     {tags.map((tag, index) => (
@@ -215,12 +215,12 @@ const OfferCard = ({
                         onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--terms-link-hover-text)')}
                         onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--terms-link-text)')}
                     >
-                        View Terms & Conditions
+                        Details
                         <ChevronDownIcon className={`ml-1 h-3 w-3 transition-transform duration-200 ${showTermsMessage ? 'rotate-180' : ''}`} />
                     </button>
                     {showTermsMessage && (
                         <p className="mt-1 text-xs italic transition-opacity duration-300 ease-in-out" style={{ color: 'var(--terms-message-text)' }}>
-                            Terms & conditions apply.
+                            {coupon_type == 'code' ? 'Click "Show Code" To Activate This Deal. Exclusions May Apply' : 'No Promo Code Needed. Click "Get Offer" To Activate This Deal. Exclusions May Apply'}
                         </p>
                     )}
                 </div>
@@ -331,13 +331,10 @@ const OfferCard = ({
                             className="mt-6 border-t pt-4 text-sm"
                             style={{ borderColor: 'var(--modal-terms-border)', color: 'var(--modal-terms-text)' }}
                         >
-                            <p className="mb-2 font-semibold">Full Terms & Conditions:</p>
+                            <p className="mb-2 font-semibold">Details:</p>
                             <ul className="list-inside list-disc space-y-1 text-xs">
-                                <li>Offer valid until {expires}.</li>
-                                <li>Limited to one use per customer.</li>
-                                <li>Cannot be combined with other promotions.</li>
-                                <li>Applicable to online purchases only.</li>
-                                <li>See store for more details.</li>
+                                <li> {coupon_type == 'code' ? 'Click "Show Code" To Activate This Deal. Exclusions May Apply' : 'No Promo Code Needed. Click "Get Offer" To Activate This Deal. Exclusions May Apply'}</li>
+
                             </ul>
                         </div>
                     </div>

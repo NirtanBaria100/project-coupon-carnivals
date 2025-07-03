@@ -11,6 +11,10 @@ interface SimilarStore {
     name: string | null,
     slug: string | null,
 }
+interface FeaturedStore {
+    name: string | null,
+    slug: string | null,
+}
 
 interface Store {
     id: number | null,
@@ -53,10 +57,11 @@ interface Props {
     stores: Store, // Changed to single Store object based on usage
     similarStores: SimilarStore[],
     coupons: Coupon[],
-    expiredCoupons: ExpiredCoupon[]
+    expiredCoupons: ExpiredCoupon[],
+    featuredStores: FeaturedStore[]
 }
 
-const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) => {
+const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredStores }: Props) => {
 
     const [userRating, setUserRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
@@ -166,7 +171,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) =>
                         {/* Left Column: Offers List */}
                         <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8 pb-8">
                             {coupons.length > 0 ? coupons.map((offer, index) => (
-                                <OfferCard key={index} store_slug={'/store/'+stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} />
+                                <OfferCard key={index} store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} />
                             )) : <span className="text-red-500">No Coupons Available</span>}
                             <p className="text-gray-600 mt-8 mb-4 text-center sm:text-left font-semibold border-b pb-2">
                                 These offers have expired, but may still work
@@ -201,38 +206,42 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores }: Props) =>
                             </div>
 
                             {/* Store Short Descriptions */}
-                            <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-center text-gray-700 text-base h-auto min-h-[100px] border border-gray-200">
+                            {stores.extra_info && <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-center text-gray-700 text-base h-auto min-h-[100px] border border-gray-200">
                                 <p className="text-center">{stores.extra_info || 'No Info Available'}</p>
-                            </div>
+                            </div>}
 
                             {/* Featured Links */}
-                            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                <h3 className="text-xl font-bold text-gray-800 mb-4">Featured Links</h3>
-                                <ul className="list-disc list-inside space-y-2 text-blue-600">
-                                    <li><a href={stores.affiliate_irl || "#"} className="hover:underline" target="_blank" rel="noopener noreferrer">Shop All Products</a></li>
-                                    <li><a href={stores.affiliate_irl || "#"} className="hover:underline" target="_blank" rel="noopener noreferrer">New Arrivals</a></li>
-                                    <li><a href={stores.affiliate_irl || "#"} className="hover:underline" target="_blank" rel="noopener noreferrer">Clearance Sale</a></li>
-                                </ul>
-                            </div>
-
-                            {/* Same Category Stores */}
-                            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                <h3 className="text-xl font-bold text-gray-800 mb-4">More Stores Like {stores?.name}</h3>
-                                <ul className="list-disc list-inside space-y-2 text-blue-600">
-                                    {similarStores.length > 0 ? (
-                                        similarStores.map((store, index) => (
+                            {featuredStores.length > 0 && (
+                                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">Featured Links</h3>
+                                    <ul className="list-disc list-inside space-y-2 text-blue-600">
+                                        {featuredStores.map((store, index) => (
                                             <li key={index}>
                                                 <Link href={'/store/' + store.slug} className="hover:underline">
                                                     {store.name ?? "N/A"}
                                                 </Link>
                                             </li>
-                                        ))
-                                    ) : (
-                                        <span className="text-red-500 text-center">No Similar Stores Available</span>
-                                    )}
-                                </ul>
-                                <p className="text-gray-500 text-sm mt-4">{similarStores.length} similar stores in this category.</p>
-                            </div>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {/* Same Category Stores */}
+                            {similarStores.length > 0 && (
+                                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">More Stores Like {stores?.name}</h3>
+                                    <ul className="list-disc list-inside space-y-2 text-blue-600">
+                                        {similarStores.map((store, index) => (
+                                            <li key={index}>
+                                                <Link href={'/store/' + store.slug} className="hover:underline">
+                                                    {store.name ?? "N/A"}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <p className="text-gray-500 text-sm mt-4">{similarStores.length} similar stores in this category.</p>
+                                </div>
+                            )}
                         </div>
                     </div>
 

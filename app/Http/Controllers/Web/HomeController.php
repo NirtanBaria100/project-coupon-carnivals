@@ -15,6 +15,11 @@ class HomeController extends Controller
         $featuredCoupons = Coupon::where(['is_featured' => 1, 'is_published' => 1])->latest()->with('stores', function($query){
             $query->first();
         })->limit(30)->get();
+        $featuredCoupons->transform(function ($query) {
+            $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
+            $query->expires = Carbon::parse($query->expires)->format('F d , Y');
+            return $query;
+        });
         $similarStores = Store::latest()->whereNot('is_featured', 1)->select(['name', 'slug', 'id'])->limit(8)->get();
         $blogs = Blog::latest()->where('is_published', 1)->limit(6)->get();
         $blogs->transform(function ($query) {
@@ -31,8 +36,8 @@ class HomeController extends Controller
     public function StorePage($slug)
     {
         $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl', 'name', 'desc', 'extra_info', 'thumbnail'])->first();
-        $similarStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->limit(5)->get();
-        $store = Store::latest()->where('slug', $slug)->first();
+        $similarStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->limit(8)->get();
+        $featuredStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_featured',1)->limit(8)->get();
         $storeCoupons = \DB::table('coupon_store')->where('store_id', $store->id)->pluck('coupon_id');
         $coupons = Coupon::whereIn('id', $storeCoupons)
             ->where(function ($query) {
@@ -55,7 +60,8 @@ class HomeController extends Controller
             'stores' => $store,
             'coupons' => $coupons,
             'expiredCoupons' => $expiredCoupons,
-            'similarStores' => $similarStores
+            'similarStores' => $similarStores,
+            'featuredStores'=> $featuredStores,
         ]);
     }
     public function CategoryPage($slug)
