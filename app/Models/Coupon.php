@@ -30,7 +30,6 @@ class Coupon extends Model
     {
         return $this->belongsToMany(Store::class);
     }
-
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
