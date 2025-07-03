@@ -129,7 +129,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                     <nav className="text-sm text-gray-600 mb-6">
                         <Link href="/" className="hover:underline">Home </Link> &gt;
                         <Link href="/stores" className="hover:underline ml-1">Stores</Link> &gt;
-                        <span className="ml-1 font-semibold">{stores.name} Promo Codes</span>
+                        <span className="ml-1 font-semibold">{stores.name}</span>
                     </nav>
 
                     {/* Store Header Section */}
