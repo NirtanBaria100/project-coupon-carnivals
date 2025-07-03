@@ -94,19 +94,16 @@ const BlogPage = ({ blogs }: Props) => {
                         style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
                     >
                         <h1 className="mb-3 text-3xl font-extrabold leading-tight sm:text-4xl" style={{ color: 'var(--main-heading-color)' }}>
-                            Our Partner Stores {/* This still says "Our Partner Stores", should it be "Our Blogs"? */}
+                            Our Featured Posts {/* This still says "Our Partner Stores", should it be "Our Blogs"? */}
                         </h1>
                         <p className="text-base sm:text-lg" style={{ color: 'var(--text-muted)' }}>
-                            Discover thousands of stores offering amazing deals, coupons, and discounts. {/* This also implies stores, not blogs */}
+                            Discover thousands of tips and blogs . {/* This also implies stores, not blogs */}
                         </p>
-                    </div>
-
-                    {/* Filters and Search Bar */}
-                    <div
-                        className="mb-8 flex flex-col items-center justify-between gap-4 rounded-lg border p-5 shadow-md md:flex-row"
+                        <div
+                        className="mb-0 flex flex-col items-center justify-between gap-4 rounded-lg  p-2  md:flex-row"
                         style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
                     >
-                        <div className="relative w-full md:w-1/2">
+                        <div className="relative w-full ">
                             <input
                                 type="text"
                                 placeholder="Search blogs by title ..."
@@ -137,35 +134,11 @@ const BlogPage = ({ blogs }: Props) => {
                             </button>
                         </div>
 
-                        <div className="flex w-full flex-col gap-4 sm:flex-row md:w-auto">
-                            {/* Sort By */}
-                            <div className="relative w-full sm:w-auto">
-                                <select
-                                    className="block w-full appearance-none rounded-md border px-4 py-2 pr-8 leading-tight focus:bg-white focus:outline-none focus:ring-2"
-                                    style={{
-                                        backgroundColor: 'var(--form-input-bg)',
-                                        borderColor: 'var(--form-input-border)',
-                                        color: 'var(--form-input-text)',
-                                    }}
-                                    onFocus={(e) => (e.currentTarget.style.borderColor = 'var(--primary-orange)')}
-                                    onBlur={(e) => (e.currentTarget.style.borderColor = 'var(--form-input-border)')}
-                                    value={sortOrder}
-                                    onChange={(e) => setSortOrder(e.target.value)}
-                                >
-                                    <option value="date">Sort by Date (Newest)</option> {/* Added date sort option */}
-                                    <option value="name">Sort by Name (A-Z)</option>
-                                </select>
-                                <div
-                                    className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2"
-                                    style={{ color: 'var(--form-input-text)' }}
-                                >
-                                    <svg className="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+                    </div>
+
+                    {/* Filters and Search Bar */}
+
 
                     {/* Blog Posts Grid */}
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
