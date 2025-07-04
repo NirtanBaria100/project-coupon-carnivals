@@ -17,16 +17,15 @@ const OfferCard = ({
     store_slug,
     affiliate_url,
     store,
-    type = 'store',
+    type,
 }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [copyStatus, setCopyStatus] = useState('');
     const [showTermsMessage, setShowTermsMessage] = useState(false);
 
-    console.log(store_slug);
     const offerValue = code;
-
+    const RedirectionURL = type == 'home' ? store_slug : affiliate_url;
     const handleCopyCode = () => {
         navigator.clipboard
             .writeText(offerValue)
@@ -51,7 +50,7 @@ const OfferCard = ({
                 // No need to copy here directly. The modal will handle the copy button.
                 // We just need to ensure the modal opens.
             }
-            window.open(affiliate_url, '_blank');
+            window.open(RedirectionURL, '_blank');
             setIsModalOpen(true);
         }
     };
@@ -79,7 +78,7 @@ const OfferCard = ({
     if (is_featured) {
         tags.push('Featured');
     }
-
+    console.log(type)
     const getPartialCode = useCallback(() => {
         return coupon_type === 'code' && offerValue ? offerValue.substring(0, 3).toUpperCase() : '---';
     }, [coupon_type, offerValue]);
@@ -124,7 +123,7 @@ const OfferCard = ({
                     add onClick={handleOfferAction}. For now, keeping original <Link> behavior for store name itself.
                     If the request specifically means the store logo/thumbnail that's part of the offer card
                     should open the modal, then the above change for the `<img>` parent is correct.) */}
-                 <Link href={type == 'stores' ? affiliate_url : store_slug}>
+                <Link href={RedirectionURL}>
                     <p className="text-center text-sm font-semibold" style={{ color: 'var(--offer-card-store-name-text)' }}>
                         {storeName}
                     </p>
@@ -141,7 +140,7 @@ const OfferCard = ({
                     className={`text-sm ${isExpired ? 'font-bold' : ''}`}
                     style={{ color: isExpired ? 'var(--offer-card-expired-text)' : 'var(--offer-card-expires-text)' }}
                 >
-                    {isExpired ? 'Expired' : ` ${expires == null ? '' : 'Expires: '+expires}`}
+                    {isExpired ? 'Expired' : ` ${expires == null ? '' : 'Expires: ' + expires}`}
                 </p>
                 <div className="mt-3 flex flex-wrap justify-center gap-2 md:justify-start">
                     {tags.map((tag, index) => (
