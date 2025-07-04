@@ -17,7 +17,9 @@ class HomeController extends Controller
         })->limit(30)->get();
         $featuredCoupons->transform(function ($query) {
             $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
-            $query->expires = Carbon::parse($query->expires)->format('F d , Y');
+            if(!empty($query->expires)){
+                  $query->expires = Carbon::parse($query->expires)->format('F d , Y');
+            }
             return $query;
         });
         $similarStores = Store::latest()->whereNot('is_featured', 1)->select(['name', 'slug', 'id'])->limit(8)->get();
@@ -39,17 +41,19 @@ class HomeController extends Controller
         $similarStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->limit(8)->get();
         $featuredStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_featured',1)->limit(8)->get();
         $storeCoupons = \DB::table('coupon_store')->where('store_id', $store->id)->pluck('coupon_id');
-        $coupons = Coupon::whereIn('id', $storeCoupons)
+        $coupons = Coupon::whereIn('id', $storeCoupons)->with('stores')
             ->where(function ($query) {
                 $query->whereDate('expires', '>', Carbon::now())
                     ->orWhereNull('expires');
             })
             ->get();
 
-        $expiredCoupons = Coupon::whereIn('id', $storeCoupons)->whereDate('expires', '<=', Carbon::now())->get();
+        $expiredCoupons = Coupon::whereIn('id', $storeCoupons)->with('stores')->whereDate('expires', '<=', Carbon::now())->get();
         $coupons->transform(function ($query) {
-            $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
-            $query->expires = Carbon::parse($query->expires)->format('F d , Y');
+           $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
+            if(!empty($query->expires)){
+                  $query->expires = Carbon::parse($query->expires)->format('F d , Y');
+            }
             return $query;
         });
         if (!empty($store)) {
