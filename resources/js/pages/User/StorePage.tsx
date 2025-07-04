@@ -25,6 +25,7 @@ interface Store {
     extra_info: string | null,
     ratings: number | 0 // This comes from backend as the store's average rating
     slug: string | null,
+    home_url : string | null,
 }
 
 interface Coupon {

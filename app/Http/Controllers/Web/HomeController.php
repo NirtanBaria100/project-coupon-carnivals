@@ -37,7 +37,7 @@ class HomeController extends Controller
     }
     public function StorePage($slug)
     {
-        $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl', 'name', 'desc', 'extra_info', 'thumbnail'])->first();
+        $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl','home_url', 'name', 'desc', 'extra_info', 'thumbnail'])->first();
         $similarStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->limit(8)->get();
         $featuredStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_featured',1)->limit(8)->get();
         $storeCoupons = \DB::table('coupon_store')->where('store_id', $store->id)->pluck('coupon_id');
