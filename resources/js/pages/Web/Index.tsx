@@ -10,6 +10,7 @@ interface Coupons {
     title: string | null,
     coupon_type: string | null,
     code: string | null,
+    id : number | 0,
     coupon_url: string | null,
     is_verified: boolean | false,
     is_exclusive: boolean | false,
@@ -34,7 +35,6 @@ interface Props {
     blogs: Blogs[]
 }
 const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
-    console.log(featured_coupons);
     const { categories } = usePage().props;
     const popularCategories = categories.filter(e => e.is_popular == true);
     // Carousel state and logic START - MODIFIED
@@ -151,7 +151,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                                     {/* OfferCard is a separate component, ensure its internal colors are also updated with variables */}
                                     {featured_coupons.length > 0 ? featured_coupons.map((offer, index) => (
 
-                                        <OfferCard key={index} type="home" storeName={offer.stores[0]?.name} store={offer.stores[0]} affiliate_url={offer.coupon_url || offer.stores[0].affiliate_irl} store_slug={'/store/' + offer?.stores[0].slug || ''} {...offer} />
+                                        <OfferCard key={index} coupon_id={offer.id} type="home" storeName={offer.stores[0]?.name} store={offer.stores[0]} affiliate_url={offer.coupon_url || offer.stores[0].affiliate_irl} store_slug={'/store/' + offer?.stores[0].slug || ''} {...offer} />
                                     )) : <span>No Featured Offers Available</span>}
                                 </div>
                             </div>

@@ -37,6 +37,7 @@ interface Coupon {
     coupon_url: string | null,
     is_verified: boolean | false,
     is_exclusive: boolean | false,
+    id:number | false,
     is_featured: boolean | false,
     isExpired: boolean | false,
     expires: Date,
@@ -67,11 +68,11 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
 
     const [userRating, setUserRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
+
     const { data, post, setData, reset } = useForm({
         store_id: stores.id,
         ratings: stores.ratings
     });
-
     // Load rating from local storage when the component mounts
     useEffect(() => {
         // Initialize userRating with the store's average rating from props
@@ -175,13 +176,13 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                         {/* Left Column: Offers List */}
                         <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8 pb-8 storepage_leftcoloffers">
                             {coupons.length > 0 ? coupons.map((offer, index) => (
-                                <OfferCard key={index} type="stores" store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} />
+                                <OfferCard key={index}   coupon_id={offer.id} type="stores" store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} />
                             )) : <span className="text-red-500">No Coupons Available</span>}
                             {expiredCoupons.length > 0 ? <><p className="text-gray-600 mt-8 mb-4 text-center sm:text-left font-semibold border-b pb-2">
                                 These offers have expired, but may still work
                             </p> {expiredCoupons.map((offer, index) => (
 
-                                <OfferCard key={index} store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} type={"stores"} />
+                                <OfferCard key={index} coupon_id={offer.id} store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} type={"stores"} />
                             ))}</> : <>
                                <hr /> <br /> <span className="text-red-500">No Expired Coupons Available</span>
                             </>

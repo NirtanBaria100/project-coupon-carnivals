@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { Link } from '@inertiajs/react';
 
@@ -10,6 +10,7 @@ const OfferCard = ({
     isExpired,
     is_verified,
     is_featured,
+    coupon_id,
     is_exclusive,
     expires,
     coupon_url,
@@ -25,7 +26,7 @@ const OfferCard = ({
     const [showTermsMessage, setShowTermsMessage] = useState(false);
 
     const offerValue = code;
-    const RedirectionURL = type == 'home' ? store_slug :  (affiliate_url || store.home_url );
+    const RedirectionURL = type == 'home' ? store_slug : (affiliate_url || store.home_url);
     const handleCopyCode = () => {
         navigator.clipboard
             .writeText(offerValue)
@@ -47,14 +48,27 @@ const OfferCard = ({
     const handleOfferAction = () => {
         if (!isExpired) {
             if (coupon_type === 'code' && offerValue) {
-                // No need to copy here directly. The modal will handle the copy button.
-                // We just need to ensure the modal opens.
+                // Modal handles copy
             }
-            window.open(RedirectionURL, '_blank');
-            setIsModalOpen(true);
+
+            const currentURL = window.location.href;
+            const baseURL = currentURL.split("#")[0];
+            const redirectCurrent = baseURL + "#" + coupon_id;
+
+            history.replaceState(null, "", redirectCurrent);
+
+            window.open(redirectCurrent, '_blank');
+
+            window.location.href = RedirectionURL;
         }
     };
 
+    useEffect(() => {
+        const hash = window.location.hash.substring(1); // remove '#'
+        if (hash && parseInt(hash) === coupon_id) {
+            setIsModalOpen(true);
+        }
+    }, [])
     const handleBackdropClick = (e) => {
         if (e.target === e.currentTarget) {
             setIsModalOpen(false);
@@ -114,9 +128,9 @@ const OfferCard = ({
                 style={{ borderColor: 'var(--offer-card-border)', backgroundColor: 'var(--offer-card-left-section-bg)' }}
             >
                 <div className="mb-2 flex items-center justify-center overflow-hidden bg-[var(--offer-card-bg)] shadow-inner">
-                    <a href={type == 'stores' ? (affiliate_url || store.home_url) : store_slug} target='_blank'>
-                        <img src={type == 'stores' ?( featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-30 w-full object-contain p-2" />
-                    </a>
+                    <button onClick={handleOfferAction}>
+                        <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-30 w-full object-contain p-2" />
+                    </button>
                 </div>
 
             </div>
@@ -228,19 +242,19 @@ const OfferCard = ({
                         </div>
 
                         <div className="mb-6 flex flex-col items-center">
-                            <a href={RedirectionURL} target='_blank'>
+                            <button onClick={handleOfferAction}>
                                 <img
                                     src={featured_image || defaultStoreImage}
                                     alt={storeName}
                                     className="mb-4 border-2 shadow-sm w-full h-40"
                                     style={{ borderColor: 'var(--modal-logo-border)' }}
-                                /></a>
-                            <a href={RedirectionURL} target='_blank'>
+                                /></button>
+                            <button onClick={handleOfferAction}>
                                 <h3 className="mb-1 text-xl font-semibold sm:text-2xl" style={{ color: 'var(--modal-store-name-text)' }}>
                                     {storeName}
                                 </h3>
-                            </a>
-                            <p className="text-center text-base leading-snug" style={{ color: 'var(--modal-offer-text-description)' }}>
+                            </button>
+                            <p onClick={handleOfferAction} className="text-center text-base leading-snug" style={{ color: 'var(--modal-offer-text-description)' }}>
                                 {title}
                             </p>
                         </div>
