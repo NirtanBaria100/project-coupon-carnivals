@@ -117,7 +117,7 @@ const Header = () => {
                 {/* Top Row: Logo, Search Bar, Blog Link, Summer Sales, Exclusive Vouchers */}
                 <div className="flex flex-wrap items-center justify-between gap-y-4 md:flex-nowrap pb-4 border-b border-gray-200 mb-4">
                     {/* Left: Logo - Always order-1 (first) */}
-                    <Link href="/" className="flex-shrink-0 order-1 pr-4 md:pr-0">
+                    <Link href="/" className="flex-shrink-0 pr-4 md:pr-0">
                         <img
                             src={promocarnivals2Logo}
                             alt="Site Logo"
@@ -126,7 +126,7 @@ const Header = () => {
                     </Link>
 
                     {/* Search Bar */}
-                    <div className="relative w-full order-last md:order-2 md:w-auto md:flex-grow md:mx-4 mt-4 md:mt-0">
+                    <div className="relative w-full  md:w-auto md:flex-grow md:mx-4 mt-4 md:mt-0">
                         <input
                             ref={searchInputRef}
                             type="text"
@@ -189,11 +189,12 @@ const Header = () => {
                                 )}
                             </div>
                         )}
+
                     </div>
 
                     {/* Right Section: Blog, Summer Sales, Exclusive Vouchers */}
                     {/* Adjusted gap-x here for tighter spacing between the links */}
-                    <div className="blogandcatlink flex items-center gap-x-2 flex-shrink-0 mt-4 md:mt-0"> {/* Added mt-4 for mobile spacing, removed md:gap-x-4 */}
+                    <div className="blogandcatlink flex items-center gap-x-2  mt-4 md:mt-0"> {/* Added mt-4 for mobile spacing, removed md:gap-x-4 */}
                         <Link href="/all/blogs" className="font-medium text-sm whitespace-nowrap transition-colors duration-300" style={{ color: 'var(--text-default)' }}
                             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-accent-hover)'}
                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-default)'}

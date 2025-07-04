@@ -115,19 +115,15 @@ const OfferCard = ({
             >
                 <div className="mb-2 flex items-center justify-center overflow-hidden bg-[var(--offer-card-bg)] shadow-inner">
                     <a href={type == 'stores' ? (affiliate_url || store.home_url) : store_slug} target='_blank'>
-                        <img src={type == 'stores' ?( featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-full w-full object-contain p-2" />
+                        <img src={type == 'stores' ?( featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-30 w-full object-contain p-2" />
                     </a>
                 </div>
 
             </div>
 
-            {/* Middle Section: Offer Description */}
-            <div className="flex flex-grow flex-col justify-center p-5 text-center md:p-6 mid_secoffer_desc">
-
-            </div>
 
             {/* Middle Section: Offer Description */}
-            <div className="flex flex-grow flex-col justify-center p-5 text-center md:p-6 ">
+            <div className="flex flex-grow flex-col  justify-start p-5 text-start md:p-6 ">
                 {/* Heading Click Handler */}
                 <button onClick={handleOfferAction} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
                     {title}
@@ -157,16 +153,17 @@ const OfferCard = ({
                         onClick={handleOfferAction}
                     >
                         <button
+
                             type="button"
                             disabled={isExpired}
-                            className={`absolute inset-0 h-full w-full ${buttonBgColor} ${buttonTextColor} flex items-center justify-center rounded-md font-extrabold transition-transform duration-300 ease-in-out ${isHovered && !isExpired ? '-translate-x-[60px]' : 'translate-x-0'} ${isExpired ? 'opacity-60' : ''} z-20`}
+                            className={`absolute inset-0 h-full w-full ${buttonBgColor} ${buttonTextColor} flex  items-center justify-center rounded-md font-extrabold transition-transform duration-300 ease-in-out ${isHovered && !isExpired ? '-translate-x-[60px]' : '-translate-x-[25px]'} ${isExpired ? 'opacity-60' : ''} z-20`}
                             onMouseEnter={(e) => !isExpired && (e.currentTarget.style.backgroundColor = 'var(--offer-button-hover-bg)')}
                             onMouseLeave={(e) => !isExpired && (e.currentTarget.style.backgroundColor = 'var(--offer-button-bg)')}
                         >
-                            <span className="px-2 text-center text-sm tracking-wider whitespace-nowrap uppercase">{buttonText}</span>
+                            <span className="px-2 text-end text-sm tracking-wider whitespace-nowrap uppercase" >{buttonText}</span>
                         </button>
                         <div
-                            className={`absolute top-0 right-0 flex h-full w-[60px] items-center justify-center rounded-r-md text-lg font-extrabold transition-transform duration-300 ease-in-out ${isHovered && !isExpired ? 'translate-x-0' : 'translate-x-full'} ${isExpired ? 'translate-x-0 opacity-100' : ''} z-10`}
+                            className={`absolute top-0 right-0 flex h-full w-[60px] items-center justify-center rounded-r-md text-lg font-extrabold transition-transform duration-300 ease-in-out ${isHovered && !isExpired ? 'translate-x-0' : 'translate-x-0'} ${isExpired ? 'translate-x-0 opacity-100' : ''} z-10`}
                             style={{ backgroundColor: 'var(--offer-code-scratch-bg)', color: 'var(--offer-code-scratch-text)' }}
                         >
                             <span className="whitespace-nowrap">{getPartialCode()}</span>
@@ -235,7 +232,7 @@ const OfferCard = ({
                                 <img
                                     src={featured_image || defaultStoreImage}
                                     alt={storeName}
-                                    className="mb-4 border-2 shadow-sm"
+                                    className="mb-4 border-2 shadow-sm w-full h-40"
                                     style={{ borderColor: 'var(--modal-logo-border)' }}
                                 /></a>
                             <a href={RedirectionURL} target='_blank'>

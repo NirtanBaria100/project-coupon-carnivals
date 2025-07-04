@@ -18,6 +18,7 @@ const Footer = () => {
 
     return (
         // Set footer background to black using CSS variable
+       
         <footer className="py-10 mt-auto font-sans footer_site" style={{ backgroundColor: 'var(--footer-bg)', color: 'var(--footer-text-primary)' }}>
             <div className="container mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6">
                 {/* Company Info */}
@@ -62,7 +63,7 @@ const Footer = () => {
                         {footerCategories.map((category) => ( // Map over the new static footerCategories array
                             <li key={category.slug}>
                                 <Link
-                                    href={`/category/${category.slug}`} 
+                                    href={`/category/${category.slug}`}
                                     className="text-sm transition-colors duration-300"
                                     style={{ color: 'var(--footer-text-secondary)' }}
                                     onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--footer-link-hover)')}

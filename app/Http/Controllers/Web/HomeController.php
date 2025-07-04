@@ -38,17 +38,18 @@ class HomeController extends Controller
     public function StorePage($slug)
     {
         $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl','home_url', 'name', 'desc', 'extra_info', 'thumbnail'])->first();
+        $store->totalRatings = count($store->storeRatings->where('is_approved')) ?? 0 ;
         $similarStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->limit(8)->get();
         $featuredStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_featured',1)->limit(8)->get();
         $storeCoupons = \DB::table('coupon_store')->where('store_id', $store->id)->pluck('coupon_id');
-        $coupons = Coupon::whereIn('id', $storeCoupons)->with('stores')
+        $coupons = Coupon::whereIn('id', $storeCoupons)->where('is_published', 1)->with('stores')
             ->where(function ($query) {
                 $query->whereDate('expires', '>', Carbon::now())
                     ->orWhereNull('expires');
             })
             ->get();
 
-        $expiredCoupons = Coupon::whereIn('id', $storeCoupons)->with('stores')->whereDate('expires', '<=', Carbon::now())->get();
+        $expiredCoupons = Coupon::whereIn('id', $storeCoupons)->with('stores')->where('is_published', 1)->whereDate('expires', '<=', Carbon::now())->get();
         $coupons->transform(function ($query) {
            $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
             if(!empty($query->expires)){
@@ -74,7 +75,13 @@ class HomeController extends Controller
         $coupons = [];
         if (!empty($category)) {
             $categoryCoupons = \DB::table('category_coupon')->where('category_id', $category->id)->pluck('coupon_id');
-            $coupons = Coupon::whereIn('id', $categoryCoupons)->with('stores')->whereDate('expires', '>', Carbon::now())->get();
+            $coupons = Coupon::whereIn('id', $categoryCoupons)->where('is_published', 1)->with('stores')->whereDate('expires', '>', Carbon::now())->get();
+            $coupons->transform(function ($query) {   $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
+            if(!empty($query->expires)){
+                  $query->expires = Carbon::parse($query->expires)->format('F d , Y');
+                }
+                return $query;
+            });
         }
 
         return Inertia::render("User/CategoryPage", [
@@ -87,7 +94,7 @@ class HomeController extends Controller
     {
         $stores = Store::latest()->get();
         $stores->transform(function ($query) {
-            $query->totalOffers = $query->coupons->count();
+            $query->totalOffers = $query->coupons->where('is_published',1)->count();
             $query->imageURL = asset($query->thumbnail);
             return $query;
         });

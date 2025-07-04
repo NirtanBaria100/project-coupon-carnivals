@@ -18,6 +18,7 @@ interface FeaturedStore {
 
 interface Store {
     id: number | null,
+    totalRatings: number | 0,
     name: string | null,
     thumbnail: string | null,
     affiliate_irl: string | null,
@@ -25,7 +26,7 @@ interface Store {
     extra_info: string | null,
     ratings: number | 0 // This comes from backend as the store's average rating
     slug: string | null,
-    home_url : string | null,
+    home_url: string | null,
 }
 
 interface Coupon {
@@ -136,15 +137,17 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                     </nav>
 
                     {/* Store Header Section */}
-                    <div className="store-thumbnail-div flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md">
+                    <div className="store-thumbnail-div flex flex-col align-items-center sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md">
                         <div className="flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200">
-                            <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-full h-full object-contain p-2" />
+                            <a href={stores.affiliate_irl || "#"}> <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-30 h-30 object-contain p-2" /></a>
                         </div>
                         <div className="flex-grow flex flex-col sm:flex-row items-center sm:items-start sm:justify-between w-full">
                             <div className="text-center sm:text-left sm:flex-grow">
-                                <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
-                                    {stores.name}
-                                </h1>
+                                <a href={stores.affiliate_irl || "#"}>
+                                    <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
+                                        {stores.name}
+                                    </h1>
+                                </a>
                                 <p className="text-base sm:text-xl text-gray-600 mt-2">{stores.desc}</p>
                             </div>
 
@@ -174,13 +177,13 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                             {coupons.length > 0 ? coupons.map((offer, index) => (
                                 <OfferCard key={index} type="stores" store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} />
                             )) : <span className="text-red-500">No Coupons Available</span>}
-                            <p className="text-gray-600 mt-8 mb-4 text-center sm:text-left font-semibold border-b pb-2">
+                            {expiredCoupons.length > 0 ? <><p className="text-gray-600 mt-8 mb-4 text-center sm:text-left font-semibold border-b pb-2">
                                 These offers have expired, but may still work
-                            </p>
-                            {expiredCoupons.length > 0 ? expiredCoupons.map((offer, index) => (
-                                <OfferCard key={index} type="stores" store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer}  type="stores"/>
-                            )) : <>
-                                <span className="text-red-500">No Expired Coupons Available</span>
+                            </p> {expiredCoupons.map((offer, index) => (
+
+                                <OfferCard key={index} store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} type={"stores"} />
+                            ))}</> : <>
+                               <hr /> <br /> <span className="text-red-500">No Expired Coupons Available</span>
                             </>
                             }
                         </div>
@@ -203,7 +206,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                                 </div>
                                 <p className="text-gray-500 text-sm mt-1 text-center">
                                     {/* Static message for number of ratings */}
-                                    <span className="font-semibold text-gray-700">2,500</span> people rated this store!
+                                    <span className="font-semibold text-gray-700">{stores.totalRatings || 0}</span> people rated this store!
                                 </p>
                             </div>
 
@@ -248,13 +251,19 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                     </div>
 
                     {/* Long Description Section */}
-                    <div className="bg-white p-6 rounded-lg shadow-md my-8 border border-gray-200 storepage_longdescsec">
+
+                    {stores.desc ? <div className="bg-white p-6 rounded-lg shadow-md my-8 border border-gray-200 storepage_longdescsec">
                         <h3 className="text-xl font-bold text-gray-800 mb-4">About {stores.name}</h3>
                         <p className="text-gray-700 text-sm leading-relaxed">
                             {stores.desc}
                         </p>
                     </div>
-
+                        : <></>}
+                    <div className="bg-white p-6 sm:p-8 rounded-lg shadow-md my-8 w-full min-h-[8rem] flex items-center justify-center border border-gray-200">
+                        <p className="text-center text-gray-700 text-base leading-relaxed">
+                            As an affiliate partner, we may earn a commission from qualifying purchases made through links on our site. This helps support our work and allows us to continue providing you with the best deals and coupons. Thank you for your support!
+                        </p>
+                    </div>
                 </div>
             </div>
         </WebLayout>
