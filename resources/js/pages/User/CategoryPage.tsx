@@ -26,6 +26,7 @@ interface Coupons {
         is_featured: boolean | false,
         isExpired: boolean | false,
         expires: Date,
+        stores:[],
 }
 
 interface Props {
