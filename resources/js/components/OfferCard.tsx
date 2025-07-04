@@ -112,22 +112,25 @@ const OfferCard = ({
                 className="flex w-full flex-shrink-0 flex-col items-center justify-center border-b p-4 md:w-1/4 md:border-r md:border-b-0"
                 style={{ borderColor: 'var(--offer-card-border)', backgroundColor: 'var(--offer-card-left-section-bg)' }}
             >
-                <div className="mb-2 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-[var(--offer-card-bg)] shadow-inner">
+                <div className="mb-2 flex  items-center  justify-center object-fit-cover overflow-hidden rounded-full bg-[var(--offer-card-bg)] shadow-inner">
                     {/* Image Click Handler */}
-                    <button onClick={handleOfferAction} className="h-full w-full object-contain p-2 cursor-pointer focus:outline-none" disabled={isExpired}>
-                        <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-full w-full object-contain p-2" />
-                    </button>
+
+                    <a href={RedirectionURL} target='_blank'>
+                        <button onClick={handleOfferAction} className="h-full w-full object-contain p-2 cursor-pointer focus:outline-none" disabled={isExpired}>
+                            <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-full w-full object-contain p-2" />
+                        </button>
+                    </a>
                 </div>
                 {/* Store Name Click Handler (Optional, as per original code it links to store slug.
                     If you want this to also open the modal, change the <Link> to a <button> and
                     add onClick={handleOfferAction}. For now, keeping original <Link> behavior for store name itself.
                     If the request specifically means the store logo/thumbnail that's part of the offer card
                     should open the modal, then the above change for the `<img>` parent is correct.) */}
-                <Link href={RedirectionURL}>
+                <a href={RedirectionURL} target='_blank'>
                     <p className="text-center text-sm font-semibold" style={{ color: 'var(--offer-card-store-name-text)' }}>
                         {storeName}
                     </p>
-                </Link>
+                </a>
             </div>
 
             {/* Middle Section: Offer Description */}
@@ -235,15 +238,18 @@ const OfferCard = ({
                         </div>
 
                         <div className="mb-6 flex flex-col items-center">
-                            <img
-                                src={featured_image || defaultStoreImage}
-                                alt={storeName}
-                                className="mb-4 border-2 shadow-sm"
-                                style={{ borderColor: 'var(--modal-logo-border)' }}
-                            />
-                            <h3 className="mb-1 text-xl font-semibold sm:text-2xl" style={{ color: 'var(--modal-store-name-text)' }}>
-                                {storeName}
-                            </h3>
+                            <a href={RedirectionURL} target='_blank'>
+                                <img
+                                    src={featured_image || defaultStoreImage}
+                                    alt={storeName}
+                                    className="mb-4 border-2 shadow-sm"
+                                    style={{ borderColor: 'var(--modal-logo-border)' }}
+                                /></a>
+                            <a href={RedirectionURL} target='_blank'>
+                                <h3 className="mb-1 text-xl font-semibold sm:text-2xl" style={{ color: 'var(--modal-store-name-text)' }}>
+                                    {storeName}
+                                </h3>
+                            </a>
                             <p className="text-center text-base leading-snug" style={{ color: 'var(--modal-offer-text-description)' }}>
                                 {title}
                             </p>
