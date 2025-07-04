@@ -25,7 +25,7 @@ const OfferCard = ({
     const [showTermsMessage, setShowTermsMessage] = useState(false);
 
     const offerValue = code;
-    const RedirectionURL = type == 'home' ? store_slug :  (affiliate_url || store_slug );
+    const RedirectionURL = type == 'home' ? store_slug :  (affiliate_url || store.home_url );
     const handleCopyCode = () => {
         navigator.clipboard
             .writeText(offerValue)
@@ -114,7 +114,7 @@ const OfferCard = ({
                 style={{ borderColor: 'var(--offer-card-border)', backgroundColor: 'var(--offer-card-left-section-bg)' }}
             >
                 <div className="mb-2 flex items-center justify-center overflow-hidden bg-[var(--offer-card-bg)] shadow-inner">
-                    <a href={type == 'stores' ? (affiliate_url || store_slug) : store_slug} target='_blank'>
+                    <a href={type == 'stores' ? (affiliate_url || store.home_url) : store_slug} target='_blank'>
                         <img src={type == 'stores' ?( featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-full w-full object-contain p-2" />
                     </a>
                 </div>
@@ -292,7 +292,7 @@ const OfferCard = ({
                                     Click the button below to go to the store and get this offer!
                                 </p>
                                 <a
-                                    href={type == 'stores' ? (affiliate_url || store_slug) : store_slug}
+                                    href={type == 'stores' ? (affiliate_url || store.home_url) : store_slug}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="focus:ring-opacity-50 mt-6 block w-full rounded-md py-3 text-center font-bold transition-colors duration-200 focus:ring-2 focus:outline-none"
