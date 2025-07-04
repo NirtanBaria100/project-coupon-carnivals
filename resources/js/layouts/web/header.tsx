@@ -215,7 +215,7 @@ const Header = () => {
                     <nav className="w-full overflow-x-auto custom-scrollbar pb-2">
                         <ul className="flex justify-start sm:justify-center flex-wrap gap-2 sm:gap-3 text-sm font-medium">
                             {/* Uses the static list for desktop categories */}
-                            {staticDesktopCategories.map((category) => (
+                            {categories.map((category) => (
                                 <li key={category.slug}> {/* Using slug as key as there's no 'id' from a static list */}
                                     <Link
                                         href={`/category/${category.slug}`}
