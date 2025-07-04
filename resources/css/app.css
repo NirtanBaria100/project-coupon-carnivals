@@ -163,7 +163,7 @@
 
 /* Apply Poppins to all elements */
 * {
-  font-family: 'Poppins', sans-serif;
+  /* font-family: "Poppins", sans-serif; */
 }
 
 
@@ -382,3 +382,117 @@ input::placeholder {
 /* --- */
 
 
+.headernav_ul li a:hover{
+background-color: transparent !important;
+    color: #1F2937 !important;
+}
+.store-thumbnail-div {
+  align-items: center;
+}
+.couponcard-detailbtn{
+  margin-left: 11px;
+  font-weight: 700;
+}
+.coupon_badges{
+    background: none;
+    border: 1px solid;
+    border-radius: 3px;
+}
+button{
+  cursor: pointer;
+}
+.site_logo{
+      margin-right: 20px;
+}
+.blogandcatlink a{
+    padding-left: 20px;
+}
+.blog_headinghome{
+  text-transform: capitalize;
+}
+.popular_storediv li{
+  margin-bottom: 3px;
+}
+.popular_catdivhome li{
+  margin-bottom: 3px;
+}
+.home_featuredoffers_div{
+  padding-top: 8px;
+  padding-left: 0px;
+  padding-bottom: 0;
+}
+.affiliate_line{
+      margin-bottom: 0;
+}
+.footer_site a,
+.footer_site p{
+color: #FFFFFF !important;
+}
+.footer_site{
+padding-bottom: 26px;
+}
+.storepage_featuredlink a{
+  color: #1F2937;
+}
+.storepage_featuredlink li{
+  color: #1F2937;
+}
+.samcat_storepage a{
+  color: #1F2937;
+}
+.samcat_storepage li{
+  color: #1F2937;
+}
+.homeweb_desc h2 {
+    font-size: 25px;
+    font-weight: 900;
+}
+.storepage_rightcolsidebar{
+  padding-right: 0;
+}
+
+@media only screen and (max-width: 1023px) {
+  .home_featuredoffers_div {
+    padding-right: 0;
+}
+.popstoreandcat_maindiv{
+  margin-top: 0;
+}
+.storepage_rightcolsidebar{
+  /* padding-right: 0; */
+  padding-left: 0;
+}
+}
+@media only screen and (max-width: 650px) {
+.popstoreandcat_maindiv, .homeblog_sec, .home_featuredoffers_maindiv{
+padding-left: 10px;
+    padding-right: 10px;
+}
+.mid_secoffer_desc{
+      padding-bottom: 0;
+}
+.homeweb_desc, .affiliate_line{
+padding-left: 15px;
+    padding-right: 15px;
+    box-shadow: none;
+    border: none !important;
+    background-color: transparent !important;
+    border-radius: 0;
+}
+.homeweb_desc h2 {
+    font-size: 20px;
+}
+.affiliate_line{
+  padding-bottom: 0;
+}
+.storepage_rightcolsidebar{
+  margin-top: 0;
+  padding-top: 0;
+}
+.storepage_leftcoloffers{
+  padding-bottom: 0;
+}
+.storepage_longdescsec{
+  margin-bottom: 0;
+}
+}

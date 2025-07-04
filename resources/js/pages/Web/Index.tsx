@@ -137,9 +137,9 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                     {/* Main Content Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
                         {/* Left Column: Offers List */}
-                        <div className="lg:col-span-2">
+                        <div className="lg:col-span-2 home_featuredoffers_maindiv ">
                             <div
-                                className="p-2 sm:p-8  mb-8"
+                                className="p-2 sm:p-8 home_featuredoffers_div"
                             >
                                 <h2
                                     className="text-2xl font-extrabold mb-6 border-l-4 pl-4"
@@ -158,20 +158,20 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                         </div>
 
                         {/* Right Column: Popular Sections */}
-                        <div className="lg:col-span-1 space-y-8 mt-8 lg:mt-0">
+                        <div className="lg:col-span-1 space-y-8 mt-8 lg:mt-0 popstoreandcat_maindiv">
 
                             {/* Popular Stores */}
                             <div
-                                className="p-6 rounded-lg shadow-lg"
+                                className="p-6 rounded-lg shadow-lg popular_storediv"
                                 style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}
                             >
-                                <h3 className="text-xl font-bold mb-5" style={{ color: 'var(--main-heading-color)' }}>Popular Stores</h3>
+                                <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--main-heading-color)' }}>Popular Stores</h3>
                                 <ul className="space-y-3">
                                     {popular_stores.length > 0 ? popular_stores.map((store) => (
                                         <li key={store.id}>
                                             <Link
                                                 href={`/store/${store.slug}`}
-                                                className="flex items-center px-3 py-1.5 transition-all duration-300 whitespace-nowrap"
+                                                className="flex items-center py-1.5 transition-all duration-300 whitespace-nowrap"
                                                 style={{
                                                     backgroundColor: 'var(--category-button-bg-default)',
                                                     color: 'var(--category-button-text-default)'
@@ -192,16 +192,16 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
 
                             {/* Popular Categories */}
                             <div
-                                className="p-6 rounded-lg shadow-lg"
+                                className="p-6 rounded-lg shadow-lg popular_catdivhome"
                                 style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}
                             >
-                                <h3 className="text-xl font-bold mb-5" style={{ color: 'var(--main-heading-color)' }}>Popular Categories</h3>
+                                <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--main-heading-color)' }}>Popular Categories</h3>
                                 <ul className="space-y-3">
                                     {popularCategories.length > 0 ? popularCategories.map((category) => (
                                         <li key={category.id}>
                                             <Link
                                                 href={`/category/${category.slug}`}
-                                                className="flex items-center px-3 py-1.5 transition-all duration-300 whitespace-nowrap"
+                                                className="flex items-center py-1.5 transition-all duration-300 whitespace-nowrap"
                                                 style={{
                                                     backgroundColor: 'var(--category-button-bg-default)',
                                                     color: 'var(--category-button-text-default)'
@@ -224,18 +224,19 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
 
                     {/* Website Descriptions Section */}
                     <div
-                        className="p-6 sm:p-8 rounded-lg shadow-lg my-10 w-full"
+                        className="p-6 sm:p-8 rounded-lg shadow-lg my-10 w-full homeweb_desc"
                         style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}
                     >
-                        <p className="text-center text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                        <h2>Welcome to Promo Carnivals!</h2>
+                        <p className="text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                             Welcome to <Link href='/' className="font-semibold" style={{ color: 'var(--text-highlight)' }}>PromoCarnivals</Link>! Your ultimate destination for discovering the best deals, coupons, and discounts across a wide range of stores and categories. We work tirelessly to bring you verified offers, ensuring you save money on your favorite brands. Start exploring today and make every purchase a smart one!
                         </p>
                     </div>
 
                     {/* Popular Posts From Our Blog Section */}
-                    <div className="mb-10">
+                    <div className="mb-10 homeblog_sec">
                         <h2
-                            className="text-2xl font-extrabold mb-8 border-l-4 pl-4"
+                            className="text-2xl font-extrabold mb-8 border-l-4 pl-4 blog_headinghome"
                             style={{ color: 'var(--main-heading-color)', borderColor: 'var(--heading-border-accent)' }}
                         >
                             Savings tips from the blog
@@ -286,7 +287,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
 
                     {/* Affiliate Line */}
                     <div
-                        className="p-6 sm:p-8 rounded-lg shadow-lg my-10 w-full"
+                        className="p-6 sm:p-8 rounded-lg shadow-lg my-10 w-full affiliate_line"
                         style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}
                     >
                         <p className="text-center text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>

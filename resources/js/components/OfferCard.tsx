@@ -122,24 +122,25 @@ const OfferCard = ({
             className={`relative mb-6 flex flex-col overflow-hidden rounded-xl shadow-lg transition-shadow duration-300 hover:shadow-xl md:flex-row ${isExpired ? 'opacity-70 grayscale' : ''}`}
             style={{ backgroundColor: 'var(--offer-card-bg)' }}
         >
+
             {/* Left Section: Logo & Text */}
             <div
                 className="flex w-full flex-shrink-0 flex-col items-center justify-center border-b p-4 md:w-1/4 md:border-r md:border-b-0"
                 style={{ borderColor: 'var(--offer-card-border)', backgroundColor: 'var(--offer-card-left-section-bg)' }}
             >
-                <div className="mb-2 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-[var(--offer-card-bg)] shadow-inner">
+                <div className="mb-2 flex items-center justify-center overflow-hidden bg-[var(--offer-card-bg)] shadow-inner">
                     <Link href={type == 'stores' ? affiliate_url : store_slug}>
                         <img src={type == 'stores' ?( featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-full w-full object-contain p-2" />
                     </Link>
                 </div>
-                <Link href={type == 'stores' ? affiliate_url : store_slug}>
+                {/* <Link href={type == 'stores' ? affiliate_url : store_slug}>
                     <p className="text-center text-sm font-semibold" style={{ color: 'var(--offer-card-store-name-text)' }}>
                         {storeName}
-                    </p></Link>
+                    </p></Link> */}
             </div>
 
             {/* Middle Section: Offer Description */}
-            <div className="flex flex-grow flex-col justify-center p-5 text-center md:p-6 md:text-left">
+            <div className="flex flex-grow flex-col justify-center p-5 text-center md:p-6 md:text-left mid_secoffer_desc">
                 <h3 className="mb-2 text-lg font-bold sm:text-xl" style={{ color: 'var(--offer-card-offer-heading-text)' }}>
                     {title}
                 </h3>
@@ -151,7 +152,7 @@ const OfferCard = ({
                 </p>
                 <div className="mt-3 flex flex-wrap justify-center gap-2 md:justify-start">
                     {tags.map((tag, index) => (
-                        <span key={index} className={`rounded-full px-3 py-1 text-xs ${getTagStyle(tag)} ${shouldBlink(tag) ? 'animate-pulse' : ''}`}>
+                        <span key={index} className={`coupon_badges px-3 py-1 text-xs ${getTagStyle(tag)} ${shouldBlink(tag) ? 'animate-pulse' : ''}`}>
                             {tag}
                         </span>
                     ))}
@@ -210,7 +211,7 @@ const OfferCard = ({
                 <div className="mt-4 w-full text-center">
                     <button
                         onClick={handleViewTermsClick}
-                        className="mx-auto flex cursor-pointer items-center justify-center text-xs underline transition-colors duration-300"
+                        className="couponcard-detailbtn flex cursor-pointer items-center justify-center text-xs underline transition-colors duration-300"
                         style={{ color: 'var(--terms-link-text)' }}
                         onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--terms-link-hover-text)')}
                         onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--terms-link-text)')}

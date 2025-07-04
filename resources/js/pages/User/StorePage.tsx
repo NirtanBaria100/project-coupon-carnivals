@@ -133,8 +133,8 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                     </nav>
 
                     {/* Store Header Section */}
-                    <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md">
-                        <div className="w-32 h-32 flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200">
+                    <div className="store-thumbnail-div flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md">
+                        <div className="flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200">
                             <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-full h-full object-contain p-2" />
                         </div>
                         {/* Adjusted: Main content area with store name, description, and button */}
@@ -169,7 +169,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                     {/* Main Content Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         {/* Left Column: Offers List */}
-                        <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8 pb-8">
+                        <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8 pb-8 storepage_leftcoloffers">
                             {coupons.length > 0 ? coupons.map((offer, index) => (
                                 <OfferCard key={index} store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} />
                             )) : <span className="text-red-500">No Coupons Available</span>}
@@ -185,7 +185,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                         </div>
 
                         {/* Right Column: Sidebar */}
-                        <div className="lg:col-span-1 p-4 lg:pl-8 space-y-8 mt-8 lg:mt-0">
+                        <div className="lg:col-span-1 p-4 lg:pl-8 space-y-8 mt-8 lg:mt-0 storepage_rightcolsidebar">
                             {/* Offer Summary */}
                             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">Offer Summary</h3>
@@ -214,7 +214,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                             {featuredStores.length > 0 && (
                                 <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                                     <h3 className="text-xl font-bold text-gray-800 mb-4">Featured Links</h3>
-                                    <ul className="list-disc list-inside space-y-2 text-blue-600">
+                                    <ul className="list-disc list-inside space-y-2 text-blue-600 storepage_featuredlink">
                                         {featuredStores.map((store, index) => (
                                             <li key={index}>
                                                 <Link href={'/store/' + store.slug} className="hover:underline">
@@ -230,7 +230,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                             {similarStores.length > 0 && (
                                 <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                                     <h3 className="text-xl font-bold text-gray-800 mb-4">More Stores Like {stores?.name}</h3>
-                                    <ul className="list-disc list-inside space-y-2 text-blue-600">
+                                    <ul className="list-disc list-inside space-y-2 text-blue-600 samcat_storepage">
                                         {similarStores.map((store, index) => (
                                             <li key={index}>
                                                 <Link href={'/store/' + store.slug} className="hover:underline">
@@ -246,7 +246,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                     </div>
 
                     {/* Long Description Section */}
-                    <div className="bg-white p-6 rounded-lg shadow-md my-8 border border-gray-200">
+                    <div className="bg-white p-6 rounded-lg shadow-md my-8 border border-gray-200 storepage_longdescsec">
                         <h3 className="text-xl font-bold text-gray-800 mb-4">About {stores.name}</h3>
                         <p className="text-gray-700 text-sm leading-relaxed">
                             {stores.desc}

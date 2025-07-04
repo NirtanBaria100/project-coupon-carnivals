@@ -7,7 +7,7 @@ const Footer = () => {
     const { amazing_discount } = usePage().props;
     return (
         // Set footer background to black using CSS variable
-        <footer className="py-10 mt-auto font-sans" style={{ backgroundColor: 'var(--footer-bg)', color: 'var(--footer-text-primary)' }}>
+        <footer className="py-10 mt-auto font-sans footer_site" style={{ backgroundColor: 'var(--footer-bg)', color: 'var(--footer-text-primary)' }}>
             <div className="container mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6">
                 {/* Company Info */}
                 <div>

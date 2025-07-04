@@ -84,7 +84,7 @@ const Header = () => {
                         <img
                             src={promocarnivals2Logo}
                             alt="Site Logo"
-                            className="h-20 w-auto"
+                            className="h-20 w-auto site_logo"
                         />
                     </Link>
 
@@ -164,7 +164,7 @@ const Header = () => {
 
                     {/* Right Section: Blog, Summer Sales, Exclusive Vouchers */}
                     {/* Adjusted gap-x here for tighter spacing between the links */}
-                    <div className="flex items-center gap-x-2 flex-shrink-0 mt-4 md:mt-0"> {/* Added mt-4 for mobile spacing, removed md:gap-x-4 */}
+                    <div className="blogandcatlink flex items-center gap-x-2 flex-shrink-0 mt-4 md:mt-0"> {/* Added mt-4 for mobile spacing, removed md:gap-x-4 */}
                         <Link href="/all/blogs" className="font-medium text-sm whitespace-nowrap transition-colors duration-300" style={{ color: 'var(--text-default)' }}
                             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-accent-hover)'}
                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-default)'}
@@ -196,14 +196,14 @@ const Header = () => {
                 </div>
 
                 {/* Categories Section (without heading) */}
-                <div className="relative pt-4 pb-2 text-center mt-4">
+                <div className="relative text-center mt-4">
                     <nav className="w-full overflow-x-auto custom-scrollbar pb-2">
-                        <ul className="flex justify-start sm:justify-center flex-wrap gap-2 sm:gap-3 text-sm font-medium">
+                        <ul className="flex justify-start sm:justify-center flex-wrap gap-2 sm:gap-3 text-sm font-medium headernav_ul">
                             {categories.map((category) => (
                                 <li key={category.id}>
                                     <Link
                                         href={`/category/${category.slug}`}
-                                        className="flex items-center px-3 py-1.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap"
+                                        className="flex items-center px-3 transition-all duration-300 whitespace-nowrap"
                                         style={{
                                             backgroundColor: 'var(--category-button-bg-default)',
                                             color: 'var(--category-button-text-default)'

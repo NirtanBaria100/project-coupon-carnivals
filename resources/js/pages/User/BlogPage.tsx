@@ -94,11 +94,9 @@ const BlogPage = ({ blogs }: Props) => {
                         style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
                     >
                         <h1 className="mb-3 text-3xl font-extrabold leading-tight sm:text-4xl" style={{ color: 'var(--main-heading-color)' }}>
-                            Our Featured Posts {/* This still says "Our Partner Stores", should it be "Our Blogs"? */}
+                            PromoCarnivals Blogs {/* This still says "Our Partner Stores", should it be "Our Blogs"? */}
                         </h1>
-                        <p className="text-base sm:text-lg" style={{ color: 'var(--text-muted)' }}>
-                            Discover thousands of tips and blogs . {/* This also implies stores, not blogs */}
-                        </p>
+                       
                         <div
                         className="mb-0 flex flex-col items-center justify-between gap-4 rounded-lg  p-2  md:flex-row"
                         style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
