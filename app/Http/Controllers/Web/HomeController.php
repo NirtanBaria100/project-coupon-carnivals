@@ -70,7 +70,7 @@ class HomeController extends Controller
         $coupons = [];
         if (!empty($category)) {
             $categoryCoupons = \DB::table('category_coupon')->where('category_id', $category->id)->pluck('coupon_id');
-            $coupons = Coupon::whereIn('id', $categoryCoupons)->whereDate('expires', '>', Carbon::now())->get();
+            $coupons = Coupon::whereIn('id', $categoryCoupons)->with('stores')->whereDate('expires', '>', Carbon::now())->get();
         }
 
         return Inertia::render("User/CategoryPage", [

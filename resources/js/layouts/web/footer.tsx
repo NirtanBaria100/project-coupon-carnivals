@@ -4,7 +4,18 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaTelegramPlane } from 'react-icon
 import PromoCarnivalsIcon from '@/assets/white logo.png'; // <--- IMPORTANT: Adjust this path to your actual logo image
 
 const Footer = () => {
-    const { amazing_discount } = usePage().props;
+    const { amazing_discount } = usePage().props; // Keep this if amazing_discount is used elsewhere in the footer or globally
+
+    // Define the static categories for the footer
+    const footerCategories = [
+        { name: 'Sports', slug: 'sports' },
+        { name: 'Home & Garden', slug: 'home-garden' },
+        { name: 'Pet Supplies', slug: 'pet-supplies' },
+        { name: 'Free Shipping', slug: 'free-shipping' },
+        { name: 'Fashion', slug: 'fashion' },
+        { name: 'Travel', slug: 'travel' },
+    ];
+
     return (
         // Set footer background to black using CSS variable
         <footer className="py-10 mt-auto font-sans footer_site" style={{ backgroundColor: 'var(--footer-bg)', color: 'var(--footer-text-primary)' }}>
@@ -15,7 +26,6 @@ const Footer = () => {
                     <h3 className="text-2xl font-bold mb-5 flex items-center" style={{ color: 'var(--footer-heading-color)' }}>
                         {/* PromoCarnivals Logo/Icon */}
                         <img src={PromoCarnivalsIcon} alt="PromoCarnivals Logo" className="h-20 w-auto mr-2" /> {/* Adjust h-8 w-8 as needed */}
-
                     </h3>
                     {/* Description text: lighter gray */}
                     <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--footer-text-secondary)' }}>
@@ -41,34 +51,31 @@ const Footer = () => {
                         >
                             <FaInstagram className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
                         </a>
-
                     </div>
                 </div>
 
-                {/* Amazing Discounts Column (No change requested) */}
+                {/* Categories Column - UPDATED */}
                 <div>
                     {/* Heading: pure white */}
-                    <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>Categories </h3>
+                    <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>Categories</h3> {/* Changed heading to "Categories" */}
                     <ul className="space-y-3">
-
-                                {/* // <li>
-                                //     <a
-                                //         href={discount.coupon_url}
-                                //         target="_blank"
-                                //         className="text-sm transition-colors duration-300"
-                                //         style={{ color: 'var(--footer-text-secondary)' }}
-                                //         onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--footer-link-hover)')}
-                                //         onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--footer-text-secondary)')}
-                                //     >
-                                //         {discount.title}
-                                //     </a>
-                                // </li> */}
-
+                        {footerCategories.map((category) => ( // Map over the new static footerCategories array
+                            <li key={category.slug}>
+                                <Link
+                                    href={`/category/${category.slug}`} 
+                                    className="text-sm transition-colors duration-300"
+                                    style={{ color: 'var(--footer-text-secondary)' }}
+                                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--footer-link-hover)')}
+                                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--footer-text-secondary)')}
+                                >
+                                    {category.name}
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
-
                 </div>
 
-                {/* Information Column - UPDATED */}
+                {/* Information Column - No Change */}
                 <div>
                     <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>Information</h3>
                     <ul className="space-y-3">
@@ -100,7 +107,7 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                {/* More From Us Column - UPDATED */}
+                {/* More From Us Column - No Change */}
                 <div>
                     <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>More From Us</h3>
                     <ul className="space-y-3">
@@ -114,7 +121,6 @@ const Footer = () => {
                             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
                         >How to use coupons</Link></li>
-                        {/* Existing dummy links removed or replaced based on new requirements */}
                     </ul>
                 </div>
             </div>

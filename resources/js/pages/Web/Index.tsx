@@ -151,7 +151,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                                     {/* OfferCard is a separate component, ensure its internal colors are also updated with variables */}
                                     {featured_coupons.length > 0 ? featured_coupons.map((offer, index) => (
 
-                                        <OfferCard key={index} store={offer.stores[0]} affiliate_url={offer.coupon_url || offer.stores[0].affiliate_irl} store_slug={'/store/' + offer?.stores[0].slug || ''} {...offer} />
+                                        <OfferCard key={index} type="home" storeName={offer.stores[0]?.name} store={offer.stores[0]} affiliate_url={offer.coupon_url || offer.stores[0].affiliate_irl} store_slug={'/store/' + offer?.stores[0].slug || ''} {...offer} />
                                     )) : <span>No Featured Offers Available</span>}
                                 </div>
                             </div>

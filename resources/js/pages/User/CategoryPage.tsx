@@ -26,6 +26,7 @@ interface Coupons {
         is_featured: boolean | false,
         isExpired: boolean | false,
         expires: Date,
+        stores:[],
 }
 
 interface Props {
@@ -78,7 +79,7 @@ const CategoryPage = ({ categoryName , category , coupons}:Props) => {
             {/* Left Column: Offer Cards */}
             <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8">
               {coupons.length > 0 ? coupons.map((offer, index) => (
-                <OfferCard key={index} {...offer} />
+                <OfferCard key={index} store_slug={'/store/'+ offer.stores[0].slug} store={offer.stores[0]} affiliate_url={offer.coupon_url || offer.stores[0].affiliate_irl} storeName={offer.stores[0].name} type={'categories'} {...offer} />
               )) : <span className='text-red-500'>No Coupons Available</span>}
             </div>
 
