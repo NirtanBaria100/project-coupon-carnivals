@@ -114,48 +114,26 @@ const OfferCard = ({
                 style={{ borderColor: 'var(--offer-card-border)', backgroundColor: 'var(--offer-card-left-section-bg)' }}
             >
                 <div className="mb-2 flex items-center justify-center overflow-hidden bg-[var(--offer-card-bg)] shadow-inner">
-                    <Link href={type == 'stores' ? affiliate_url : store_slug}>
+                    <a href={type == 'stores' ? affiliate_url : store_slug} target='_blank'>
                         <img src={type == 'stores' ?( featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-full w-full object-contain p-2" />
-                    </Link>
-                </div>
-                {/* <Link href={type == 'stores' ? affiliate_url : store_slug}>
-                    <p className="text-center text-sm font-semibold" style={{ color: 'var(--offer-card-store-name-text)' }}>
-                        {storeName}
-                    </p></Link> */}
-            </div>
-
-            {/* Middle Section: Offer Description */}
-            <div className="flex flex-grow flex-col justify-center p-5 text-center md:p-6 md:text-left mid_secoffer_desc">
-                <h3 className="mb-2 text-lg font-bold sm:text-xl" style={{ color: 'var(--offer-card-offer-heading-text)' }}>
-                <div className="mb-2 flex  items-center  justify-center object-fit-cover overflow-hidden rounded-full bg-[var(--offer-card-bg)] shadow-inner">
-                    {/* Image Click Handler */}
-
-                    <a href={RedirectionURL} target='_blank'>
-                        <button onClick={handleOfferAction} className="h-full w-full object-contain p-2 cursor-pointer focus:outline-none" disabled={isExpired}>
-                            <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-full w-full object-contain p-2" />
-                        </button>
                     </a>
                 </div>
-                {/* Store Name Click Handler (Optional, as per original code it links to store slug.
-                    If you want this to also open the modal, change the <Link> to a <button> and
-                    add onClick={handleOfferAction}. For now, keeping original <Link> behavior for store name itself.
-                    If the request specifically means the store logo/thumbnail that's part of the offer card
-                    should open the modal, then the above change for the `<img>` parent is correct.) */}
-                <a href={RedirectionURL} target='_blank'>
-                    <p className="text-center text-sm font-semibold" style={{ color: 'var(--offer-card-store-name-text)' }}>
-                        {storeName}
-                    </p>
-                </a>
+
             </div>
 
             {/* Middle Section: Offer Description */}
-            <div className="flex flex-grow flex-col justify-center p-5 text-center md:p-6 md:text-left">
+            <div className="flex flex-grow flex-col justify-center p-5 text-center md:p-6 mid_secoffer_desc">
+
+            </div>
+
+            {/* Middle Section: Offer Description */}
+            <div className="flex flex-grow flex-col justify-center p-5 text-center md:p-6 ">
                 {/* Heading Click Handler */}
                 <button onClick={handleOfferAction} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
                     {title}
                 </button>
                 <p
-                    className={`text-sm ${isExpired ? 'font-bold' : ''}`}
+                    className={`text-sm text-left ${isExpired ? 'font-bold' : ''}`}
                     style={{ color: isExpired ? 'var(--offer-card-expired-text)' : 'var(--offer-card-expires-text)' }}
                 >
                     {isExpired ? 'Expired' : ` ${expires == null ? '' : 'Expires: ' + expires}`}
