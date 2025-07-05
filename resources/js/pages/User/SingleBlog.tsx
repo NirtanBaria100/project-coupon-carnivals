@@ -124,7 +124,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                         style={{ color: "var(--primary-orange)" }}
                                     >{post.date}</span></span>
                                 <span>•</span>
-                                {post.category ? <span>
+                                {post.category.length > 0 ? <span>
                                     Category:
                                     <Link
                                         href={`/blogs/category/${post.category[0] ? post.category[0].slug : ""}`}
