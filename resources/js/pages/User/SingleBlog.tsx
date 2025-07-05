@@ -23,9 +23,9 @@ interface Category {
 interface Props {
     post: Post[],
     recentPost: RecentPost[],
-    categories: Category[]
+    featuredcategories: Category[]
 }
-const SingleBlog = ({ post, categories, recentPost }: Props) => {
+const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
 
     return (
         <WebLayout>
@@ -215,7 +215,7 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
                                     Blog Categories
                                 </h3>
                                 <ul className="space-y-2">
-                                    {categories.length > 0 ? categories.map((category) => (
+                                    {featuredcategories.length > 0 ? featuredcategories.map((category) => (
                                         <li key={category.id}>
                                             <Link
                                                 href={`/blogs/category/${category.slug}`}

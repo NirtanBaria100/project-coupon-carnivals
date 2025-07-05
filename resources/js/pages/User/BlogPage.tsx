@@ -40,7 +40,6 @@ interface Props {
 const BlogPage = ({ blogs }: Props) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('date'); // 'offers' or 'name'
-    console.log(blogs);
     // Use blogs.data for filtering and sorting
     const filteredAndSortedBlogs = useMemo(() => {
 
@@ -166,7 +165,7 @@ const BlogPage = ({ blogs }: Props) => {
                                             {post.title}
                                         </Link>
                                     </h3>
-                                    
+
                                     <div className="flex items-center justify-between text-xs" style={{ color: 'var(--text-muted)' }}>
                                         <span>By {post.author?.name.toUpperCase() || ''}</span> {/* Used optional chaining for author.name */}
                                         <span>{post.date}</span>

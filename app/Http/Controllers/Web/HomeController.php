@@ -139,10 +139,10 @@ class HomeController extends Controller
         });
         $post->imageURL = asset($post->image);
         $post->date = Carbon::parse($post->created_at)->format('F d,Y');
-        $categories = Category::whereHas('blogs')->select(['name', 'id', 'slug'])->limit(5)->get();
+        $featuredcategories = Category::whereHas('blogs')->select(['name', 'id', 'slug'])->limit(5)->get();
         return Inertia::render("User/SingleBlog", [
             'post' => $post,
-            'categories' => $categories,
+            'featuredcategories' => $featuredcategories,
             'recentPost' => $recentPost,
         ]);
 
