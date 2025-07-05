@@ -127,11 +127,11 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                 <span>
                                     Category:
                                     <Link
-                                        href={`/blogs/category/${post.category.slug ?? ""}`}
+                                        href={`/blogs/category/${post.category[0] ?  post.category[0].slug : ""}`}
                                         className="hover:underline"
                                         style={{ color: "var(--primary-orange)" }}
                                     >
-                                        {post.category.name ?? ""}
+                                        ${post.category[0] ? post.category[0].name : ""}
                                     </Link>
                                 </span>
                             </div>
