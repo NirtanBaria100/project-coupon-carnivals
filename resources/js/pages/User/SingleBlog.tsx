@@ -12,7 +12,8 @@ interface Post {
     author: string | null,
     seo_title: string | "",
     meta_description: string | "",
-    focus_keyphrase: string | ""
+    focus_keyphrase: string | "",
+    category:[],
 }
 interface RecentPost {
     title: string | null,
@@ -126,11 +127,11 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                 <span>
                                     Category:
                                     <Link
-                                        href={`/blogs/category/${post.category.slug}`}
+                                        href={`/blogs/category/${post.category.slug ?? ""}`}
                                         className="hover:underline"
                                         style={{ color: "var(--primary-orange)" }}
                                     >
-                                        {post.category.name}
+                                        {post.category.name ?? ""}
                                     </Link>
                                 </span>
                             </div>
