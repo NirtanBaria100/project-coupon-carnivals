@@ -4,7 +4,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaTelegramPlane } from 'react-icon
 import PromoCarnivalsIcon from '@/assets/white logo.png'; // <--- IMPORTANT: Adjust this path to your actual logo image
 
 const Footer = () => {
-    const { amazing_discount } = usePage().props; // Keep this if amazing_discount is used elsewhere in the footer or globally
+    const { categories } = usePage().props; // Keep this if amazing_discount is used elsewhere in the footer or globally
 
     // Define the static categories for the footer
     const footerCategories = [
@@ -18,7 +18,7 @@ const Footer = () => {
 
     return (
         // Set footer background to black using CSS variable
-       
+
         <footer className="py-10 mt-auto font-sans footer_site" style={{ backgroundColor: 'var(--footer-bg)', color: 'var(--footer-text-primary)' }}>
             <div className="container mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6">
                 {/* Company Info */}
@@ -60,7 +60,7 @@ const Footer = () => {
                     {/* Heading: pure white */}
                     <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>Categories</h3> {/* Changed heading to "Categories" */}
                     <ul className="space-y-3">
-                        {footerCategories.map((category) => ( // Map over the new static footerCategories array
+                        {categories.map((category) => ( // Map over the new static footerCategories array
                             <li key={category.slug}>
                                 <Link
                                     href={`/category/${category.slug}`}

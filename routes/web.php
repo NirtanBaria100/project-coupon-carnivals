@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ReorderController;
 use App\Http\Controllers\Admin\StoresController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagsController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\RichTextEditorController;
 
 use App\Http\Controllers\Web\HomeController;
@@ -27,16 +28,14 @@ Route::prefix('/rating')->name('ratings.')->group(function(){
     Route::post('/store', [HomeController::class,'storeRating'])->name('store');
 });
     // Admin Dashboard or Home
-    Route::prefix('admin')->group(function () {
+    Route::prefix('admin')->middleware('auth')->group(function () {
 
-
-        Route::get('/', function () {
-            return Inertia::render('Admin/Welcome');
-        })->name('home');
-
-
-    Route::get("/dashboard", [DashboardController::class, 'index'])->name("admin.dashboard");
-
+    Route::get("/", [DashboardController::class, 'index'])->name("home");
+    Route::get("/", [DashboardController::class, 'index'])->name("admin.dashboard");
+    // Users Route
+    Route::prefix('users')->name("admin.users.")->group(function(){
+        Route::get('/', [UserController::class,'index'])->name('index');
+    });
 
     // Coupon Routes
     Route::prefix('coupons')->name("admin.coupons.")->group(function () {

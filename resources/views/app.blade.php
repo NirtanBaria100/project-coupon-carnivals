@@ -30,7 +30,7 @@
             }
         </style>
 
-        <title inertia>{{ config('app.name', 'Coupon Carnival') }}</title>
+        <title inertia>{{ config('app.name', 'PromoCarnival') }}</title>
 
         <link rel="icon" href="{{ asset('favicon-carnivals.png') }}" sizes="any">
         <link rel="icon" href="{{ asset('favicon-carnivals.png') }}" type="image/svg+xml">

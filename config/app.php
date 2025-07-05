@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Coupon Carnival'),
+    'name' => env('APP_NAME', 'PromoCarnival'),
 
     /*
     |--------------------------------------------------------------------------
