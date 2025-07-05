@@ -39,7 +39,7 @@ class BlogsController extends Controller
             'seo_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
         ]);
-
+        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = Str::slug($request->title) . '-' . time() . '.' . $file->getClientOriginalExtension();
@@ -76,6 +76,7 @@ class BlogsController extends Controller
             'seo_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
         ];
+        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
         if($request->hasFile('image')){
             $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000';;
         }

@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "@inertiajs/react";
 import WebLayout from "@/layouts/web-layout";
+import PageMeta from "@/components/PageMeta";
 
 interface Post {
     title: string | null,
@@ -9,6 +10,9 @@ interface Post {
     imageURL: string | null,
     date: string | null,
     author: string | null,
+    seo_title: string | "",
+    meta_description: string | "",
+    focus_keyphrase: string | ""
 }
 interface RecentPost {
     title: string | null,
@@ -29,6 +33,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
 
     return (
         <WebLayout>
+            <PageMeta title={post.seo_title} description={post.meta_description} keywords={post.focus_keyphrase} />
             <div
                 className="pb-12 font-sans"
                 style={{ backgroundColor: "var(--page-bg)" }}

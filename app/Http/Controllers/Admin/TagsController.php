@@ -46,7 +46,7 @@ class TagsController extends Controller
             'slug' => 'required|string|max:255|unique:tags,slug',
             'desc' => 'nullable|string',
         ]);
-
+        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
         Tag::create($request->only('name', 'slug', 'desc'));
 
         return redirect()->route('admin.tags.index')->with('success', 'Tag created.');
@@ -66,7 +66,7 @@ class TagsController extends Controller
             'slug' => 'required|string|max:255|unique:tags,slug,' . $tag->id,
             'desc' => 'nullable|string',
         ]);
-
+        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
         $tag->update($request->only('name', 'slug', 'desc'));
 
         return redirect()->route('admin.tags.index')->with('success', 'Tag updated.');

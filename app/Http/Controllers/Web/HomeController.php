@@ -37,7 +37,7 @@ class HomeController extends Controller
     }
     public function StorePage($slug)
     {
-        $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl','home_url', 'name', 'desc', 'extra_info', 'thumbnail'])->first();
+        $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl','home_url', 'name', 'desc', 'extra_info','seo_title','meta_description','focus_keyphrase', 'thumbnail'])->first();
         $store->totalRatings = count($store->storeRatings->where('is_approved')) ?? 0 ;
         $similarStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->limit(8)->get();
         $featuredStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_featured',1)->limit(8)->get();

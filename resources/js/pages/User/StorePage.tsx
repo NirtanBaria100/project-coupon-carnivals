@@ -6,6 +6,7 @@ import WebLayout from '@/layouts/web-layout';
 import { Link, useForm } from '@inertiajs/react';
 import { toastDirection } from '@/lib/utils/Constants';
 import toast from 'react-hot-toast';
+import PageMeta from '@/components/PageMeta';
 
 interface SimilarStore {
     name: string | null,
@@ -27,6 +28,9 @@ interface Store {
     ratings: number | 0 // This comes from backend as the store's average rating
     slug: string | null,
     home_url: string | null,
+    meta_description: string | '',
+    seo_title: string | '',
+    focus_keyphrase: string | ''
 }
 
 interface Coupon {
@@ -37,7 +41,7 @@ interface Coupon {
     coupon_url: string | null,
     is_verified: boolean | false,
     is_exclusive: boolean | false,
-    id:number | false,
+    id: number | false,
     is_featured: boolean | false,
     isExpired: boolean | false,
     expires: Date,
@@ -128,6 +132,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
 
     return (
         <WebLayout>
+            <PageMeta title={stores.seo_title} description={stores.meta_description} keywords={stores.focus_keyphrase} />
             <div className="bg-gray-100 pb-8 min-h-screen">
                 <div className="container mx-auto px-4 py-8">
                     {/* Breadcrumbs */}
@@ -176,7 +181,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                         {/* Left Column: Offers List */}
                         <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8 pb-8 storepage_leftcoloffers">
                             {coupons.length > 0 ? coupons.map((offer, index) => (
-                                <OfferCard key={index}   coupon_id={offer.id} type="stores" store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} />
+                                <OfferCard key={index} coupon_id={offer.id} type="stores" store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} />
                             )) : <span className="text-red-500">No Coupons Available</span>}
                             {expiredCoupons.length > 0 ? <><p className="text-gray-600 mt-8 mb-4 text-center sm:text-left font-semibold border-b pb-2">
                                 These offers have expired, but may still work
@@ -184,7 +189,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
 
                                 <OfferCard key={index} coupon_id={offer.id} store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} type={"stores"} />
                             ))}</> : <>
-                               <hr /> <br /> <span className="text-red-500">No Expired Coupons Available</span>
+                                <hr /> <br /> <span className="text-red-500">No Expired Coupons Available</span>
                             </>
                             }
                         </div>

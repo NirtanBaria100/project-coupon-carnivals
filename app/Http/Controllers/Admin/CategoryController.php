@@ -59,7 +59,7 @@ class CategoryController extends Controller
             'seo_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
         ]);
-
+        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
 
         if ($request->hasFile('image_icon')) {
             $imagePath = $request->file('image_icon')->store('category-icons', 'public');
@@ -99,7 +99,7 @@ class CategoryController extends Controller
             'seo_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
         ]);
-
+        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
        if ($request->hasFile('image_icon')) {
             $imagePath = $request->file('image_icon')->store('category-icons', 'public');
             $validated['image_icon'] = asset('storage/' . $imagePath);

@@ -62,7 +62,7 @@ class StoresController extends Controller
             'is_featured' => 'boolean',
             'extra_info' => 'nullable|string',
         ]);
-
+        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $filename = Str::slug($request->name) . '-' . time() . '.' . $file->getClientOriginalExtension();
@@ -111,7 +111,7 @@ class StoresController extends Controller
             'seo_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
         ]);
-
+        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
         if ($request->hasFile('thumbnail')) {
             $appUrl = config("app.url");
             $validated['thumbnail'] = $appUrl . '/storage/' . $request->file('thumbnail')->store('thumbnails', 'public');
