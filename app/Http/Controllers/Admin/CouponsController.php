@@ -17,16 +17,18 @@ class CouponsController extends Controller
     // Display a listing of the resource.
     public function index(Request $request)
     {
-        $query = Coupon::query();
+        $query = Coupon::with('stores');
 
         if ($request->filled('search')) {
             $query->where('title', 'like', '%' . $request->search . '%');
         }
-
         if ($request->filled('sort')) {
-            $query->orderBy($request->sort, $request->direction ?? 'asc');
+            $query->orderBy($request->sort, $request->direction ?? 'desc');
         }
+        if(!$request->filled('sort')){
+            $query->orderBy('created_at', 'desc');
 
+        }
         return Inertia::render('Admin/Coupon/Index', [
             'coupons' => $query->paginate(perPage: 50)->withQueryString(),
             'filters' => $request->only(['search', 'sort', 'direction']),

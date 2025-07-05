@@ -59,7 +59,7 @@ export default function Edit() {
         focus_keyphrase: store.focus_keyphrase ?? '',
         seo_title: store.seo_title ?? '',
         meta_description: store.meta_description ?? '',
-       
+
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -102,7 +102,7 @@ export default function Edit() {
         formData.append('seo_title', data.seo_title);
         formData.append('meta_description', data.meta_description);
 
-    
+
 
         if (data.thumbnail) {
             formData.append('thumbnail', data.thumbnail);
@@ -220,7 +220,7 @@ export default function Edit() {
 
                         <textarea
                             name="extra_info"
-                            placeholder="Extra Info"
+                            placeholder="Short Description Sidebar"
                             value={data.extra_info}
                             onChange={handleChange}
                             className="w-full rounded border px-3 py-2"
@@ -250,7 +250,7 @@ export default function Edit() {
                             className="w-full rounded border px-3 py-2"
                         />
 
-                      
+
                     </div>
                 </form>
             </div>

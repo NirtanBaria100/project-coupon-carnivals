@@ -28,6 +28,7 @@ interface Coupon {
     is_featured: boolean;
     is_verified: boolean;
     is_exclusive: boolean;
+    stores:[],
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -121,6 +122,9 @@ export default function Index() {
                             <TableHead onClick={() => handleSort('title')} className="cursor-pointer">
                                 Title {renderSortIcon('title')}
                             </TableHead>
+                            <TableHead className="cursor-pointer">
+                                Store
+                            </TableHead>
                             <TableHead>Published</TableHead>
                             <TableHead>Featured</TableHead>
                             <TableHead>Verified</TableHead>
@@ -139,6 +143,7 @@ export default function Index() {
                         {coupons.data.map((coupon) => (
                             <TableRow key={coupon.id}>
                                 <TableCell>{coupon.title}</TableCell>
+                                <TableCell>{coupon.stores.name}</TableCell>
                                 <TableCell>
                                     <Switch checked={coupon.is_published} onCheckedChange={(val) => toggleStatus(coupon.id, 'is_published', val)} />
                                 </TableCell>

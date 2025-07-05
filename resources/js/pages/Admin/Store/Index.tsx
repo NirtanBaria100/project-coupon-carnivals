@@ -126,7 +126,7 @@ export default function Index() {
                             <TableHead onClick={() => handleSort('ratings')} className="cursor-pointer">
                                 Rating {sort === 'ratings' && (direction === 'asc' ? '↑' : '↓')}
                             </TableHead>
-                            <TableHead>Description</TableHead>
+
                             <TableHead onClick={() => handleSort('is_featured')} className="cursor-pointer">
                                 Featured {sort === 'is_featured' && (direction === 'asc' ? '↑' : '↓')}
                             </TableHead>
@@ -148,7 +148,7 @@ export default function Index() {
                                         <img
                                             src={store.thumbnail.startsWith('http') ? store.thumbnail : `http://127.0.0.1:8000${store.thumbnail}`}
                                             alt={store.name}
-                                            className="h-12 w-12 rounded object-cover"
+                                            className="h-12 w-12 rounded border-1 p-1 object-contain"
                                         />
                                     ) : (
                                         <span className="text-sm text-gray-400">No Image</span>
@@ -161,7 +161,6 @@ export default function Index() {
                                         View ( {store.ratings} )
                                     </Button>
                                 </Link></TableCell>
-                                <TableCell>{store.desc || '-'}</TableCell>
                                 <TableCell>{store.is_featured ? 'Yes' : 'No'}</TableCell>
                                     <TableCell className="space-x-2 text-right">
                                         <Link href={`/admin/stores/${store.id}/edit`}>

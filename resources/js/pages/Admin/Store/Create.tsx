@@ -134,7 +134,7 @@ export default function Create() {
 
                         <textarea
                             name="extra_info"
-                            placeholder="Extra Info"
+                            placeholder="Short Description Sidebar"
                             value={data.extra_info}
                             onChange={handleChange}
                             className="w-full rounded border px-3 py-2"
