@@ -97,12 +97,12 @@ const CategoryPage = ({ category, coupons }: Props) => {
                         {/* Right Column: Sidebar */}
                         <div className="lg:col-span-1 p-4 lg:pl-8 space-y-8 mt-8 lg:mt-0">
                             {/* Category Description */}
-                            {category.desc && <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            {category.desc ? <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">About {formattedCategoryName} Category</h3>
                                 <p className="text-gray-700 text-sm leading-relaxed">
                                     {category.desc}
                                 </p>
-                            </div>}
+                            </div>:<></>}
 
                             {/* Popular Categories */}
                             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
