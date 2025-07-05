@@ -13,7 +13,7 @@ interface Post {
     seo_title: string | "",
     meta_description: string | "",
     focus_keyphrase: string | "",
-    category:[],
+    category: [],
 }
 interface RecentPost {
     title: string | null,
@@ -119,21 +119,21 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                 </span>
                                 <span>•</span>
                                 <span>Published Date:{" "}
-                                <span
-                                    className="font-semibold"
-                                    style={{ color: "var(--primary-orange)" }}
-                                >{post.date}</span></span>
+                                    <span
+                                        className="font-semibold"
+                                        style={{ color: "var(--primary-orange)" }}
+                                    >{post.date}</span></span>
                                 <span>•</span>
-                                <span>
+                                {post.category ? <span>
                                     Category:
                                     <Link
-                                        href={`/blogs/category/${post.category[0] ?  post.category[0].slug : ""}`}
+                                        href={`/blogs/category/${post.category[0] ? post.category[0].slug : ""}`}
                                         className="hover:underline"
                                         style={{ color: "var(--primary-orange)" }}
                                     >
-                                        ${post.category[0] ? post.category[0].name : ""}
+                                        {post.category[0] ? post.category[0].name : ""}
                                     </Link>
-                                </span>
+                                </span> : <></>}
                             </div>
 
                             <img src={post.imageURL}
