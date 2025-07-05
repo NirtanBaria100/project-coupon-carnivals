@@ -24,13 +24,13 @@ const Footer = () => {
                 {/* Company Info */}
                 <div>
                     {/* Logo text: pure white */}
-                    <h3 className="text-2xl font-bold mb-5 flex items-center" style={{ color: 'var(--footer-heading-color)' }}>
+                    <h3 className="text-2xl font-bold flex items-center" style={{ color: 'var(--footer-heading-color)' }}>
                         {/* PromoCarnivals Logo/Icon */}
                         <img src={PromoCarnivalsIcon} alt="PromoCarnivals Logo" className="h-20 w-auto mr-2" /> {/* Adjust h-8 w-8 as needed */}
                     </h3>
                     {/* Description text: lighter gray */}
                     <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--footer-text-secondary)' }}>
-                        Descriptions Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        At Promo Carnivals, we bring you the latest deals, discounts, and promo codes from the stores you love. Our goal is to help you save money every time you shop by sharing a wide range of verified and updated coupons. Whether you're buying clothes, electronics, groceries, or anything else, our experts have got something for you.
                     </p>
                     <div className="flex space-x-3 mt-4">
                         {/* Social Icons */}

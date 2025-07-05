@@ -446,6 +446,10 @@ padding-bottom: 26px;
 .homeweb_desc h2 {
     font-size: 25px;
     font-weight: 900;
+    color: #1F2937;
+}
+.homeweb_desc p, .homeweb_desc strong{
+color: #1F2937;
 }
 .storepage_rightcolsidebar{
   padding-right: 0;
@@ -459,7 +463,6 @@ padding-bottom: 26px;
   margin-top: 0;
 }
 .storepage_rightcolsidebar{
-  /* padding-right: 0; */
   padding-left: 0;
 }
 }

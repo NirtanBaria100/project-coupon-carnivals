@@ -227,9 +227,16 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                         className="p-6 sm:p-8 rounded-lg shadow-lg my-10 w-full homeweb_desc"
                         style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}
                     >
-                        <h2>Welcome to Promo Carnivals!</h2>
+                        <h2>Discover Big Savings at Promo Carnivals</h2>
                         <p className="text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                            Welcome to <Link href='/' className="font-semibold" style={{ color: 'var(--text-highlight)' }}>PromoCarnivals</Link>! Your ultimate destination for discovering the best deals, coupons, and discounts across a wide range of stores and categories. We work tirelessly to bring you verified offers, ensuring you save money on your favorite brands. Start exploring today and make every purchase a smart one!
+                            <p>Welcome to Promo Carnivals, where we help you save money on all your favorite products. Whether you are looking for deals on groceries, clothes, electronics, or home appliances, we have covered you.</p>
+<br /><strong>Fresh Coupons and Deals Updated Daily</strong><br />
+<p>Our experts update coupons daily bases to ensure our valuable customers get the latest and best deals frequently.</p>
+<br /><strong>Unlock Special Offers You Won’t Find Elsewhere</strong><br />
+<p>You can easily get access to exclusive offers and special discounts that you will not find anywhere else. So, why wait? sign up today for our newsletter to stay in the loop and never miss a great deal.</p>
+<br /><strong>Your Smart Shopping Starts Here</strong><br />
+<p>Do not wait! Start exploring Promo Carnivals right now and discover how easy it is to save your money on everything you need. Happy shopping!</p>
+
                         </p>
                     </div>
 
