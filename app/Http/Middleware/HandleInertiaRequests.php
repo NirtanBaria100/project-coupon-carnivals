@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
-        $category  = Category::latest()->select(['slug','name','is_popular'])->limit(8)->get();
+        $category  = Category::latest()->select(['slug','name','is_popular'])->limit(10)->get();
         $coupons   = Coupon::latest()->where(['is_featured'=> 1, 'coupon_type'=>'deal'])->limit(5)->get();
         return [
             ...parent::share($request),

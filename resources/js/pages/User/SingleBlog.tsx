@@ -35,7 +35,7 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
             >
                 <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
                     {/* Breadcrumbs */}
-                    <nav className="text-sm  mb-6">
+                    <nav className="text-sm  flex mb-6">
                         <Link
                             href="/"
                             className="transition-colors duration-300"
@@ -134,8 +134,7 @@ const SingleBlog = ({ post, categories, recentPost }: Props) => {
                                 alt={post.title}
                                 className="w-full h-auto rounded-lg mb-8 shadow-md"
                             />
-                            <h1>Description:</h1>
-                            <hr /> <br />
+
                             {/* The dangerouslySetInnerHTML content will directly use the inline styles defined in dummyPosts */}
                             <div
                                 className="prose max-w-none leading-relaxed"

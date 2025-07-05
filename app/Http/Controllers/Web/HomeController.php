@@ -12,7 +12,7 @@ class HomeController extends Controller
 
     public function Index()
     {
-        $featuredCoupons = Coupon::where(['is_featured' => 1, 'is_published' => 1])->latest()->with('stores', function($query){
+        $featuredCoupons = Coupon::whereDate('expires' , '>' , Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])->latest()->with('stores', function($query){
             $query->first();
         })->limit(30)->get();
         $featuredCoupons->transform(function ($query) {
@@ -159,10 +159,15 @@ class HomeController extends Controller
             return redirect()->back()->with(['error' => true], 500);
         }
     }
-    public function searchBlogs(Request $request)
+    public function searchStores(Request $request)
     {
         $search = $request->data['searchValue'];
-        $blogs = Blog::where('is_published', 1)->where('title', 'LIKE', '%' . $search . '%')->select(['title', 'slug'])->get();
-        return response()->json(['data' => $blogs]);
+        $stores = Store::where('name', 'LIKE', '%' . $search . '%')->select(['name', 'slug'])->get();
+        $category = Category::where('name', 'LIKE', '%' . $search . '%')->select(['name', 'slug'])->get();
+
+        return response()->json(['data' => [
+            'stores' => $stores,
+            'category' => $category
+        ]]);
     }
 }

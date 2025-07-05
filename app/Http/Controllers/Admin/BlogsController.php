@@ -43,7 +43,7 @@ class BlogsController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = Str::slug($request->title) . '-' . time() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('post/', $filename, 'public'); // stores in storage/app/public/images
+            $path = $file->storeAs('post', $filename, 'public'); // stores in storage/app/public/images
             $appUrl = config("app.url");
             $validated['image'] = $appUrl.'/storage/' . $path; // public URL
         }
@@ -66,29 +66,29 @@ class BlogsController extends Controller
 
     public function update(Request $request, Blog $blog)
     {
-        $validated = $request->validate([
+        $rules = [
             'title' => 'required|string|max:255|unique:blogs,title,' . $blog->id,
             'slug' => 'required|string|max:255|unique:blogs,slug,' . $blog->id,
             'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
             'is_published' => 'boolean',
             'category_id' => 'nullable|exists:categories,id',
             'focus_keyphrase' => 'nullable|string',
             'seo_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
-        ]);
-
+        ];
+        if($request->hasFile('image')){
+            $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000';;
+        }
+        $validated = $request->validate($rules);
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = Str::slug($request->title) . '-' . time() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('post/', $filename, 'public'); // stores in storage/app/public/images
-             $appUrl = config("app.url");
-            $validated['image'] = $appUrl.'/storage/' . $path; // public URL
+            $path = $file->storeAs('post', $filename, 'public'); // stores in storage/app/public/images
+            $validated['image'] = url('/storage/' . $path); // public URL
         }
         $validated['published_at'] = $validated['is_published'] ? now() : null;
 
         $blog->update($validated);
-
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog updated successfully.');
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog created successfully.');
     }
 }

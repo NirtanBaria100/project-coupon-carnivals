@@ -166,9 +166,7 @@ const BlogPage = ({ blogs }: Props) => {
                                             {post.title}
                                         </Link>
                                     </h3>
-                                    <p className="mb-4 line-clamp-3 text-sm" style={{ color: 'var(--text-muted)' }}>
-                                        Tsete
-                                    </p>
+                                    
                                     <div className="flex items-center justify-between text-xs" style={{ color: 'var(--text-muted)' }}>
                                         <span>By {post.author?.name.toUpperCase() || ''}</span> {/* Used optional chaining for author.name */}
                                         <span>{post.date}</span>

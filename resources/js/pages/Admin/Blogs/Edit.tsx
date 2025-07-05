@@ -5,11 +5,13 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import AppLayout from '@/layouts/app-layout';
-import { Head, useForm } from '@inertiajs/react';
+import { toastDirection } from '@/lib/utils/Constants';
+import { Head, router, useForm } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 // import ' react-quill/dist/quill.snow.css';
 
 import { lazy, Suspense } from 'react';
+import toast from 'react-hot-toast';
 
 // const ReactQuill = lazy(() => import('react-quill'));
 
@@ -39,7 +41,8 @@ interface Props {
 
 export default function Edit({ blog, categories, csrfToken }: Props) {
     const [content, setContent] = useState('');
-    const { data, setData, patch, processing } = useForm({
+    const { data, setData, patch, processing, errors } = useForm({
+        id : blog.id,
         title: blog.title || '',
         slug: blog.slug || '',
         content: blog.content || '',
@@ -61,11 +64,45 @@ export default function Edit({ blog, categories, csrfToken }: Props) {
     };
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        patch(route('admin.blogs.update', 0));
+        const formData = new FormData();
+
+        formData.append('_method', 'PUT');
+        formData.append('title', data.title);
+        formData.append('slug', data.slug);
+        formData.append('content', data.content);
+        formData.append('category_id', data.category_id);
+        formData.append('focus_keyphrase', data.focus_keyphrase);
+        formData.append('seo_title', data.seo_title);
+        formData.append('is_published', data.is_published ? '1' : '0');
+        formData.append('focus_keyphrase', data.focus_keyphrase);
+        formData.append('seo_title', data.seo_title);
+        formData.append('meta_description', data.meta_description);
+
+
+
+        if (data.image) {
+            formData.append('image', data.image);
+        }
+
+        router.post(route('admin.blogs.update', data.id), formData, {
+            forceFormData: true,
+            preserveScroll: true,
+            preserveState: false,
+            onSuccess: () => toast.success('Blog updated!', { position: toastDirection }),
+            onError: (errs) => {
+                Object.values(errs).forEach((msg) =>
+                    toast.error(msg, {
+                        position: toastDirection,
+                    }),
+                );
+            },
+        });
     };
     useEffect(() => {
-        setContent(data.content);
-    }, []);
+        if (Object.keys(errors).length > 0) {
+            Object.values(errors).forEach((msg) => toast.error(msg));
+        }
+    }, [errors]);
 return (
     <AppLayout>
         <Head title="Edit Blog" />
@@ -84,7 +121,7 @@ return (
 
             <div>
                 <label className="block font-medium">Content</label>
-                <RichTextEditor content={content} setContent={setContent} setFormData={setData} name={'content'} csrfToken={csrfToken} path={'post'} />
+                <RichTextEditor content={data.content} setContent={setContent} setFormData={setData} name={'content'} csrfToken={csrfToken} path={'post'} />
             </div>
 
             <label className="block font-medium">Image</label>

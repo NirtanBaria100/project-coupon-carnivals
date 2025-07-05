@@ -3,7 +3,14 @@ import { Link, usePage } from '@inertiajs/react';
 import { UserIcon, MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import promocarnivals2Logo from '@/assets/promocarnivals2.png';
 import axios from 'axios';
-
+type Search = {
+    slug: string | null,
+    name: string | null,
+}
+type CategorySearch = {
+    slug: string | null,
+    name: string | null,
+}
 const Header = () => {
     // You can now safely remove '{ categories } = usePage().props;'
     // if no other part of the Header component relies on it directly for dynamic data.
@@ -11,7 +18,8 @@ const Header = () => {
     const { categories } = usePage().props;
 
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [storeResults, setstoreResults] = useState<Search[]>([]);
+    const [categoryResult, setCategoryResult] = useState<CategorySearch[]>([]);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -20,19 +28,7 @@ const Header = () => {
     const mobileMenuRef = useRef(null);
     const mobileCategoriesButtonRef = useRef(null);
 
-    // Define the static categories for both desktop and mobile headers
-    const staticDesktopCategories = [
-        { name: 'Travel', slug: 'travel' },
-        { name: 'Home & Garden', slug: 'home-garden' },
-        { name: 'Jewellery & Watches', slug: 'jewellery-watches' },
-        { name: 'Clothing', slug: 'clothing' },
-        { name: 'Sports', slug: 'sports' },
-        { name: 'Arts & Crafts', slug: 'arts-crafts' },
-        { name: 'Pet Supplies', slug: 'pet-supplies' },
-        { name: 'Electronics', slug: 'electronics' },
-        { name: 'Free Shipping', slug: 'free-shipping' },
-        { name: 'Gifts', slug: 'gifts' },
-    ];
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -62,17 +58,20 @@ const Header = () => {
         const searchValue = e.target.value;
         setSearchTerm(searchValue);
         if (searchValue.length > 0) {
-            axios.post('/search/blogs', {
+            axios.post('/search/stores', {
                 data: { searchValue: searchValue },
             }).then((res) => {
                 const result = res.data.data;
-                setSearchResults(result);
+                const category = result.category;
+                const stores = result.stores;
+                setCategoryResult(category);
+                setstoreResults(stores);
             }).catch(error => {
                 console.error("Error fetching search results:", error);
-                setSearchResults([]);
+                setstoreResults([]);
             });
         } else {
-            setSearchResults([]);
+            setstoreResults([]);
         }
     };
 
@@ -170,18 +169,34 @@ const Header = () => {
                                     color: 'var(--search-dropdown-text)'
                                 }}
                             >
-                                {searchResults.length > 0 ? (
-                                    searchResults.map((result) => (
-                                        <Link
-                                            key={result.slug}
-                                            href={`/blog/${result.slug}`} // Assuming search results are blogs
-                                            className="block px-4 py-2 text-left hover:bg-gray-100"
-                                            style={{ color: 'var(--text-default)' }}
-                                            onClick={() => setIsSearchFocused(false)}
-                                        >
-                                            {result.title}
-                                        </Link>
-                                    ))
+                                {storeResults.length || categoryResult.length > 0 ? (
+                                    <div className="space-y-2 px-3">
+                                        <p className="text-sm ms-4 font-bold  text-gray-700 mb-1 text-orange-500">Stores:</p>
+                                        {storeResults.length > 0 ? storeResults.map((result) => (
+                                            <Link
+                                                key={result.slug}
+                                                href={`/store/${result.slug}`}
+                                                className="block px-4 py-2 text-left hover:bg-gray-100 rounded"
+                                                style={{ color: 'var(--text-default)' }}
+                                                onClick={() => setIsSearchFocused(false)}
+                                            >
+                                                {result.name}
+                                            </Link>
+                                        ))   : <span className="block px-4 py-2 text-left hover:bg-gray-100 rounded text-red-500">No Stores Found</span>}
+                                        <p className="text-sm ms-4 font-bold  text-gray-700 mb-1 text-orange-500">Categories:</p>
+                                        {categoryResult.length > 0 ?  categoryResult.map((result) => (
+                                            <Link
+                                                key={result.slug}
+                                                href={`/category/${result.slug}`}
+                                                className="block px-4 py-2 text-left hover:bg-gray-100 rounded"
+                                                style={{ color: 'var(--text-default)' }}
+                                                onClick={() => setIsSearchFocused(false)}
+                                            >
+                                                {result.name}
+                                            </Link>
+                                        )) : <span className="block px-4 py-2 text-left hover:bg-gray-100 rounded text-red-500">No Categories Found</span>}
+                                    </div>
+
                                 ) : (
                                     <div className="text-center px-4 py-2 text-red-500">
                                         No Result Found

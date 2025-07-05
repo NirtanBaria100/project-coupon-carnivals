@@ -21,7 +21,7 @@ Route::prefix("")->name("home.")->group(function () {
     Route::get("/blog/{slug}", [HomeController::class, 'singleBlog']);
     Route::get("/all/blogs", [HomeController::class, 'AllBlogs']);
     Route::get("/blogs/category/{category}", [HomeController::class, 'AllBlogs']);
-    Route::post("/search/blogs", [HomeController::class, 'searchBlogs']);
+    Route::post("/search/stores", [HomeController::class, 'searchStores']);
 });
 Route::prefix('/rating')->name('ratings.')->group(function(){
     Route::post('/store', [HomeController::class,'storeRating'])->name('store');
@@ -93,7 +93,7 @@ Route::prefix('/rating')->name('ratings.')->group(function(){
         Route::get('/', [BlogsController::class, 'index'])->name('index');
         Route::get('/create', [BlogsController::class, 'create'])->name('create');
         Route::post('/', [BlogsController::class, 'store'])->name('store');
-        Route::patch('/{blog}', [BlogsController::class, 'update'])->name('update');
+        Route::put('/{blog}', [BlogsController::class, 'update'])->name('update');
         Route::get('/{blog}/edit', [BlogsController::class, 'edit'])->name('edit');
     });
 
