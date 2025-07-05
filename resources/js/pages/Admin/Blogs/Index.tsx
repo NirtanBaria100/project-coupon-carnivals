@@ -5,7 +5,17 @@ import AppLayout from '@/layouts/app-layout'
 import { Table, TableHeader, TableHead, TableRow, TableCell, TableBody } from '@/components/ui/table'
 import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
-
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 interface Blog {
     id: number
     title: string
@@ -20,13 +30,14 @@ interface Props {
 }
 
 export default function Index({ blogs }: Props) {
-    const { patch } = useForm()
+    const { patch, post, put } = useForm()
 
-    const togglePublish = (id: number, value: boolean) => {
-        patch(route('admin.blogs.update', id), {
-            is_published: value,
-            preserveScroll: true,
-        })
+
+    const deleteBlog = (blog) => {
+        put(route('admin.blogs.delete', blog));
+    }
+    const togglePublish = (blog) => {
+        put(route('admin.blogs.status', blog));
     }
 
     return (
@@ -66,12 +77,31 @@ export default function Index({ blogs }: Props) {
                             <TableCell>{blog.title}</TableCell>
                             <TableCell>{blog.slug}</TableCell>
                             <TableCell>
-                                <Switch checked={blog.is_published} onCheckedChange={(val) => togglePublish(blog.id, val)} />
+                                <Switch checked={blog.is_published} onCheckedChange={(val) => togglePublish(blog)} />
                             </TableCell>
                             <TableCell className="text-right space-x-2">
                                 <Link href={route('admin.blogs.edit', blog.id)}>
                                     <Button variant="outline" size="sm">Edit</Button>
                                 </Link>
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button variant="destructive" size="sm">
+                                            Delete
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                This action will permanently delete this coupon. This cannot be undone.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction onClick={() => deleteBlog(blog)}>Continue</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
                             </TableCell>
                         </TableRow>
                     ))}

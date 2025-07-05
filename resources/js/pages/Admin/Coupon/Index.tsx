@@ -28,7 +28,7 @@ interface Coupon {
     is_featured: boolean;
     is_verified: boolean;
     is_exclusive: boolean;
-    stores:[],
+    stores: [],
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -133,7 +133,7 @@ export default function Index() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                          {coupons.data.length === 0 && (
+                        {coupons.data.length === 0 && (
                             <TableRow>
                                 <TableCell colSpan={6} className="py-6 text-center">
                                     No coupons found.

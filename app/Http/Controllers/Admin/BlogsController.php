@@ -92,4 +92,14 @@ class BlogsController extends Controller
         $blog->update($validated);
         return redirect()->route('admin.blogs.index')->with('success', 'Blog created successfully.');
     }
+    public function delete(Blog $blog){
+        $blog->delete();
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog deleted successfully.');
+    }
+    public function toggleStatus(Blog $blog){
+        $blogPublished =  $blog->is_published == 1 ? 0 : 1 ;
+        $blog->is_published = $blogPublished ;
+        $blog->update();
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog updated successfully.');
+    }
 }

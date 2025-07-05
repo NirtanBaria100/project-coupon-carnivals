@@ -93,6 +93,8 @@ Route::prefix('/rating')->name('ratings.')->group(function(){
         Route::get('/create', [BlogsController::class, 'create'])->name('create');
         Route::post('/', [BlogsController::class, 'store'])->name('store');
         Route::put('/{blog}', [BlogsController::class, 'update'])->name('update');
+        Route::put('/delete/{blog}', [BlogsController::class, 'delete'])->name('delete');
+        Route::put('/toggle-status/{blog}', [BlogsController::class, 'toggleStatus'])->name('status');
         Route::get('/{blog}/edit', [BlogsController::class, 'edit'])->name('edit');
     });
 
