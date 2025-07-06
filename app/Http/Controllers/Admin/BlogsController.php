@@ -76,7 +76,6 @@ class BlogsController extends Controller
             'seo_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
         ];
-        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
         if($request->hasFile('image')){
             $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000';;
         }
@@ -88,6 +87,7 @@ class BlogsController extends Controller
             $validated['image'] = url('/storage/' . $path); // public URL
         }
         $validated['published_at'] = $validated['is_published'] ? now() : null;
+        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
 
         $blog->update($validated);
         return redirect()->route('admin.blogs.index')->with('success', 'Blog created successfully.');
