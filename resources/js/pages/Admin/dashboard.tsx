@@ -17,7 +17,7 @@ export default function Dashboard({ stats }: DashboardProps) {
         <AppLayout>
             <Head title="Dashboard" />
             <div className="grid gap-6 p-6 md:grid-cols-2 lg:grid-cols-4">
-                <Link href="/admin/coupons" className="hover:opacity-80">
+                <Link href={route("admin.coupons.index")} className="hover:opacity-80">
                     <Card>
                         <CardContent className="flex items-center gap-4 p-6">
                             <ClipboardList className="h-10 w-10 text-primary" />
@@ -29,7 +29,7 @@ export default function Dashboard({ stats }: DashboardProps) {
                     </Card>
                 </Link>
 
-                <Link href="/admin/stores" className="hover:opacity-80">
+                <Link href={route("admin.stores.index")} className="hover:opacity-80">
                     <Card>
                         <CardContent className="flex items-center gap-4 p-6">
                             <Store className="h-10 w-10 text-primary" />
@@ -41,7 +41,7 @@ export default function Dashboard({ stats }: DashboardProps) {
                     </Card>
                 </Link>
 
-                <Link href="/admin/categories" className="hover:opacity-80">
+                <Link href={route("admin.categories.index")} className="hover:opacity-80">
                     <Card>
                         <CardContent className="flex items-center gap-4 p-6">
                             <BarChart2 className="h-10 w-10 text-primary" />
@@ -53,7 +53,7 @@ export default function Dashboard({ stats }: DashboardProps) {
                     </Card>
                 </Link>
 
-                <Link href="/admin/tags" className="hover:opacity-80">
+                <Link href={route("admin.tags.index" )}className="hover:opacity-80">
                     <Card>
                         <CardContent className="flex items-center gap-4 p-6">
                             <Tag className="h-10 w-10 text-primary" />

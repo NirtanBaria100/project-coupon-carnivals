@@ -33,7 +33,7 @@ interface Category {
     updated_at: string;
 }
 
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Categories', href: '/admin/categories' }];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Categories', href: route('admin.categories.index') }];
 
 export default function Index() {
     const { props, url } = usePage<{
@@ -55,7 +55,7 @@ export default function Index() {
     const handleSearch = () => {
         setPage('1');
         router.get(
-            '/admin/categories',
+            route('admin.categories.index'),
             {
                 search,
                 sort: sortField,
@@ -75,7 +75,7 @@ export default function Index() {
         setSortDirection(direction);
 
         router.get(
-            '/admin/categories',
+            route('admin.categories.index'),
             {
                 search,
                 sort: field,
@@ -98,7 +98,7 @@ export default function Index() {
             <div className="p-5">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">Categories</h1>
-                    <Link href="/admin/categories/create">
+                    <Link href={route("admin.categories.create")}>
                         <Button>Add Category</Button>
                     </Link>
                 </div>
@@ -152,7 +152,7 @@ export default function Index() {
                                 <TableCell>{category.icon || '-'}</TableCell>
                                 <TableCell>{category.is_popular ? 'Yes' : 'No'}</TableCell>
                                 <TableCell className="space-x-2 text-right">
-                                    <Link href={`/admin/categories/${category.id}/edit`}>
+                                    <Link href={route(`admin.categories.edit`,category.id)}>
                                         <Button variant="outline" size="sm">
                                             Edit
                                         </Button>
@@ -193,7 +193,7 @@ export default function Index() {
                     onPageChange={(newPage) => {
                         setPage(newPage);
                         router.get(
-                            '/admin/categories',
+                            route('admin.categories.index'),
                             {
                                 search,
                                 sort: sortField,

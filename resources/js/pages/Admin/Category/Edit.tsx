@@ -95,8 +95,8 @@ export default function Edit({ category, categories }: EditProps) {
     };
 
     const breadcrumbs = [
-        { title: 'Categories', href: '/admin/categories' },
-        { title: 'Edit Category', href: `/admin/categories/${category.id}/edit` },
+        { title: 'Categories', href: route('admin.categories.index') },
+        { title: 'Edit Category', href: route(`admin.categories.edit`,category.id) },
     ];
 
     return (

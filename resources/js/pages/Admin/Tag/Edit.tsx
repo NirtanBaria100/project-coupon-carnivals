@@ -46,8 +46,8 @@ export default function Edit({ tag }: EditProps) {
   }, [errors]);
 
   const breadcrumbs = [
-    { title: 'Tags', href: '/admin/tags/' },
-    { title: 'Edit Tag', href: `/admin/tags/${tag.id}/edit` },
+    { title: 'Tags', href: route('admin.tags.index') },
+    { title: 'Edit Tag', href: route(`admin.tags.edit`,tag.id) },
   ];
 
   return (

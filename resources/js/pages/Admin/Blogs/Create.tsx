@@ -1,4 +1,3 @@
-// resources/js/Pages/Admin/Blogs/Create.tsx
 
 import BlogEditor from '@/components/BlogEditor';
 import { Button } from '@/components/ui/button';
@@ -49,8 +48,8 @@ export default function Create({ categories , csrfToken }: CreateProps) {
     };
 
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Blogs', href: '/admin/blogs' },
-        { title: 'Create Blog', href: '/admin/blogs/create' },
+        { title: 'Blogs', href: route("admin.blogs.index") },
+        { title: 'Create Blog', href: route('admin.blogs.create') },
     ];
 
     useEffect(() => {

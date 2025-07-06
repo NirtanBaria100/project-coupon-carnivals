@@ -16,7 +16,7 @@ const Header = () => {
         { id: 2, name: 'Free Shipping Offer', type: 'Offer', link: '/offer/free-shipping' },
         { id: 3, name: 'Electronics Category', type: 'Category', link: '/category/electronics' },
         { id: 4, name: 'Fashion Deals', type: 'Offer', link: '/offer/fashion-deals' },
-        { id: 5, name: 'Home & Garden Store', type: 'Store', link: '/store/home-garden' },
+        { id: 5, name: 'Home & Garden Store', type: 'Store', link: '/store/home-and-garden' },
         { id: 6, name: 'Discount Codes for XYZ', type: 'Offer', link: '/offer/xyz-discount' },
         { id: 7, name: 'Travel Vouchers', type: 'Offer', link: '/offer/travel-vouchers' },
         { id: 8, name: 'Beauty Products Sale', type: 'Offer', link: '/offer/beauty-sale' },
