@@ -74,8 +74,7 @@ class HomeController extends Controller
         $category = Category::latest()->where('slug', $slug)->first();
         $coupons = [];
         if (!empty($category)) {
-            $storeIds = Store::where('category_id',$category->id)->pluck('id');
-            $categoryCoupons = \DB::table('coupon_store')->whereIn('store_id', $storeIds)->pluck('coupon_id');
+            $categoryCoupons = \DB::table('category_coupon')->where('category_id', $category->id)->pluck('coupon_id');
             $coupons = Coupon::whereIn('id', $categoryCoupons)->where('is_published', 1)->with('stores')->whereDate('expires', '>', Carbon::now())->get();
             $coupons->transform(function ($query) {   $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
             if(!empty($query->expires)){
