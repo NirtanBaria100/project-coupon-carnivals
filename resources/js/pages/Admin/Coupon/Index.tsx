@@ -39,7 +39,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index() {
-    const { patch, delete: destroy } = useForm();
+    const { patch, delete: destroy, put } = useForm();
     const { props, url } = usePage<{
         coupons: PaginatedData<Coupon>;
         filters: {
@@ -74,7 +74,7 @@ export default function Index() {
     };
 
     const toggleStatus = (id: number, field: keyof Coupon, value: boolean) => {
-        patch(route(`admin.coupons.toggle`,id), {
+        put(route(`admin.coupons.toggle`, { 'field': field, 'coupon': id, }), {
             [field]: value,
             preserveScroll: true,
         });

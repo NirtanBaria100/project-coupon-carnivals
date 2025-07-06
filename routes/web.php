@@ -53,7 +53,7 @@ Route::prefix('99k356ha56')->middleware('auth')->group(function () {
         Route::delete('/{coupon}', [CouponsController::class, 'destroy'])->name('destroy');
         Route::get('/{coupon}/edit', [CouponsController::class, 'edit'])->name('edit');
         Route::put('/{coupon}', [CouponsController::class, 'update'])->name('update');
-        Route::patch('/{coupon}/toggle', [CouponsController::class, 'toggleStatus'])->name('toggle');
+        Route::put('/{coupon}/{field}/toggle', [CouponsController::class, 'toggleStatus'])->name('toggle');
         Route::get('/store-types/{storeType}/reorder', [ReorderController::class, 'edit'])->name('reorder.edit');
         Route::post('/store-types/{storeType}/reorder', [ReorderController::class, 'updateOrder'])->name('reorder');
 

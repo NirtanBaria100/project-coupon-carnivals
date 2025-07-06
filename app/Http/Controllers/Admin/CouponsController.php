@@ -186,22 +186,12 @@ class CouponsController extends Controller
 
 
 
-    public function toggleStatus(Request $request, Coupon $coupon)
+    public function toggleStatus(Request $request, Coupon $coupon , $field = null)
     {
-        $field = array_keys($request->all())[0]; // Get the field being updated
-        $value = $request->input($field);
+        $coupon->$field = $coupon->$field == 1 ? 0 : 1 ;
 
-        // Validate the field and value
-        $allowedFields = ['is_published', 'is_featured', 'is_verified', 'is_exclusive'];
-
-        if (!in_array($field, $allowedFields)) {
-            return response()->json(['error' => 'Invalid field'], 422);
-        }
-
-        $coupon->$field = (bool) $value;
-        $coupon->save();
-
-        return response()->json(['success' => true, 'message' => 'Status updated']);
+        $coupon->update();
+        return redirect()->route('admin.coupons.index')->with('success', 'Coupon Updated successfully.');
     }
 
     // Remove the specified resource from storage.
