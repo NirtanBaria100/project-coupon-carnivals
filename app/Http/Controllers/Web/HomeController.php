@@ -170,4 +170,8 @@ class HomeController extends Controller
             'category' => $category
         ]]);
     }
+
+    public function AllCategoryPage() {
+        return Inertia::render('User/AllCategoryPage');
+    }
 }

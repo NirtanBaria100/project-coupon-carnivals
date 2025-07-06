@@ -19,6 +19,7 @@ Route::prefix("")->name("home.")->group(function () {
     Route::get("/store/{slug}", [HomeController::class, 'StorePage']);
     Route::get("/stores", [HomeController::class, 'AllStorePage']);
     Route::get("/category/{slug}", [HomeController::class, 'CategoryPage']);
+    Route::get("/categories", [HomeController::class, 'AllCategoryPage']);
     Route::get("/blog/{slug}", [HomeController::class, 'singleBlog']);
     Route::get("/all/blogs", [HomeController::class, 'AllBlogs']);
     Route::get("/blogs/category/{category}", [HomeController::class, 'AllBlogs']);
