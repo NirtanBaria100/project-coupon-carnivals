@@ -1,7 +1,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, Link } from '@inertiajs/react';
 import { Card, CardContent } from '@/components/ui/card';
-import { BarChart2, Tag, Store, ClipboardList } from 'lucide-react';
+import { BarChart2, Tag, Store, ClipboardList, UserIcon } from 'lucide-react';
 
 interface DashboardProps {
     stats: {
@@ -9,6 +9,7 @@ interface DashboardProps {
         totalStores: number;
         totalCategories: number;
         totalTags: number;
+        totalUsers: number | 0;
     };
 }
 
@@ -41,6 +42,17 @@ export default function Dashboard({ stats }: DashboardProps) {
                     </Card>
                 </Link>
 
+                <Link href={route("admin.users.index")} className="hover:opacity-80">
+                    <Card>
+                        <CardContent className="flex items-center gap-4 p-6">
+                            <UserIcon className="h-10 w-10 text-primary" />
+                            <div>
+                                <h2 className="text-lg font-semibold">Active Users</h2>
+                                <p className="text-2xl font-bold">{stats.totalUsers}</p>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </Link>
                 <Link href={route("admin.categories.index")} className="hover:opacity-80">
                     <Card>
                         <CardContent className="flex items-center gap-4 p-6">
