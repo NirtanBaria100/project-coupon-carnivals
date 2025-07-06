@@ -12,7 +12,7 @@ interface SimilarStore {
     name: string | null,
     slug: string | null,
 }
-interface FeaturedStore {
+interface FeaturedLinks {
     name: string | null,
     slug: string | null,
 }
@@ -65,10 +65,10 @@ interface Props {
     similarStores: SimilarStore[],
     coupons: Coupon[],
     expiredCoupons: ExpiredCoupon[],
-    featuredStores: FeaturedStore[]
+    featuredLinks: FeaturedLinks[]
 }
 
-const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredStores }: Props) => {
+const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLinks }: Props) => {
 
     const [userRating, setUserRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
@@ -222,13 +222,13 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                             </div>}
 
                             {/* Featured Links */}
-                            {featuredStores.length > 0 && (
+                            {featuredLinks.length > 0 && (
                                 <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                                     <h3 className="text-xl font-bold text-gray-800 mb-4">Featured Links</h3>
                                     <ul className="list-disc list-inside space-y-2 text-blue-600 storepage_featuredlink">
-                                        {featuredStores.map((store, index) => (
+                                        {featuredLinks.map((store, index) => (
                                             <li key={index}>
-                                                <Link href={'/store/' + store.slug} className="hover:underline">
+                                                <Link href={'/category/' + store.slug} className="hover:underline">
                                                     {store.name ?? "N/A"}
                                                 </Link>
                                             </li>
@@ -265,7 +265,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
                         </p>
                     </div>
                         : <></>}
-                   
+
                 </div>
             </div>
         </WebLayout>

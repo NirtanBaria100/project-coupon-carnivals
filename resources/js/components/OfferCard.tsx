@@ -244,7 +244,7 @@ const OfferCard = ({
                         <div className="mb-6 flex flex-col items-center">
                             <button onClick={handleOfferAction}>
                                 <img
-                                    src={featured_image || defaultStoreImage}
+                                    src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo}
                                     alt={storeName}
                                     className="mb-4 border-2 shadow-sm w-full h-40"
                                     style={{ borderColor: 'var(--modal-logo-border)' }}

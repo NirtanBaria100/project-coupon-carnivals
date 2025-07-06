@@ -37,10 +37,10 @@ class HomeController extends Controller
     }
     public function StorePage($slug)
     {
-        $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl','home_url', 'name', 'desc', 'extra_info','seo_title','meta_description','focus_keyphrase', 'thumbnail'])->first();
+        $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl','home_url', 'name', 'desc', 'extra_info','seo_title','meta_description','focus_keyphrase', 'thumbnail','category_id'])->first();
         $store->totalRatings = count($store->storeRatings->where('is_approved')) ?? 0 ;
-        $similarStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->limit(8)->get();
-        $featuredStores = Store::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_featured',1)->limit(8)->get();
+        $similarStores = Store::latest()->whereNot('slug', $slug)->where('category_id' , $store->category_id)->select(['name', 'slug'])->limit(8)->get();
+        $featuredLinks = Category::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_popular',1)->limit(8)->get();
         $storeCoupons = \DB::table('coupon_store')->where('store_id', $store->id)->pluck('coupon_id');
         $coupons = Coupon::whereIn('id', $storeCoupons)->where('is_published', 1)->with('stores')
             ->where(function ($query) {
@@ -66,7 +66,7 @@ class HomeController extends Controller
             'coupons' => $coupons,
             'expiredCoupons' => $expiredCoupons,
             'similarStores' => $similarStores,
-            'featuredStores'=> $featuredStores,
+            'featuredLinks'=> $featuredLinks,
         ]);
     }
     public function CategoryPage($slug)
@@ -74,7 +74,8 @@ class HomeController extends Controller
         $category = Category::latest()->where('slug', $slug)->first();
         $coupons = [];
         if (!empty($category)) {
-            $categoryCoupons = \DB::table('category_coupon')->where('category_id', $category->id)->pluck('coupon_id');
+            $storeIds = Store::where('category_id',$category->id)->pluck('id');
+            $categoryCoupons = \DB::table('coupon_store')->whereIn('store_id', $storeIds)->pluck('coupon_id');
             $coupons = Coupon::whereIn('id', $categoryCoupons)->where('is_published', 1)->with('stores')->whereDate('expires', '>', Carbon::now())->get();
             $coupons->transform(function ($query) {   $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
             if(!empty($query->expires)){
