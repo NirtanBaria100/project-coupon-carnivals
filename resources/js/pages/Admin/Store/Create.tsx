@@ -6,15 +6,25 @@ import AppLayout from '@/layouts/app-layout';
 import { toastDirection } from '@/lib/utils/Constants';
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
+import Select from 'react-select';
 import { FormEventHandler, useEffect } from 'react';
 import toast from 'react-hot-toast';
-
-export default function Create() {
+import customSelectStyles from '@/components/ui/CustomSelectStyles';
+interface Category {
+    name: string,
+    id: number,
+}
+interface Props {
+    categories: Category[],
+}
+export default function Create({ categories }: Props) {
+    const categoryOptions = categories?.map((cat) => ({ value: cat.id.toString(), label: cat.name })) ?? [];
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         slug: '',
         desc: '',
         home_url: '',
+        category_id:'',
         affiliate_irl: '',
         thumbnail: null as File | null,
         is_featured: false,
@@ -41,7 +51,7 @@ export default function Create() {
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post('/admin/stores/create', {
+        post(route('admin.stores.create'), {
             forceFormData: true, // Important for file upload
             onSuccess: () => toast.success('Coupon created!', { position: toastDirection }), // Optional: reset form after success,
         });
@@ -92,6 +102,14 @@ export default function Create() {
                             value={data.slug}
                             onChange={handleChange}
                             className="w-full rounded border px-3 py-2"
+                        />
+                        <label className="block font-medium">Stores</label>
+                        <Select
+                            value={data.category_id}
+                            options={categoryOptions}
+                            onChange={(selected) => setData('category_id', selected)}
+                            placeholder="Select store category"
+                            styles={customSelectStyles}
                         />
 
                         <textarea

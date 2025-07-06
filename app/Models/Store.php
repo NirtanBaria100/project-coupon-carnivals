@@ -10,6 +10,7 @@ class Store extends Model
         'name',
         'slug',
         'desc',
+        'category_id',
         'home_url',
         'affiliate_irl',
         'thumbnail',

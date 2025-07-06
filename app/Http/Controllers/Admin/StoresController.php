@@ -44,7 +44,9 @@ class StoresController extends Controller
     // Show the form for creating a new store
     public function create()
     {
-        return Inertia::render('Admin/Store/Create');
+        return Inertia::render('Admin/Store/Create',[
+            'categories' => Category::select('id', 'name')->get(),
+        ]);
     }
 
     // Store a newly created store in storage
@@ -57,6 +59,7 @@ class StoresController extends Controller
             'slug' => 'required|string|max:255|unique:stores,slug',
             'desc' => 'nullable|nullable|string',
             'home_url' => 'nullable|nullable|url',
+            'category_id' => 'required',
             'affiliate_irl' => 'nullable|nullable|url',
             'thumbnail' => 'nullable|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'is_featured' => 'boolean',
@@ -70,7 +73,7 @@ class StoresController extends Controller
             $appUrl = config("app.url");
             $validated['thumbnail'] = $appUrl . '/storage/' . $path; // public URL
         }
-        dd($validated);
+        $validated['category_id'] = $validated['category_id']['value'];
         Store::create($validated);
 
         return redirect()->route('admin.stores.index')->with('success', 'Store created successfully.');
@@ -93,6 +96,7 @@ class StoresController extends Controller
 
         return Inertia::render('Admin/Store/Edit', [
             'store' => $store,
+            'categories' => Category::select('id', 'name')->get(),
         ]);
     }
 
@@ -106,6 +110,7 @@ class StoresController extends Controller
             'affiliate_irl' => 'nullable|url',
             'thumbnail' => 'nullable|image|max:2048',
             'is_featured' => 'boolean',
+            'category_id' => 'required',
             'extra_info' => 'nullable|string',
             'focus_keyphrase' => 'nullable|string|max:255',
             'seo_title' => 'nullable|string|max:255',
