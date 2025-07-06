@@ -53,6 +53,7 @@ class CategoryController extends Controller
             'parent_cat' => 'nullable|exists:categories,id',
             'icon' => 'nullable|string',
             'image_icon' => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
+            'single_line_desc' => 'nullable|string|max:255',
             'is_popular' => 'boolean',
             'focus_keyphrase' => 'nullable|string|max:255',
             'seo_title' => 'nullable|string|max:255',
