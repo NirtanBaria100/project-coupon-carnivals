@@ -40,6 +40,8 @@ Route::prefix('99k356ha56')->middleware('auth')->group(function () {
     // Users Route
     Route::prefix('users')->name("admin.users.")->group(function(){
         Route::get('/', [UserController::class,'index'])->name('index');
+        Route::put('/{user}/destroy', [UserController::class,'destroy'])->name('destroy');
+        Route::put('/{user}/status', [UserController::class,'toggleStatus'])->name('status');
     });
 
     // Coupon Routes

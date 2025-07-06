@@ -23,7 +23,7 @@ import { Switch } from '@/components/ui/switch';
 interface User {
     id: number;
     name: string;
-    email:string | '',
+    email: string | '',
     email_verified_at: string | "",
 }
 
@@ -53,7 +53,7 @@ export default function Index() {
         filters: { search?: string; sort?: string; direction?: string };
     }>();
     const { users, filters } = props;
-    const { patch, delete: destroy } = useForm();
+    const { patch, delete: destroy, put } = useForm();
 
     const [search, setSearch] = useState(filters.search && '');
     const [sort, setSort] = useState(filters.sort && 'created_at');
@@ -83,14 +83,11 @@ export default function Index() {
         setDirection(newDirection);
         router.get(route('admin.stores.index'), { search, sort: column, direction: newDirection }, { preserveScroll: true });
     };
-    const toggleStatus = (id: number, field: keyof Coupon, value: boolean) => {
-        patch(route(`admin.coupons.toggle`,id), {
-            [field]: value,
-            preserveScroll: true,
-        });
+    const toggleStatus = (user) => {
+        put(route('admin.users.status', user));
     };
-    const deleteStore = (store: Store) => {
-        router.delete(route('admin.stores.destroy', store.id), { preserveScroll: true });
+    const deleteStore = (user) => {
+        put(route('admin.users.destroy', user));
     };
 
     return (
@@ -119,7 +116,7 @@ export default function Index() {
                             <TableHead onClick={() => handleSort('email')} className="cursor-pointer">
                                 Email {sort === 'email' && (direction === 'asc' ? '↑' : '↓')}
                             </TableHead>
-                            <TableHead  className="cursor-pointer">
+                            <TableHead className="cursor-pointer">
                                 Account Verified
                             </TableHead>
                             <TableHead className="text-right">Actions</TableHead>
@@ -139,34 +136,30 @@ export default function Index() {
                                 <TableCell>{user.name}</TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell>
-                                    <Switch checked={user.email_verified_at} onCheckedChange={(val) => toggleStatus(user.id, 'email_verified_at', val)} />
+                                    <Switch checked={user.email_verified_at} onCheckedChange={() => { toggleStatus(user) }} />
                                 </TableCell>
-                                    <TableCell className="space-x-2 text-right">
-                                        <Link href={route("admin.users.edit",user.id)}>
-                                            <Button variant="outline" size="sm">
-                                                Edit
+                                <TableCell className="space-x-2 text-right">
+
+                                    <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <Button variant="destructive" size="sm">
+                                                Delete
                                             </Button>
-                                        </Link>
-                                        <AlertDialog>
-                                            <AlertDialogTrigger asChild>
-                                                <Button variant="destructive" size="sm">
-                                                    Delete
-                                                </Button>
-                                            </AlertDialogTrigger>
-                                            <AlertDialogContent>
-                                                <AlertDialogHeader>
-                                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                    <AlertDialogDescription>
-                                                        This action will permanently delete this coupon. This cannot be undone.
-                                                    </AlertDialogDescription>
-                                                </AlertDialogHeader>
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                    <AlertDialogAction onClick={() => deleteStore(user)}>Continue</AlertDialogAction>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
-                                        </AlertDialog>
-                                    </TableCell>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    This action will permanently delete this coupon. This cannot be undone.
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                <AlertDialogAction onClick={() => deleteStore(user)}>Continue</AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
