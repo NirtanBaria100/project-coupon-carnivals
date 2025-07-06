@@ -31,7 +31,18 @@ interface Props {
     featuredcategories: Category[]
 }
 const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
-
+    const staticCategories = [
+        { slug: "travel", name: "Travel" },
+        { slug: "home-and-garden", name: "Home & Garden" },
+        { slug: "jewellery-watches", name: "Jewellery & Watches" },
+        { slug: "clothing", name: "Clothing" },
+        { slug: "sports", name: "Sports" },
+        { slug: "arts-crafts", name: "Arts & Crafts" },
+        { slug: "pet-supplies", name: "Pet Supplies" },
+        { slug: "electronics", name: "Electronics" },
+        { slug: "free-shipping", name: "Free Shipping" },
+        { slug: "gifts", name: "Gifts" }
+    ];
     return (
         <WebLayout>
             <PageMeta title={post.seo_title} description={post.meta_description} keywords={post.focus_keyphrase} />
@@ -114,7 +125,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                         className="font-semibold"
                                         style={{ color: "var(--primary-orange)" }}
                                     >
-                                        {post.author.name.toUpperCase()}
+                                        {/* {post.author.name.toUpperCase()} */}
                                     </span>
                                 </span>
                                 <span>•</span>
@@ -221,8 +232,8 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                     Blog Categories
                                 </h3>
                                 <ul className="space-y-2">
-                                    {featuredcategories.length > 0 ? featuredcategories.map((category) => (
-                                        <li key={category.id}>
+                                    {staticCategories.length > 0 ? staticCategories.map((category) => (
+                                        <li key={category.slug}>
                                             <Link
                                                 href={`/blogs/category/${category.slug}`}
                                                 className="flex items-center px-2 py-1 transition-all duration-300 whitespace-nowrap"
@@ -245,7 +256,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </WebLayout>
