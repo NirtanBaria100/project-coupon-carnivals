@@ -25,11 +25,15 @@ Route::prefix("")->name("home.")->group(function () {
     Route::get("/blogs/category/{category}", [HomeController::class, 'AllBlogs']);
     Route::post("/search/stores", [HomeController::class, 'searchStores']);
 });
+
+
 Route::prefix('/rating')->name('ratings.')->group(function(){
     Route::post('/store', [HomeController::class,'storeRating'])->name('store');
 });
-    // Admin Dashboard or Home
-    Route::prefix('99k356ha56')->middleware('auth')->group(function () {
+
+
+// Admin Dashboard or Home
+Route::prefix('99k356ha56')->middleware('auth')->group(function () {
 
     Route::get("/", [DashboardController::class, 'index'])->name("home");
     Route::get("/", [DashboardController::class, 'index'])->name("admin.dashboard");
@@ -111,9 +115,12 @@ Route::prefix('/rating')->name('ratings.')->group(function(){
 Route::post('store/editorImage', [RichTextEditorController::class ,'storeImage']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    Route::prefix('99k356ha56')->group(function (){
+
+        Route::get('dashboard', function () {
+            return Inertia::render('dashboard');
+        })->name('dashboard');
+    });
 });
 
 

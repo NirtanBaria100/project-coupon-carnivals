@@ -89,43 +89,48 @@ class StoresController extends Controller
     }
 
     // Show the form for editing the specified store
-    public function edit(Store $store)
-    {
+ public function edit(Store $store)
+{
+    return Inertia::render('Admin/Store/Edit', [
+        'store' => $store,
+        'categories' => Category::select('id', 'name')->get(),
+    ]);
+}
 
+ public function update(Request $request, Store $store)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'slug' => 'required|string|max:255|unique:stores,slug,' . $store->id,
+        'desc' => 'nullable|string',
+        'home_url' => 'nullable|url',
+        'affiliate_irl' => 'nullable|url',
+        'thumbnail' => 'nullable|image|max:2048',
+        'is_featured' => 'boolean',
+        'category_id' => 'required',
+        'extra_info' => 'nullable|string',
+        'focus_keyphrase' => 'nullable|string|max:255',
+        'seo_title' => 'nullable|string|max:255',
+        'meta_description' => 'nullable|string|max:255',
+    ]);
 
+    $validated['slug'] = strtolower(str_replace(' ', '-', $validated['slug']));
 
-        return Inertia::render('Admin/Store/Edit', [
-            'store' => $store,
-            'categories' => Category::select('id', 'name')->get(),
-        ]);
+    // Handle thumbnail upload if present
+    if ($request->hasFile('thumbnail')) {
+        $appUrl = config('app.url');
+        $validated['thumbnail'] = $appUrl . '/storage/' . $request->file('thumbnail')->store('thumbnails', 'public');
     }
 
-    public function update(Request $request, Store $store)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:stores,slug,' . $store->id,
-            'desc' => 'nullable|string',
-            'home_url' => 'nullable|url',
-            'affiliate_irl' => 'nullable|url',
-            'thumbnail' => 'nullable|image|max:2048',
-            'is_featured' => 'boolean',
-            'category_id' => 'required',
-            'extra_info' => 'nullable|string',
-            'focus_keyphrase' => 'nullable|string|max:255',
-            'seo_title' => 'nullable|string|max:255',
-            'meta_description' => 'nullable|string|max:255',
-        ]);
-        $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
-        if ($request->hasFile('thumbnail')) {
-            $appUrl = config("app.url");
-            $validated['thumbnail'] = $appUrl . '/storage/' . $request->file('thumbnail')->store('thumbnails', 'public');
-        }
-
-        $store->update($validated);
-
-        return redirect()->route('admin.stores.index')->with('success', 'Store updated successfully.');
+    // If category is passed as array (e.g., from react-select), extract the actual value
+    if (is_array($validated['category_id']) && isset($validated['category_id']['value'])) {
+        $validated['category_id'] = $validated['category_id']['value'];
     }
+
+    $store->update($validated);
+
+    return redirect()->route('admin.stores.index')->with('success', 'Store updated successfully.');
+}
 
 
     // Remove the specified store from storage

@@ -146,7 +146,7 @@ const Footer = () => {
                 <p>&copy; {new Date().getFullYear()} PromoCarnivals. All rights reserved.
                 </p>
                 <p className="mt-3">
-                    As an affiliate partner, we may earn a commission from qualifying purchases made through links on our site. This helps support our work and allows us to continue providing you with the best deals and coupons. Thank you for your support!
+                   Nexura Systems Ltd • 124 City Road, London, United Kingdom, EC1V 2NX • Company Number: 15966170
                 </p>
             </div>
         </footer>

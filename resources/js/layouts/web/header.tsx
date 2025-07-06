@@ -135,7 +135,7 @@ const Header = () => {
                         <input
                             ref={searchInputRef}
                             type="text"
-                            placeholder="Search for stores and categories"
+                            placeholder="Search for stores"
                             className="w-full h-10 px-3 pl-10 text-sm rounded-full border focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300"
                             style={{
                                 backgroundColor: 'var(--search-input-bg)',
