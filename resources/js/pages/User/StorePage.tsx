@@ -189,7 +189,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredSto
 
                                 <OfferCard key={index} coupon_id={offer.id} store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} type={"stores"} />
                             ))}</> : <>
-                                <hr /> <br /> <span className="text-red-500">No Expired Coupons Available</span>
+                                {/* <hr /> <br /> <span className="text-red-500">No Expired Coupons Available</span> */}
                             </>
                             }
                         </div>

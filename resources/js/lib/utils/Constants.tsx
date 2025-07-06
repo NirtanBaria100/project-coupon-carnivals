@@ -73,4 +73,7 @@ export const ADMIN_NAVITIEMS = [
 ];
 
 
-export const toastDirection = "bottom-right"
+export const toastDirection = "bottom-right";
+
+
+export const STATIC_CATEGORIES = 
