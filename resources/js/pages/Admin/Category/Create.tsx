@@ -153,13 +153,7 @@ export default function Create({ categories }: CreateProp) {
                         <Switch checked={data.is_popular} onCheckedChange={(checked) => handleSwitch('is_popular', checked)} />
                     </div>
 
-                    <input
-                        name="single_line_desc"
-                        placeholder="Short Description"
-                        value={data.single_line_desc}
-                        onChange={handleChange}
-                        className="w-full rounded border px-3 py-2"
-                    />
+                 
 
                     <h1 className="text-xl font-semibold text-gray-800 dark:text-white">SEO</h1>
 

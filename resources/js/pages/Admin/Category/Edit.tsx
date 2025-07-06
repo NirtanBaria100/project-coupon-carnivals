@@ -64,7 +64,7 @@ export default function Edit({ category, categories }: EditProps) {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('_method', 'PUT'); 
+        formData.append('_method', 'PUT');
 
         // Append all other fields
         formData.append('name', data.name);
@@ -172,14 +172,7 @@ export default function Edit({ category, categories }: EditProps) {
                         <Switch checked={data.is_popular} onCheckedChange={(checked) => handleSwitch('is_popular', checked)} />
                     </div>
 
-                    <input
-                        name="single_line_desc"
-                        placeholder="Short Description"
-                        value={data.single_line_desc}
-                        onChange={handleChange}
-                        className="w-full rounded border px-3 py-2"
-                    />
-
+                
                     <h1 className="text-xl font-semibold text-gray-800 dark:text-white">SEO</h1>
 
                     <input
