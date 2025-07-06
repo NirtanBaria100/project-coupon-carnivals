@@ -29,7 +29,7 @@ Route::prefix('/rating')->name('ratings.')->group(function(){
     Route::post('/store', [HomeController::class,'storeRating'])->name('store');
 });
     // Admin Dashboard or Home
-    Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::prefix('99k356ha56')->middleware('auth')->group(function () {
 
     Route::get("/", [DashboardController::class, 'index'])->name("home");
     Route::get("/", [DashboardController::class, 'index'])->name("admin.dashboard");

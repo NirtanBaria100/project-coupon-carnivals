@@ -163,15 +163,16 @@ class HomeController extends Controller
     {
         $search = $request->data['searchValue'];
         $stores = Store::where('name', 'LIKE', '%' . $search . '%')->select(['name', 'slug'])->get();
-        $category = Category::where('name', 'LIKE', '%' . $search . '%')->select(['name', 'slug'])->get();
 
         return response()->json(['data' => [
             'stores' => $stores,
-            'category' => $category
         ]]);
     }
 
     public function AllCategoryPage() {
-        return Inertia::render('User/AllCategoryPage');
+        $allCategories = Category::latest()->get();
+        return Inertia::render('User/AllCategoryPage',[
+            'allCategories' => $allCategories
+        ]);
     }
 }

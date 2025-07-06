@@ -245,11 +245,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-white p-6 sm:p-8 rounded-lg shadow-md my-8 w-full min-h-[8rem] flex items-center justify-center border border-gray-200 affiliate_line">
-                        <p className="text-center text-gray-700 text-base leading-relaxed">
-                            As an affiliate partner, we may earn a commission from qualifying purchases made through links on our site. This helps support our work and allows us to continue providing you with the best deals and coupons. Thank you for your support!
-                        </p>
-                    </div>
+                    
                 </div>
             </div>
         </WebLayout>

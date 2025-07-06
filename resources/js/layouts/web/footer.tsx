@@ -60,7 +60,7 @@ const Footer = () => {
                     {/* Heading: pure white */}
                     <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--footer-heading-color)' }}>Categories</h3> {/* Changed heading to "Categories" */}
                     <ul className="space-y-3">
-                        {categories.map((category) => ( // Map over the new static footerCategories array
+                        {footerCategories.map((category) => ( // Map over the new static footerCategories array
                             <li key={category.slug}>
                                 <Link
                                     href={`/category/${category.slug}`}
@@ -132,6 +132,9 @@ const Footer = () => {
                 style={{ color: 'var(--footer-copyright-text)', borderTop: '1px solid var(--footer-border-color)' }}
             >
                 <p>&copy; {new Date().getFullYear()} PromoCarnivals. All rights reserved.
+                </p>
+                <p className="mt-3">
+                    As an affiliate partner, we may earn a commission from qualifying purchases made through links on our site. This helps support our work and allows us to continue providing you with the best deals and coupons. Thank you for your support!
                 </p>
             </div>
         </footer>

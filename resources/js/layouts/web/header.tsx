@@ -7,10 +7,7 @@ type Search = {
     slug: string | null,
     name: string | null,
 }
-type CategorySearch = {
-    slug: string | null,
-    name: string | null,
-}
+
 const Header = () => {
     // You can now safely remove '{ categories } = usePage().props;'
     // if no other part of the Header component relies on it directly for dynamic data.
@@ -19,7 +16,6 @@ const Header = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [storeResults, setstoreResults] = useState<Search[]>([]);
-    const [categoryResult, setCategoryResult] = useState<CategorySearch[]>([]);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -28,6 +24,18 @@ const Header = () => {
     const mobileMenuRef = useRef(null);
     const mobileCategoriesButtonRef = useRef(null);
 
+    const staticCategories = [
+        { slug: "travel", name: "Travel" },
+        { slug: "home-garden", name: "Home & Garden" },
+        { slug: "jewellery-watches", name: "Jewellery & Watches" },
+        { slug: "clothing", name: "Clothing" },
+        { slug: "sports", name: "Sports" },
+        { slug: "arts-crafts", name: "Arts & Crafts" },
+        { slug: "pet-supplies", name: "Pet Supplies" },
+        { slug: "electronics", name: "Electronics" },
+        { slug: "free-shipping", name: "Free Shipping" },
+        { slug: "gifts", name: "Gifts" }
+    ];
 
 
     useEffect(() => {
@@ -62,9 +70,7 @@ const Header = () => {
                 data: { searchValue: searchValue },
             }).then((res) => {
                 const result = res.data.data;
-                const category = result.category;
                 const stores = result.stores;
-                setCategoryResult(category);
                 setstoreResults(stores);
             }).catch(error => {
                 console.error("Error fetching search results:", error);
@@ -169,9 +175,8 @@ const Header = () => {
                                     color: 'var(--search-dropdown-text)'
                                 }}
                             >
-                                {storeResults.length || categoryResult.length > 0 ? (
+                                {storeResults.length > 0 ? (
                                     <div className="space-y-2 px-3">
-                                        <p className="text-sm ms-4 font-bold  text-gray-700 mb-1 text-orange-500">Stores:</p>
                                         {storeResults.length > 0 ? storeResults.map((result) => (
                                             <Link
                                                 key={result.slug}
@@ -182,19 +187,8 @@ const Header = () => {
                                             >
                                                 {result.name}
                                             </Link>
-                                        ))   : <span className="block px-4 py-2 text-left hover:bg-gray-100 rounded text-red-500">No Stores Found</span>}
-                                        <p className="text-sm ms-4 font-bold  text-gray-700 mb-1 text-orange-500">Categories:</p>
-                                        {categoryResult.length > 0 ?  categoryResult.map((result) => (
-                                            <Link
-                                                key={result.slug}
-                                                href={`/category/${result.slug}`}
-                                                className="block px-4 py-2 text-left hover:bg-gray-100 rounded"
-                                                style={{ color: 'var(--text-default)' }}
-                                                onClick={() => setIsSearchFocused(false)}
-                                            >
-                                                {result.name}
-                                            </Link>
-                                        )) : <span className="block px-4 py-2 text-left hover:bg-gray-100 rounded text-red-500">No Categories Found</span>}
+                                        )) : <span className="block px-4 py-2 text-left hover:bg-gray-100 rounded text-red-500">No Stores Found</span>}
+
                                     </div>
 
                                 ) : (
@@ -230,7 +224,7 @@ const Header = () => {
                 <div className="relative text-center mt-4">
                     <nav className="w-full overflow-x-auto custom-scrollbar pb-2">
                         <ul className="flex justify-start sm:justify-center flex-wrap gap-2 sm:gap-3 text-sm font-medium headernav_ul">
-                            {categories.map((category) => (
+                            {staticCategories.map((category) => (
                                 <li key={category.slug}> {/* Using slug as key as there's no 'id' from a static list */}
                                     <Link
                                         href={`/category/${category.slug}`}

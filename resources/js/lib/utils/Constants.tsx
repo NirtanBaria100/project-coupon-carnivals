@@ -3,70 +3,70 @@ import { ArrowDownUp, CirclePlus, LayoutGrid, StoreIcon, Tag, UserIcon } from "l
 export const ADMIN_NAVITIEMS = [
     {
         title: 'Dashboard',
-        href: '/admin/',
+        href: '/99k356ha56/',
         icon: LayoutGrid,
     },
     {
         title: 'Users',
-        href: '/admin/users',
+        href: '/99k356ha56/users',
         icon: UserIcon,
     },
     {
         title: 'Stores',
-        href: '/admin/stores',
+        href: '/99k356ha56/stores',
         icon: StoreIcon,
     },
     {
         title: 'Create Store',
-        href: '/admin/stores/create',
+        href: '/99k356ha56/stores/create',
         icon: CirclePlus,
     },
     {
         title: 'Coupons',
-        href: '/admin/coupons',
+        href: '/99k356ha56/coupons',
         icon: Tag,
         isHeading: false,
     },
     {
         title: 'Create Coupon',
-        href: '/admin/coupons/create',
+        href: '/99k356ha56/coupons/create',
         icon: CirclePlus,
     },
     {
         title: 'Tags',
-        href: '/admin/tags',
+        href: '/99k356ha56/tags',
         icon: Tag,
         isHeading: false,
     },
     {
         title: 'Create Tag',
-        href: '/admin/tags/create',
+        href: '/99k356ha56/tags/create',
         icon: CirclePlus,
     },
     {
         title: 'Category',
-        href: '/admin/categories',
+        href: '/99k356ha56/categories',
         icon: Tag,
         isHeading: false,
     },
     {
         title: 'Create Category',
-        href: '/admin/categories/create',
+        href: '/99k356ha56/categories/create',
         icon: CirclePlus,
     },
     {
         title: 'Reorder',
-        href: '/admin/coupons/store-types/default/reorder',
+        href: '/99k356ha56/coupons/store-types/default/reorder',
         icon: ArrowDownUp,
     },
     {
         title: 'Blogs',
-        href: '/admin/blogs',
+        href: '/99k356ha56/blogs',
         icon: ArrowDownUp,
     },
     {
         title: 'Create Blog',
-        href: '/admin/blogs/create',
+        href: '/99k356ha56/blogs/create',
         icon: ArrowDownUp,
     }
 
@@ -76,4 +76,4 @@ export const ADMIN_NAVITIEMS = [
 export const toastDirection = "bottom-right";
 
 
-export const STATIC_CATEGORIES = 
+export const STATIC_CATEGORIES = "";
