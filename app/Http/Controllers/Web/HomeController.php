@@ -22,7 +22,7 @@ class HomeController extends Controller
             }
             return $query;
         });
-        $similarStores = Store::latest()->whereNot('is_featured', 1)->select(['name', 'slug', 'id'])->limit(8)->get();
+        $similarStores = Store::latest()->where('is_featured', 1)->select(['name', 'slug', 'id'])->limit(8)->get();
         $blogs = Blog::latest()->where('is_published', 1)->limit(6)->get();
         $blogs->transform(function ($query) {
             $query->title = \Str::limit($query->title, 80, '...');
