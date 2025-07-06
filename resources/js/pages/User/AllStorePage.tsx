@@ -206,7 +206,7 @@ const AllStorePage = ({ allStores }: Props) => {
                             <Link
                                 key={store.id}
                                 href={`/store/${store.slug}`}
-                                className="block py-1 px-2 text-sm md:text-base transition-colors duration-200"
+                                className="block py-2 px-2 text-sm md:text-base transition-colors duration-200"
                                 style={{ color: "var(--text-default)" }}
                                 onMouseEnter={(e) =>
                                     (e.currentTarget.style.color = "var(--primary-orange)")
