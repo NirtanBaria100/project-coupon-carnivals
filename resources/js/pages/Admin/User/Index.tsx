@@ -45,7 +45,7 @@ interface PaginatedData<T> {
     };
 }
 
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Users', href: '/admin/users' }];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Users', href: route('admin.users.index') }];
 
 export default function Index() {
     const { props, url } = usePage<{
@@ -63,7 +63,7 @@ export default function Index() {
     const handleSearch = () => {
         setPage('1');
         router.get(
-            '/admin/users',
+            route('admin.users.index'),
             {
                 search,
                 sort,
@@ -84,7 +84,7 @@ export default function Index() {
         router.get(route('admin.stores.index'), { search, sort: column, direction: newDirection }, { preserveScroll: true });
     };
     const toggleStatus = (id: number, field: keyof Coupon, value: boolean) => {
-        patch(`/admin/coupons/${id}/toggle`, {
+        patch(route(`admin.coupons.toggle`,id), {
             [field]: value,
             preserveScroll: true,
         });
@@ -142,7 +142,7 @@ export default function Index() {
                                     <Switch checked={user.email_verified_at} onCheckedChange={(val) => toggleStatus(user.id, 'email_verified_at', val)} />
                                 </TableCell>
                                     <TableCell className="space-x-2 text-right">
-                                        <Link href={`/admin/users/${user.id}/edit`}>
+                                        <Link href={route("admin.users.edit",user.id)}>
                                             <Button variant="outline" size="sm">
                                                 Edit
                                             </Button>

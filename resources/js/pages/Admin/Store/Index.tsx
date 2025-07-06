@@ -49,7 +49,7 @@ interface PaginatedData<T> {
     };
 }
 
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Stores', href: '/admin/stores' }];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Stores', href: route('admin.stores.index') }];
 
 export default function Index() {
     const { props, url } = usePage<{
@@ -66,7 +66,7 @@ export default function Index() {
     const handleSearch = () => {
         setPage('1');
         router.get(
-            '/admin/stores',
+            route('admin.stores.index'),
             {
                 search,
                 sort,
@@ -97,7 +97,7 @@ export default function Index() {
             <div className="p-5">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">Stores</h1>
-                    <Link href="/admin/stores/create">
+                    <Link href={route("admin.stores.create")}>
                         <Button>Add Store</Button>
                     </Link>
                 </div>
@@ -156,14 +156,14 @@ export default function Index() {
                                 </TableCell>
                                 <TableCell>{store.name}</TableCell>
                                 <TableCell>{store.slug}</TableCell>
-                                <TableCell>  <Link href={`/admin/stores/${store.id}/ratings`}>
+                                <TableCell>  <Link href={route(`admin.stores.ratings`,store.id)}>
                                     <Button style={{ cursor:'pointer' }} variant="outline" size="sm">
                                         View ( {store.ratings} )
                                     </Button>
                                 </Link></TableCell>
                                 <TableCell>{store.is_featured ? 'Yes' : 'No'}</TableCell>
                                     <TableCell className="space-x-2 text-right">
-                                        <Link href={`/admin/stores/${store.id}/edit`}>
+                                        <Link href={route(`admin.stores.edit`,store.id)}>
                                             <Button variant="outline" size="sm">
                                                 Edit
                                             </Button>

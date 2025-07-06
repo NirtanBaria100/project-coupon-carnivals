@@ -58,8 +58,8 @@ export default function Create({ categories }: Props) {
     };
 
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Stores', href: '/admin/stores' },
-        { title: 'Create Store', href: '/admin/stores/create' },
+        { title: 'Stores', href: route('admin.stores.index') },
+        { title: 'Create Store', href: route('admin.stores.create') },
     ];
 
     // ✅ Show individual error messages on load or validation fail

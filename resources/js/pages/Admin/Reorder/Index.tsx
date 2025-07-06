@@ -1,4 +1,3 @@
-// resources/js/Pages/Admin/Coupons/Reorder.tsx
 import React, { useCallback, useRef, useState } from 'react';
 // import { Inertia } from '@inertiajs/inertia'
 import { Button } from '@/components/ui/button';

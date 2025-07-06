@@ -292,15 +292,6 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                         </div>
                     </div>
 
-                    {/* Affiliate Line */}
-                    <div
-                        className="p-6 sm:p-8 rounded-lg shadow-lg my-10 w-full affiliate_line"
-                        style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}
-                    >
-                        <p className="text-center text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                            As an affiliate partner, we may earn a commission from qualifying purchases made through links on our site. This helps support our work and allows us to continue providing you with the best deals and coupons. Thank you for your support!
-                        </p>
-                    </div>
                 </div>
             </div>
         </WebLayout>

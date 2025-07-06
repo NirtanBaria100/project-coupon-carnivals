@@ -124,8 +124,8 @@ export default function Edit() {
     };
 
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Stores', href: '/admin/stores' },
-        { title: 'Edit Store', href: `/admin/stores/${store.id}/edit` },
+        { title: 'Stores', href: route('admin.stores.index') },
+        { title: 'Edit Store', href: route(`admin.stores.edit`,store.id) },
     ];
 
     useEffect(() => {

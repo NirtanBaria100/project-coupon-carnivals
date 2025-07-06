@@ -1,4 +1,3 @@
-// resources/js/Pages/Admin/Blogs/Index.tsx
 
 import { Head, Link, useForm } from '@inertiajs/react'
 import AppLayout from '@/layouts/app-layout'

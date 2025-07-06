@@ -59,7 +59,7 @@ export default function Index() {
     const handleSearch = () => {
         setPage('1');
         router.get(
-            '/admin/coupons',
+            route('admin.coupons.index'),
             {
                 search,
                 sort: sortField,
@@ -74,7 +74,7 @@ export default function Index() {
     };
 
     const toggleStatus = (id: number, field: keyof Coupon, value: boolean) => {
-        patch(`/admin/coupons/${id}/toggle`, {
+        patch(route(`admin.coupons.toggle`,id), {
             [field]: value,
             preserveScroll: true,
         });
@@ -100,7 +100,7 @@ export default function Index() {
             <div className="p-5">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">Coupons</h1>
-                    <Link href="/admin/coupons/create">
+                    <Link href={route("admin.coupons.create")}>
                         <Button>Add Coupon</Button>
                     </Link>
                 </div>
@@ -157,7 +157,7 @@ export default function Index() {
                                     <Switch checked={coupon.is_exclusive} onCheckedChange={(val) => toggleStatus(coupon.id, 'is_exclusive', val)} />
                                 </TableCell>
                                 <TableCell className="space-x-2 text-right">
-                                    <Link href={`/admin/coupons/${coupon.id}/edit`}>
+                                    <Link href={route(`admin.coupons.edit`,coupon.id)}>
                                         <Button variant="outline" size="sm">
                                             Edit
                                         </Button>
@@ -195,7 +195,7 @@ export default function Index() {
                     onPageChange={(newPage: any) => {
                         setPage(newPage);
                         router.get(
-                            '/admin/coupons',
+                            route('admin.coupons.index'),
                             {
                                 search,
                                 sort: sortField,

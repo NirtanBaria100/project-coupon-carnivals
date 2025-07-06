@@ -76,8 +76,8 @@ export default function Create({ categories }: CreateProp) {
     }, [errors]);
 
     const breadcrumbs = [
-        { title: 'Categories', href: '/admin/categories' },
-        { title: 'Create Category', href: '/admin/categories/create' },
+        { title: 'Categories', href: route('admin.categories.index') },
+        { title: 'Create Category', href: route('admin.categories.create') },
     ];
 
     return (

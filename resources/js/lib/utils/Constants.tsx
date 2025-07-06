@@ -76,4 +76,45 @@ export const ADMIN_NAVITIEMS = [
 export const toastDirection = "bottom-right";
 
 
-export const STATIC_CATEGORIES = "";
+export const STATIC_CATEGORIES = [
+    {
+        name:"Travel",
+        slug:""
+    },
+    {
+        name:"Home & Garden",
+        slug:""
+    },
+    {
+        name:"Jewellery & Watches",
+        slug:""
+    },
+    {
+        name:"Clothing",
+        slug:""
+    },
+    {
+        name:"Sports",
+        slug:""
+    },
+    {
+        name:"Arts & Crafts",
+        slug:""
+    },
+    {
+        name:"Pet Supplies",
+        slug:""
+    },
+    {
+        name:"Electronics",
+        slug:""
+    },
+    {
+        name:"Free Shipping",
+        slug:""
+    },
+    {
+        name:"Gifts",
+        slug:""
+    },
+];

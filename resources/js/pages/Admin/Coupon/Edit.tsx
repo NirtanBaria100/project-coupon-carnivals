@@ -117,8 +117,8 @@ export default function Edit({ stores, tags, categories, coupon }: EditProps) {
     };
 
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Coupons', href: '/admin/coupons/' },
-        { title: 'Edit Coupon', href: `/admin/coupons/${coupon.id}/edit` },
+        { title: 'Coupons', href: route('admin.coupons.index') },
+        { title: 'Edit Coupon', href: route('admin.coupons.edit',coupon.id )},
     ];
 
     return (

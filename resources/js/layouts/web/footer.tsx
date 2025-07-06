@@ -1,4 +1,4 @@
-// src/components/Footer.jsx
+    // src/components/Footer.jsx
 import { Link, usePage } from '@inertiajs/react';
 import { FaFacebookF, FaTwitter, FaInstagram, FaTelegramPlane } from 'react-icons/fa';
 import PromoCarnivalsIcon from '@/assets/white logo.png'; // <--- IMPORTANT: Adjust this path to your actual logo image
@@ -9,7 +9,7 @@ const Footer = () => {
     // Define the static categories for the footer
     const footerCategories = [
         { name: 'Sports', slug: 'sports' },
-        { name: 'Home & Garden', slug: 'home-garden' },
+        { name: 'Home & Garden', slug: 'home-and-garden' },
         { name: 'Pet Supplies', slug: 'pet-supplies' },
         { name: 'Free Shipping', slug: 'free-shipping' },
         { name: 'Fashion', slug: 'fashion' },
@@ -18,6 +18,18 @@ const Footer = () => {
 
     return (
         // Set footer background to black using CSS variable
+<>
+
+                    {/* Affiliate Line */}
+                    <div
+                        className="p-6 sm:p-8 rounded-lg shadow-lg my-10 w-full affiliate_line"
+                        style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)',marginBottom:"50px" }}
+                    >
+                        <p className="text-center text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                            As an affiliate partner, we may earn a commission from qualifying purchases made through links on our site. This helps support our work and allows us to continue providing you with the best deals and coupons. Thank you for your support!
+                        </p>
+                    </div>
+
 
         <footer className="py-10 mt-auto font-sans footer_site" style={{ backgroundColor: 'var(--footer-bg)', color: 'var(--footer-text-primary)' }}>
             <div className="container mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6">
@@ -138,6 +150,7 @@ const Footer = () => {
                 </p>
             </div>
         </footer>
+        </>
     );
 };
 

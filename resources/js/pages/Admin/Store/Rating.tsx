@@ -43,7 +43,7 @@ interface PaginatedData<T> {
     };
 }
 
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Store Ratings', href: '/admin/stores' }];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Store Ratings', href: route('admin.stores.index') }];
 
 export default function Rating() {
     const { props, url } = usePage<{
@@ -86,7 +86,7 @@ export default function Rating() {
             <div className="p-5">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">Ratings for Store: ( {store_name} )</h1>
-                    <Link href="/admin/stores">
+                    <Link href={route("admin.stores.index")}>
                         <Button className='cursor-pointer'>Back to Listing</Button>
                     </Link>
                 </div>

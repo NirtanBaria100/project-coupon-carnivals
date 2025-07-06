@@ -90,11 +90,11 @@ export default function Create({ stores, tags, categories }: CreateProps) {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Coupons',
-            href: '/admin/coupons/',
+            href: route('admin.coupons.index'),
         },
         {
             title: 'Create Coupon',
-            href: '/admin/coupons/create',
+            href: route('admin.coupons.create'),
         },
     ];
 

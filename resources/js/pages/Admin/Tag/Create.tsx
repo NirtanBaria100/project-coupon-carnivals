@@ -36,8 +36,8 @@ export default function Create() {
         }
     }, [errors]);
     const breadcrumbs = [
-        { title: 'Tags', href: '/admin/tags/' },
-        { title: 'Create Tag', href: '/admin/tags/create' },
+        { title: 'Tags', href: route('admin.tags.index') },
+        { title: 'Create Tag', href: route('admin.tags.create') },
     ];
 
     return (

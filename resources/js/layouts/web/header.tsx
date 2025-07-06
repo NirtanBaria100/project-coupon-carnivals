@@ -26,7 +26,7 @@ const Header = () => {
 
     const staticCategories = [
         { slug: "travel", name: "Travel" },
-        { slug: "home-garden", name: "Home & Garden" },
+        { slug: "home-and-garden", name: "Home & Garden" },
         { slug: "jewellery-watches", name: "Jewellery & Watches" },
         { slug: "clothing", name: "Clothing" },
         { slug: "sports", name: "Sports" },
