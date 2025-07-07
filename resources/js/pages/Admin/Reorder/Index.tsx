@@ -66,7 +66,7 @@ const DraggableCoupon: React.FC<{
             ref={ref}
             className={`flex flex-col items-center gap-4 rounded-lg bg-white p-4 shadow transition-opacity ${isDragging ? 'opacity-50' : 'opacity-100'}`}
         >
-            <img src={coupon.featured_image} className="h-80 w-80 rounded" alt="" />
+            <img src={coupon.featured_image} className="h-50 w-80 rounded" alt="" />
             <span>{coupon.title}</span>
         </div>
     );
@@ -130,8 +130,15 @@ export default function Reorder({ storeId, stores, coupons: initial }: Props) {
                         </TableCell>
                     </TableRow>
                 )}
-                <DndProvider backend={HTML5Backend}>
+                {/* <DndProvider backend={HTML5Backend}>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                        {items.map((coupon, i) => (
+                            <DraggableCoupon key={coupon.id} coupon={coupon} index={i} move={move} />
+                        ))}
+                    </div>
+                </DndProvider> */}
+                <DndProvider backend={HTML5Backend}>
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6">
                         {items.map((coupon, i) => (
                             <DraggableCoupon key={coupon.id} coupon={coupon} index={i} move={move} />
                         ))}
