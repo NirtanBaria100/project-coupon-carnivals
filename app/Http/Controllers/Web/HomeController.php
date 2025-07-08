@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\{Store, Blog, Category, Coupon, Rating};
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
 
@@ -15,29 +16,29 @@ class HomeController extends Controller
         // $featuredCoupons = Coupon::whereDate('expires' , '>' , Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])->latest()->with('stores', function($query){
         //     $query->first();
         // })->limit(30)->get();
-        $featuredCoupons = Coupon::select('coupons.*', 'coupon_order.position')->whereDate('expires' , '>' , Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])
-        ->where('is_published', 1)
-        ->leftJoin('coupon_order', function ($join) {
-            $join->on('coupon_order.coupon_id', '=', 'coupons.id');
-        })
-        ->with('stores')
-        ->orderBy('coupon_order.position')->where(function ($query) {
-            $query->whereDate('expires', '>', Carbon::now())
-                ->orWhereNull('expires');
-        })->with('stores', function($query){
-            $query->first();
-        })->limit(30)
-        ->get()
-        ->map(function ($coupon) {
-            $coupon->featured_image = $coupon->featured_image
-                ? asset($coupon->featured_image)
-                : asset('images/placeholder.png');
-            return $coupon;
-        });
+        $featuredCoupons = Coupon::select('coupons.*', 'coupon_order.position')->whereDate('expires', '>', Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])
+            ->where('is_published', 1)
+            ->leftJoin('coupon_order', function ($join) {
+                $join->on('coupon_order.coupon_id', '=', 'coupons.id');
+            })
+            ->with('stores')
+            ->orderBy('coupon_order.position')->where(function ($query) {
+                $query->whereDate('expires', '>', Carbon::now())
+                    ->orWhereNull('expires');
+            })->with('stores', function ($query) {
+                $query->first();
+            })->limit(30)
+            ->get()
+            ->map(function ($coupon) {
+                $coupon->featured_image = $coupon->featured_image
+                    ? asset($coupon->featured_image)
+                    : asset('images/placeholder.png');
+                return $coupon;
+            });
         $featuredCoupons->transform(function ($query) {
             $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
-            if(!empty($query->expires)){
-                  $query->expires = Carbon::parse($query->expires)->format('F d , Y');
+            if (!empty($query->expires)) {
+                $query->expires = Carbon::parse($query->expires)->format('F d , Y');
             }
             return $query;
         });
@@ -56,66 +57,20 @@ class HomeController extends Controller
     }
     public function StorePage($slug)
     {
-        $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl','home_url', 'name', 'desc', 'extra_info','seo_title','meta_description','focus_keyphrase', 'thumbnail','category_id'])->first();
-        $store->totalRatings = count($store->storeRatings->where('is_approved')) ?? 0 ;
-        $similarStores = Store::latest()->whereNot('slug', $slug)->where('category_id' , $store->category_id)->select(['name', 'slug'])->limit(8)->get();
-        $featuredLinks = Category::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_popular',1)->limit(8)->get();
+        $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl', 'home_url', 'name', 'desc', 'extra_info', 'seo_title', 'meta_description', 'focus_keyphrase', 'thumbnail', 'category_id'])->first();
+        $store->totalRatings = count($store->storeRatings->where('is_approved')) ?? 0;
+        $similarStores = Store::latest()->whereNot('slug', $slug)->where('category_id', $store->category_id)->select(['name', 'slug'])->limit(8)->get();
+        $featuredLinks = Category::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_popular', 1)->limit(8)->get();
         $storeCoupons = \DB::table('coupon_store')
-        ->where('store_id', $store->id)
-        ->pluck('coupon_id');
+            ->where('store_id', $store->id)
+            ->pluck('coupon_id');
 
-    $coupons = Coupon::select('coupons.*', 'coupon_order.position')
-        ->whereIn('coupons.id', $storeCoupons)
-        ->where('is_published', 1)
-        ->leftJoin('coupon_order', function ($join) use ($store) {
-            $join->on('coupon_order.coupon_id', '=', 'coupons.id')
-                 ->where('coupon_order.store_id', '=', $store->id);
-        })
-        ->with('stores')
-        ->orderBy('coupon_order.position')->where(function ($query) {
-            $query->whereDate('expires', '>', Carbon::now())
-                ->orWhereNull('expires');
-        })
-        ->get()
-        ->map(function ($coupon) {
-            $coupon->featured_image = $coupon->featured_image
-                ? asset($coupon->featured_image)
-                : asset('images/placeholder.png');
-            return $coupon;
-        });
-
-        $expiredCoupons = Coupon::whereIn('id', $storeCoupons)->with('stores')->where('is_published', 1)->whereDate('expires', '<=', Carbon::now())->get();
-        $coupons->transform(function ($query) {
-           $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
-            if(!empty($query->expires)){
-                  $query->expires = Carbon::parse($query->expires)->format('F d , Y');
-            }
-            return $query;
-        });
-        if (!empty($store)) {
-            $store->thumbnail = asset($store->thumbnail);
-            $store->ratings = $store->storeRatings->where('is_approved', 1)->sum('ratings');
-        }
-        return Inertia::render("User/StorePage", [
-            'stores' => $store,
-            'coupons' => $coupons,
-            'expiredCoupons' => $expiredCoupons,
-            'similarStores' => $similarStores,
-            'featuredLinks'=> $featuredLinks,
-        ]);
-    }
-    public function CategoryPage($slug)
-    {
-        $category = Category::latest()->where('slug', $slug)->first();
-        $coupons = [];
-        if (!empty($category)) {
-            $categoryCoupons = \DB::table('category_coupon')->where('category_id', $category->id)->pluck('coupon_id');
-            // $coupons = Coupon::whereIn('id', $categoryCoupons)->where('is_published', 1)->with('stores')->whereDate('expires', '>', Carbon::now())->get();
-            $coupons = Coupon::select('coupons.*', 'coupon_order.position')
-            ->whereIn('coupons.id',  $categoryCoupons)
+        $coupons = Coupon::select('coupons.*', 'coupon_order.position')
+            ->whereIn('coupons.id', $storeCoupons)
             ->where('is_published', 1)
-            ->leftJoin('coupon_order', function ($join)  {
-                $join->on('coupon_order.coupon_id', '=', 'coupons.id');
+            ->leftJoin('coupon_order', function ($join) use ($store) {
+                $join->on('coupon_order.coupon_id', '=', 'coupons.id')
+                    ->where('coupon_order.store_id', '=', $store->id);
             })
             ->with('stores')
             ->orderBy('coupon_order.position')->where(function ($query) {
@@ -129,18 +84,32 @@ class HomeController extends Controller
                     : asset('images/placeholder.png');
                 return $coupon;
             });
-            $coupons->transform(function ($query) {
-             $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
-            if(!empty($query->expires)){
-                  $query->expires = Carbon::parse($query->expires)->format('F d , Y');
-                }
-                return $query;
-            });
-        }
 
+        $expiredCoupons = Coupon::whereIn('id', $storeCoupons)->with('stores')->where('is_published', 1)->whereDate('expires', '<=', Carbon::now())->get();
+        $coupons->transform(function ($query) {
+            $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
+            if (!empty($query->expires)) {
+                $query->expires = Carbon::parse($query->expires)->format('F d , Y');
+            }
+            return $query;
+        });
+        if (!empty($store)) {
+            $store->thumbnail = asset($store->thumbnail);
+            $store->ratings = $store->storeRatings->where('is_approved', 1)->sum('ratings');
+        }
+        return Inertia::render("User/StorePage", [
+            'stores' => $store,
+            'coupons' => $coupons,
+            'expiredCoupons' => $expiredCoupons,
+            'similarStores' => $similarStores,
+            'featuredLinks' => $featuredLinks,
+        ]);
+    }
+    public function CategoryPage($slug)
+    {
+        $category = Category::latest()->where('slug', $slug)->first();
         return Inertia::render("User/CategoryPage", [
             'category' => $category,
-            'coupons' => $coupons
         ]);
     }
 
@@ -148,14 +117,13 @@ class HomeController extends Controller
     {
         $stores = Store::latest()->get();
         $stores->transform(function ($query) {
-            $query->totalOffers = $query->coupons->where('is_published',1)->count();
+            $query->totalOffers = $query->coupons->where('is_published', 1)->count();
             $query->imageURL = asset($query->thumbnail);
             return $query;
         });
         return Inertia::render("User/AllStorePage", [
             'allStores' => $stores,
         ]);
-
     }
 
 
@@ -180,7 +148,6 @@ class HomeController extends Controller
         return Inertia::render("User/BlogPage", [
             'blogs' => $blogs
         ]);
-
     }
 
     public function singleBlog($slug)
@@ -199,7 +166,6 @@ class HomeController extends Controller
             'featuredcategories' => $featuredcategories,
             'recentPost' => $recentPost,
         ]);
-
     }
     public function storeRating(Request $request)
     {
@@ -223,10 +189,50 @@ class HomeController extends Controller
         ]]);
     }
 
-    public function AllCategoryPage() {
+    public function AllCategoryPage()
+    {
         $allCategories = Category::latest()->get();
-        return Inertia::render('User/AllCategoryPage',[
+        return Inertia::render('User/AllCategoryPage', [
             'allCategories' => $allCategories
         ]);
+    }
+    public function loadMoreCoupons(Request $request , $skip)
+    {
+
+        $coupons = [];
+        if (!empty($request->category_id)) {
+            $categoryCoupons = \DB::table('category_coupon')->where('category_id', $request->category_id)->pluck('coupon_id');
+            // $coupons = Coupon::whereIn('id', $categoryCoupons)->where('is_published', 1)->with('stores')->whereDate('expires', '>', Carbon::now())->get();
+            $coupons = Coupon::select('coupons.*', 'coupon_order.position')
+                ->whereIn('coupons.id',  $categoryCoupons)
+                ->where('is_published', 1)
+                ->leftJoin('coupon_order', function ($join) {
+                    $join->on('coupon_order.coupon_id', '=', 'coupons.id');
+                })->limit(50)
+                ->with('stores')
+                ->orderBy('coupon_order.position')->where(function ($query) {
+                    $query->whereDate('expires', '>', Carbon::now())
+                        ->orWhereNull('expires');
+                });
+                if($skip > 0)
+                {
+                    $coupons->skip($skip);
+                }
+               $coupons = $coupons->get()
+                ->map(function ($coupon) {
+                    $coupon->featured_image = $coupon->featured_image
+                        ? asset($coupon->featured_image)
+                        : asset('images/placeholder.png');
+                    return $coupon;
+                });
+            $coupons->transform(function ($query) {
+                $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
+                if (!empty($query->expires)) {
+                    $query->expires = Carbon::parse($query->expires)->format('F d , Y');
+                }
+                return $query;
+            });
+        }
+        return response()->json(['coupons'=> $coupons]);
     }
 }

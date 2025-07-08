@@ -1,7 +1,7 @@
 // resources/js/Pages/CategoryPage.jsx
 
-import React, { useState } from 'react';
-import { Head, Link, usePage } from '@inertiajs/react';
+import React, { useEffect, useState } from 'react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import OfferCard from '@/components/OfferCard';
 
 // IMPORTANT: Import the AppLayout component
@@ -9,8 +9,10 @@ import AppLayout from '@/layouts/app-layout'; // Adjust path if your layout is e
 import WebLayout from '@/layouts/web-layout';
 import { title } from 'process';
 import PageMeta from '@/components/PageMeta';
+import axios from 'axios';
 interface SingleCategory {
     name: string | '',
+    id: number,
     slug: string | null,
     desc: string | null,
     image_icon: string | null,
@@ -36,12 +38,16 @@ interface Coupons {
 }
 
 interface Props {
-    coupons: Coupons,
     category: SingleCategory,
 }
 // Accept props from the Inertia controller, including categoryName
-const CategoryPage = ({ category, coupons }: Props) => {
+const CategoryPage = ({ category }: Props) => {
     const { categories } = usePage().props;
+    const [skip, setSkip] = useState(0);
+    const [coupon, setCoupon] = useState<Coupons[]>([]);
+    const { data } = useForm({
+        category_id: category.id
+    });
     const popularCategories = categories.filter(e => e.slug != category.slug && e.is_popular == true);
     const formatCategoryName = (name) => {
         if (!name) return 'Category';
@@ -51,8 +57,22 @@ const CategoryPage = ({ category, coupons }: Props) => {
 
     const formattedCategoryName = formatCategoryName(category.name);
 
+    const loadMore = async () => {
+        setSkip(skip + 50);
+        try {
+            await axios.post(route('home.loadmore.coupons', skip), data).then((res) => {
+                const newCoupons = res.data.coupons || [];
 
+                setCoupon(prev => [...prev, ...newCoupons]);
+            });
 
+        } catch (error) {
+            console.error("Error loading more coupons:", error);
+        }
+    }
+    useEffect(() => {
+        loadMore();
+    }, [])
 
     return (
         <WebLayout>
@@ -80,7 +100,7 @@ const CategoryPage = ({ category, coupons }: Props) => {
                                 DISCOUNT CODES AND VOUCHERS FOR <br className="md:hidden" /> {category?.name.toUpperCase() || ""}
                             </h1>
                             <p className="text-gray-600 text-sm sm:text-base">
-                                We have {coupons.length} live discount codes & deals in {category?.name}.
+                                We have {coupon.length} live discount codes & deals in {category?.name}.
                             </p>
                         </div>
                     </div>
@@ -89,9 +109,12 @@ const CategoryPage = ({ category, coupons }: Props) => {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         {/* Left Column: Offer Cards */}
                         <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8">
-                            {coupons.length > 0 ? coupons.map((offer, index) => (
+                            {coupon.length > 0 ? coupon.map((offer, index) => (
                                 <OfferCard key={index} coupon_id={offer.id} store_slug={'/store/' + offer.stores[0].slug} store={offer.stores[0]} affiliate_url={offer.coupon_url || offer.stores[0].affiliate_irl} storeName={offer.stores[0].name} type={'categories'} {...offer} />
                             )) : <span className='text-red-500'>No Coupons Available</span>}
+                            {coupon.length > 50 ? <div className=" lg:col-span-2 text-center flex justify-center align-items-center w-full">
+                                <button className='btn border border-orange-500 w-full text-orange-500 rounded shadow-sm hover:text-white hover:bg-orange-500 p-2 text-center' onClick={() => loadMore()}>Load More</button>
+                            </div> : <></>}
                         </div>
 
                         {/* Right Column: Sidebar */}
@@ -102,7 +125,7 @@ const CategoryPage = ({ category, coupons }: Props) => {
                                 <p className="text-gray-700 text-sm leading-relaxed">
                                     {category.desc}
                                 </p>
-                            </div>:<></>}
+                            </div> : <></>}
 
                             {/* Popular Categories */}
                             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
@@ -129,11 +152,12 @@ const CategoryPage = ({ category, coupons }: Props) => {
                                         </li>
                                     )) : <span className='text-red-500'>No Popular Categories Available</span>}
                                 </ul>
+
                             </div>
                         </div>
                     </div>
 
-                  
+
                 </div>
             </div>
         </WebLayout>
