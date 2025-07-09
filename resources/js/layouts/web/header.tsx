@@ -208,14 +208,14 @@ const Header = () => {
                             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-accent-hover)'}
                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-default)'}
                         >
-                            <span className="inline-block align-middle mr-1" role="img" aria-label="blog-icon">📄</span>Blog
+                            <span className="inline-block align-middle mr-1" role="img" aria-label="blog-icon">📄</span>Blogs
                         </Link>
 
                         <Link href="/categories" className="font-medium text-sm whitespace-nowrap transition-colors duration-300" style={{ color: 'var(--text-default)' }}
                             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-accent-hover)'}
                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-default)'}
                         >
-                            <span className="inline-block align-middle mr-1" role="img" aria-label="exclusive-vouchers-icon">💰</span>Categories
+                            <span className="inline-block align-middle mr-1" role="img" aria-label="exclusive-vouchers-icon">🏷️</span>Categories
                         </Link>
                     </div>
                 </div>

@@ -137,7 +137,7 @@ const OfferCard = ({
 
 
             {/* Middle Section: Offer Description */}
-            <div className="flex flex-grow flex-col  justify-start p-5 text-start md:p-6 ">
+            <div className="flex flex-grow flex-col justify-start p-5 text-start md:p-6 midsec_offerdesc">
                 {/* Heading Click Handler */}
                 <button onClick={handleOfferAction} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
                     {title}
@@ -293,8 +293,8 @@ const OfferCard = ({
                                         {copyStatus || 'Copy Code'}
                                     </button>
                                 </div>
-                                <p className="mt-3 text-center text-xs" style={{ color: 'var(--modal-instructions-text)' }}>
-                                    Click "Copy Code" and paste it at checkout.
+                                <p className="mt-3 text-center text-xs gotodivpopup" style={{ color: 'var(--modal-instructions-text)' }}>
+                                    <a target='_blank' href={type == 'stores' ? (affiliate_url || store.home_url) : store_slug}>Go to {storeName}</a>
                                 </p>
                             </div>
                         ) : (

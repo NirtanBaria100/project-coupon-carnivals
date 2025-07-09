@@ -5,11 +5,12 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
 
-const appName = import.meta.env.VITE_APP_NAME || 'PromoCarnivals';
+const appName = 'Promo Carnivals - Find Exclusive Coupons and Discounts';
+const desc = 'Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!'
 
 createInertiaApp({
-    title: (title) => `${(title ? title + ' - ' : '')}  ${appName}`,
-    description: (description)=> `${description}`,
+    title: (title) => `${appName}`,
+    description: (description)=> `${desc}`,
     resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx')),
     setup({ el, App, props }) {
         const root = createRoot(el);

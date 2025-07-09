@@ -381,7 +381,10 @@ input::placeholder {
 
 /* --- */
 
-
+.footer_logoweb{
+  margin-top: -21px;
+    margin-left: -12px;
+}
 .headernav_ul li a:hover{
 background-color: transparent !important;
     color: #1F2937 !important;
@@ -454,6 +457,10 @@ color: #1F2937;
 .storepage_rightcolsidebar{
   padding-right: 0;
 }
+.gotodivpopup a{
+      color: #000;
+    text-decoration: underline;
+}
 
 @media only screen and (max-width: 1023px) {
   .home_featuredoffers_div {
@@ -467,6 +474,9 @@ color: #1F2937;
 }
 }
 @media only screen and (max-width: 650px) {
+  .midsec_offerdesc{
+    padding-bottom: 0px !important;
+  }
 .popstoreandcat_maindiv, .homeblog_sec, .home_featuredoffers_maindiv{
 padding-left: 10px;
     padding-right: 10px;
@@ -485,8 +495,8 @@ padding-left: 15px;
 .homeweb_desc h2 {
     font-size: 20px;
 }
-.affiliate_line{
-  padding-bottom: 0;
+.affiliate_line p{
+  font-size: 15px;
 }
 .storepage_rightcolsidebar{
   margin-top: 0;
@@ -497,5 +507,34 @@ padding-left: 15px;
 }
 .storepage_longdescsec{
   margin-bottom: 0;
+}
+}
+
+@media only screen and (max-width: 639px) {
+.store-thumbnail-div {
+    flex-direction: row;
+}
+.store-thumbnail-secdiv > div{
+  text-align: left;
+  padding-left: 12px;
+}
+.store-thumbnail-secdiv > div p{
+  font-size: 14px;
+  /* display: none; */
+}
+.store-thumbnail-secdiv h1{
+  font-size: 20px;
+}
+.store-thumbnail-firstdiv{
+    width: 100px;
+    border: none;
+    border-radius: 0;
+}
+.store-thumbnail-firstdiv img{
+border: 1px solid #dfdfdf;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    border-radius: 0;
 }
 }
