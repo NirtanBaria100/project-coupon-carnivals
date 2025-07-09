@@ -22,7 +22,7 @@ interface Store {
     totalRatings: number | 0,
     name: string | null,
     thumbnail: string | null,
-    affiliate_irl: string | null,
+    affiliate_irl: string | null, // Keeping this for OfferCard but removed from direct UI links
     desc: string | null,
     extra_info: string | null,
     ratings: number | 0 // This comes from backend as the store's average rating
@@ -143,36 +143,21 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                     </nav>
 
                     {/* Store Header Section */}
-                    <div className="store-thumbnail-div flex flex-col align-items-center sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md">
+                    {/* Added 'justify-center' to the parent flex container for horizontal centering when space allows, and on small screens */}
+                    <div className="store-thumbnail-div flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md justify-center">
                         <div className="flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200 mb-0 store-thumbnail-firstdiv">
-                            <a href={stores.affiliate_irl || "#"}> <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-30 h-30 object-contain p-2" /></a>
+                            {/* Removed: The <a> tag around the image */}
+                            <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-30 h-30 object-contain p-2" />
                         </div>
-                        <div className="flex-grow flex flex-col sm:flex-row items-center sm:items-start sm:justify-between w-full store-thumbnail-secdiv">
-                            <div className="text-center sm:text-left sm:flex-grow">
-                                <a href={stores.affiliate_irl || "#"}>
-                                    <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
-                                        {stores.name}
-                                    </h1>
-                                </a>
+                        {/* Ensure text content (h1, p) is centered on smaller screens and aligns below image */}
+                        <div className="flex-grow flex flex-col items-center sm:items-start w-full store-thumbnail-secdiv">
+                            <div className="text-center sm:text-left sm:flex-grow w-full"> {/* Added w-full here for better centering control */}
+                                {/* Removed: The <a> tag around the h1 */}
+                                <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
+                                    {stores.name}
+                                </h1>
                                 <p className="text-base sm:text-xl text-gray-600 mt-2">{stores.desc}</p>
                             </div>
-
-                            {/* Visit Store Button */}
-                            {stores.affiliate_irl && (
-                                <div className="mt-4 sm:mt-0 sm:ml-6 flex-shrink-0">
-                                    <a
-                                        href={stores.affiliate_irl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center font-bold py-3 px-8 rounded-md transition-colors duration-200 text-base min-w-[150px]"
-                                        style={{ backgroundColor: 'var(--primary-orange)', color: 'var(--neutral-white)', margin: '35px' }}
-                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--offer-button-hover-bg)'}
-                                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--primary-orange)'}
-                                    >
-                                        Visit Store
-                                    </a>
-                                </div>
-                            )}
                         </div>
                     </div>
 
@@ -190,8 +175,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                                 <OfferCard key={index} coupon_id={offer.id} store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} type={"stores"} />
                             ))}</> : <>
                                 {/* <hr /> <br /> <span className="text-red-500">No Expired Coupons Available</span> */}
-                            </>
-                            }
+                            </>}
                         </div>
 
                         {/* Right Column: Sidebar */}
@@ -211,8 +195,8 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                                     {renderStars(userRating, true)} {/* Pass true to make stars interactive */}
                                 </div>
                                 <p className="text-gray-500 text-sm mt-1 text-center">
-                                    {/* Static message for number of ratings */}
-                                    <span className="font-semibold text-gray-700">{stores.totalRatings || 0}</span> people rated this store!
+                                    {/* Updated message to match the desired format */}
+                                    <span className="font-semibold text-gray-700">{stores.totalRatings || 0} ratings</span> with the average rating of <span className="font-semibold text-gray-700">{stores.ratings.toFixed(0)} out of 5 stars.</span>
                                 </p>
                             </div>
 
