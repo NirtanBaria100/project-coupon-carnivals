@@ -153,7 +153,7 @@ class HomeController extends Controller
     public function singleBlog($slug)
     {
         $post = Blog::latest()->where('slug', $slug)->with('author')->with('category')->first();
-        $recentPost = Blog::latest()->whereNot('slug', $slug)->with('category')->get();
+        $recentPost = Blog::latest()->whereNot('slug', $slug)->where('is_published',1)->with('category')->get();
         $recentPost->transform(function ($query) {
             $query->title = \Str::limit($query->title, 140, '...');
             return $query;
