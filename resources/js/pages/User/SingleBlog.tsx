@@ -125,7 +125,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                         className="font-semibold"
                                         style={{ color: "var(--primary-orange)" }}
                                     >
-                                        {/* {post.author.name.toUpperCase()} */}
+                                        {post.author.name.toUpperCase()}
                                     </span>
                                 </span>
                                 <span>•</span>
@@ -192,7 +192,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                         ) => (
                                             <li key={index}>
                                                 <Link
-                                                    href={`/blog/${p.id}`}
+                                                    href={`/blog/${p.slug}`}
                                                     className="text-sm transition-colors duration-300"
                                                     style={{ color: "var(--text-muted)" }}
                                                     onMouseEnter={(e) =>
