@@ -40,8 +40,8 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
     // Carousel state and logic START - MODIFIED
     const [currentSlide, setCurrentSlide] = useState(0);
     const bannerData = [
-        { image: banner1Image , url : '#' }, // Use the imported image
-        { image: banner2Image , url : '/stores'}, // Use the imported image again for the second slide
+        { image: banner1Image , url : '/stores' }, // Use the imported image
+        { image: banner2Image , url : '/category/clothing'}, // Use the imported image again for the second slide
     ];
     const totalSlides = bannerData.length;
 
@@ -54,7 +54,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
     }, [totalSlides]);
 
     useEffect(() => {
-        const slideInterval = setInterval(nextSlide, 5000); // changed from 50000 to 5000
+        const slideInterval = setInterval(nextSlide, 15000); // changed from 50000 to 5000
         return () => clearInterval(slideInterval);
     }, [nextSlide]);
     // Carousel state and logic END
@@ -70,7 +70,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                     >
                         {bannerData.map((banner, index) => (
                             <div key={index} className="carousel-item h-full w-full flex-shrink-0 relative">
-                                <a href={banner.url}> <img src={banner.image} alt={`Banner ${index + 1}`} className="absolute inset-0 w-full h-full object-contain" /></a>
+                                <a  target="_blank" href={banner.url}> <img src={banner.image} alt={`Banner ${index + 1}`} className="absolute inset-0 w-full h-full object-contain" /></a>
 
                                 {/* Overlay (now empty as heading, subheading, and button are removed) */}
                                 {/* The overlay div itself remains to maintain the dark overlay effect if 'var(--banner-overlay-bg)' is semi-transparent.

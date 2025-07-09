@@ -144,10 +144,10 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
 
                     {/* Store Header Section */}
                     <div className="store-thumbnail-div flex flex-col align-items-center sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md">
-                        <div className="flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200">
+                        <div className="flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200 mb-0 store-thumbnail-firstdiv">
                             <a href={stores.affiliate_irl || "#"}> <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-30 h-30 object-contain p-2" /></a>
                         </div>
-                        <div className="flex-grow flex flex-col sm:flex-row items-center sm:items-start sm:justify-between w-full">
+                        <div className="flex-grow flex flex-col sm:flex-row items-center sm:items-start sm:justify-between w-full store-thumbnail-secdiv">
                             <div className="text-center sm:text-left sm:flex-grow">
                                 <a href={stores.affiliate_irl || "#"}>
                                     <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
@@ -224,7 +224,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                             {/* Featured Links */}
                             {featuredLinks.length > 0 && (
                                 <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                    <h3 className="text-xl font-bold text-gray-800 mb-4">Featured Links</h3>
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">Popular Categories</h3>
                                     <ul className="list-disc list-inside space-y-2 text-blue-600 storepage_featuredlink">
                                         {featuredLinks.map((store, index) => (
                                             <li key={index}>
@@ -240,7 +240,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                             {/* Same Category Stores */}
                             {similarStores.length > 0 && (
                                 <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                    <h3 className="text-xl font-bold text-gray-800 mb-4">More Stores Like {stores?.name}</h3>
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">Similar Stores</h3>
                                     <ul className="list-disc list-inside space-y-2 text-blue-600 samcat_storepage">
                                         {similarStores.map((store, index) => (
                                             <li key={index}>

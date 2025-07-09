@@ -22,50 +22,18 @@ const Footer = () => {
 
                     {/* Affiliate Line */}
                     <div
-                        className="p-6 sm:p-8 rounded-lg shadow-lg my-10 w-full affiliate_line"
-                        style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)',marginBottom:"50px" }}
+                        className="p-3 sm:p-5 w-full affiliate_line"
+                        style={{ backgroundColor: 'var(--card-bg)',marginBottom:"0px" }}
                     >
-                        <p className="text-center text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                            As an affiliate partner, we may earn a commission from qualifying purchases made through links on our site. This helps support our work and allows us to continue providing you with the best deals and coupons. Thank you for your support!
+                        <p className="text-center text-base leading-relaxed">
+                            PromoCarnivals may receive a commission when you purchase through links on our website.
                         </p>
                     </div>
 
 
         <footer className="py-10 mt-auto font-sans footer_site" style={{ backgroundColor: 'var(--footer-bg)', color: 'var(--footer-text-primary)' }}>
             <div className="container mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6">
-                {/* Company Info */}
-                <div>
-                    {/* Logo text: pure white */}
-                    <h3 className="text-2xl font-bold flex items-center" style={{ color: 'var(--footer-heading-color)' }}>
-                        {/* PromoCarnivals Logo/Icon */}
-                        <img src={PromoCarnivalsIcon} alt="PromoCarnivals Logo" className="h-20 w-auto mr-2" /> {/* Adjust h-8 w-8 as needed */}
-                    </h3>
-                    {/* Description text: lighter gray */}
-                    <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--footer-text-secondary)' }}>
-                        At Promo Carnivals, we bring you the latest deals, discounts, and promo codes from the stores you love. Our goal is to help you save money every time you shop by sharing a wide range of verified and updated coupons. Whether you're buying clothes, electronics, groceries, or anything else, our experts have got something for you.
-                    </p>
-                    <div className="flex space-x-3 mt-4">
-                        {/* Social Icons */}
-                        {/* Using inline styles with onMouseEnter/onMouseLeave for hover effects */}
-                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-                            className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
-                            style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-facebook-hover)'}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-icon-bg)'}
-                        >
-                            <FaFacebookF className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
-                        </a>
-
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-                            className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
-                            style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-instagram-hover)'}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-icon-bg)'}
-                        >
-                            <FaInstagram className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
-                        </a>
-                    </div>
-                </div>
+               
 
                 {/* Categories Column - UPDATED */}
                 <div>
@@ -135,6 +103,40 @@ const Footer = () => {
                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
                         >How to use coupons</Link></li>
                     </ul>
+                </div>
+
+                 {/* Company Info */}
+                <div>
+                    {/* Logo text: pure white */}
+                    <h3 className="text-2xl font-bold flex items-center" style={{ color: 'var(--footer-heading-color)' }}>
+                        {/* PromoCarnivals Logo/Icon */}
+                        <a href="/"><img src={PromoCarnivalsIcon} alt="PromoCarnivals Logo" className="h-20 w-auto mr-2 footer_logoweb" /></a> {/* Adjust h-8 w-8 as needed */}
+                    </h3>
+                    {/* Description text: lighter gray */}
+                    <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--footer-text-secondary)' }}>
+                        At Promo Carnivals, we bring you the latest deals, discounts, and promo codes from the stores you love. Our goal is to help you save money every time you shop by sharing a wide range of verified and updated coupons. Whether you're buying clothes, electronics, groceries, or anything else, our experts have got something for you.
+                    </p>
+                    <div className="flex space-x-3 mt-4">
+                        {/* Social Icons */}
+                        {/* Using inline styles with onMouseEnter/onMouseLeave for hover effects */}
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                            className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
+                            style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-facebook-hover)'}
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-icon-bg)'}
+                        >
+                            <FaFacebookF className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
+                        </a>
+
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                            className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
+                            style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-instagram-hover)'}
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-icon-bg)'}
+                        >
+                            <FaInstagram className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
+                        </a>
+                    </div>
                 </div>
             </div>
 

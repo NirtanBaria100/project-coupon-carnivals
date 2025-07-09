@@ -31,7 +31,8 @@
             }
         </style>
 
-        <title inertia>{{ config('app.name', 'PromoCarnival') }}</title>
+        <title inertia>Promo Carnivals - Find Exclusive Coupons and Discounts</title>
+        <meta name="description" content="Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!">
 
         <link rel="icon" href="{{ asset('favicon-carnivals.png') }}" sizes="any">
         <link rel="icon" href="{{ asset('favicon-carnivals.png') }}" type="image/svg+xml">
