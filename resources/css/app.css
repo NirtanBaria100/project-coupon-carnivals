@@ -216,7 +216,7 @@
   --category-button-text-hover: var(--neutral-white);    /* Button text on hover: White */
 
   /* HomePage/General Page Structural Colors */
-  --page-bg: #F9FAFB; /* Light gray background for the entire page (equivalent to Tailwind's gray-50) */
+  --page-bg: #FFFFFF; /* Light gray background for the entire page (equivalent to Tailwind's gray-50) */
   --card-bg: var(--neutral-white); /* Background for sections/cards (e.g., Offers List, Popular Stores) */
   --card-border: #F3F4F6; /* Light border for sections/cards (equivalent to Tailwind's gray-100) */
 
