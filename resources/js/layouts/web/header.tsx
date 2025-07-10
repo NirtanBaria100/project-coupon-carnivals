@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { UserIcon, MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline'; // Removed UserIcon
 import promocarnivals2Logo from '@/assets/promocarnivals2.png';
 import axios from 'axios';
+
 type Search = {
     slug: string | null,
     name: string | null,
 }
 
 const Header = () => {
-    // You can now safely remove '{ categories } = usePage().props;'
-    // if no other part of the Header component relies on it directly for dynamic data.
-    // However, I'll leave it in for now in case it's used elsewhere that hasn't been discussed.
     const { categories } = usePage().props;
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -22,7 +20,7 @@ const Header = () => {
     const searchInputRef = useRef(null);
     const searchDropdownRef = useRef(null);
     const mobileMenuRef = useRef(null);
-    const mobileCategoriesButtonRef = useRef(null);
+    const mobileCategoriesButtonRef = useRef(null); // Keep this if you plan to re-introduce a mobile categories button
 
     const staticCategories = [
         { slug: "travel", name: "Travel" },
@@ -37,6 +35,7 @@ const Header = () => {
         { slug: "gifts", name: "Gifts" }
     ];
 
+    const staticDesktopCategories = staticCategories; // Assuming same for both, as per previous logic
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -48,6 +47,7 @@ const Header = () => {
                 setIsSearchFocused(false);
             }
             // Close mobile menu if click outside menu button or menu itself
+            // Only relevant if a dedicated mobile menu button exists and toggles it
             if (
                 mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) &&
                 mobileCategoriesButtonRef.current && !mobileCategoriesButtonRef.current.contains(event.target)
@@ -94,71 +94,70 @@ const Header = () => {
     };
 
     const toggleMobileMenu = () => {
-        // Only toggle for small screens (below md breakpoint)
-        if (window.innerWidth < 768) {
-            setIsMobileMenuOpen(prevState => !prevState);
-        }
+        // This toggle is usually tied to a hamburger menu button
+        setIsMobileMenuOpen(prevState => !prevState);
     };
 
     const handleMouseEnterMobileMenuButton = () => {
-        // Open menu on hover for desktop (md breakpoint and up)
+        // Only open menu on hover for desktop (md breakpoint and up) if you have a hoverable mobile menu button
         if (window.innerWidth >= 768) {
             setIsMobileMenuOpen(true);
         }
     };
 
     const handleMouseLeaveMobileMenuArea = () => {
-        // Close menu on mouse leave for desktop (md breakpoint and up)
+        // Only close menu on mouse leave for desktop (md breakpoint and up) if needed
         if (window.innerWidth >= 768) {
             setIsMobileMenuOpen(false);
         }
     };
 
     return (
-        // Added 'relative' to header for absolute positioning of mobile dropdown
-        // Added 'font-sans' to ensure global Poppins font is applied here
-        <header className="shadow-md py-3 relative font-sans" style={{ backgroundColor: 'var(--header-bg)', borderBottom: '1px solid var(--border-light)' }}>
-            <div className="container mx-auto px-4 md:px-6 lg:px-8">
-                {/* Top Row: Logo, Search Bar, Blog Link, Summer Sales, Exclusive Vouchers */}
-                <div className="flex flex-wrap items-center justify-between gap-y-4 md:flex-nowrap pb-4 border-b border-gray-200 mb-4">
-                    {/* Left: Logo - Always order-1 (first) */}
-                    <Link href="/" className="flex-shrink-0 pr-4 md:pr-0">
+        <header className="relative font-sans bg-white"> {/* Set explicit white background */}
+
+            {/* Main Header Content - Logo, Search Bar, Blog/Categories Links */}
+            {/* Added shadow-sm for a very subtle shadow */}
+            <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4 border-b border-gray-100 shadow-md"> {/* Increased py for more vertical space, subtle border-b, and shadow-sm */}
+                <div className="flex flex-wrap items-center justify-between gap-y-4 md:flex-nowrap">
+                    {/* Left: Logo */}
+                    <Link href="/" className="flex-shrink-0"> {/* Removed pr-4 md:pr-0 */}
                         <img
                             src={promocarnivals2Logo}
                             alt="Site Logo"
-                            className="h-20 w-auto site_logo"
+                            className="h-16 w-auto site_logo" // Adjusted logo height for a sleeker look
                         />
                     </Link>
 
                     {/* Search Bar */}
-                    <div className="relative w-full  md:w-auto md:flex-grow md:mx-4 mt-4 md:mt-0">
+                    <div className="relative w-full md:w-auto md:flex-grow md:mx-6"> {/* Increased md:mx for more spacing */}
                         <input
                             ref={searchInputRef}
                             type="text"
-                            placeholder="Search for stores"
-                            className="w-full h-10 px-3 pl-10 text-sm rounded-full border focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300"
+                            placeholder="Search for stores and categories"
+                            // No rounded-full
+                            className="w-full h-10 px-3 pl-10 text-sm border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" // Refined border and focus styles
                             style={{
-                                backgroundColor: 'var(--search-input-bg)',
-                                color: 'var(--search-input-text)',
-                                borderColor: 'var(--search-input-border)',
-                                '--tw-ring-color': 'var(--search-input-focus-ring)',
+                                backgroundColor: 'var(--search-input-bg, #f5f5f5)', // Added fallback for --search-input-bg
+                                color: 'var(--search-input-text, #333)',
+                                borderColor: 'var(--search-input-border, #e0e0e0)',
+                                '--tw-ring-color': 'var(--search-input-focus-ring, #3b82f6)',
                             }}
                             value={searchTerm}
                             onChange={handleSearchChange}
                             onFocus={handleFocus}
                             onKeyPress={handleKeyPress}
                         />
-                        <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--search-input-placeholder)' }} />
+                        <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" style={{ color: 'var(--search-input-placeholder, #a0a0a0)' }} /> {/* Made icon lighter */}
 
                         {/* Search Results Dropdown (Empty State) */}
                         {isSearchFocused && searchTerm.length === 0 && (
                             <div
                                 ref={searchDropdownRef}
-                                className="absolute top-full left-0 mt-2 w-full border rounded-lg shadow-xl z-50 py-3 text-center text-sm animate-fadeInDown"
+                                className="absolute top-full left-0 mt-2 w-full border border-gray-200 rounded-md shadow-lg z-50 py-3 text-center text-sm animate-fadeInDown" // Refined border and shadow
                                 style={{
-                                    backgroundColor: 'var(--search-dropdown-bg)',
-                                    borderColor: 'var(--search-dropdown-border)',
-                                    color: 'var(--search-dropdown-text)'
+                                    backgroundColor: 'var(--search-dropdown-bg, #fff)',
+                                    borderColor: 'var(--search-dropdown-border, #ddd)',
+                                    color: 'var(--search-dropdown-text, #555)'
                                 }}
                             >
                                 Type to search...
@@ -168,142 +167,118 @@ const Header = () => {
                         {isSearchFocused && searchTerm.length > 0 && (
                             <div
                                 ref={searchDropdownRef}
-                                className="absolute top-full left-0 mt-2 w-full border rounded-lg shadow-xl z-50 py-3 text-sm animate-fadeInDown max-h-60 overflow-y-auto"
+                                className="absolute top-full left-0 mt-2 w-full border border-gray-200 rounded-md shadow-lg z-50 py-3 text-sm animate-fadeInDown max-h-60 overflow-y-auto" // Refined border and shadow
                                 style={{
-                                    backgroundColor: 'var(--search-dropdown-bg)',
-                                    borderColor: 'var(--search-dropdown-border)',
-                                    color: 'var(--search-dropdown-text)'
+                                    backgroundColor: 'var(--search-dropdown-bg, #fff)',
+                                    borderColor: 'var(--search-dropdown-border, #ddd)',
+                                    color: 'var(--search-dropdown-text, #555)'
                                 }}
                             >
                                 {storeResults.length > 0 ? (
-                                    <div className="space-y-2 px-3">
-                                        {storeResults.length > 0 ? storeResults.map((result) => (
+                                    <div className="space-y-1 px-3"> {/* Reduced space-y for tighter results */}
+                                        {storeResults.map((result) => (
                                             <Link
                                                 key={result.slug}
                                                 href={`/store/${result.slug}`}
-                                                className="block px-4 py-2 text-left hover:bg-gray-100 rounded"
-                                                style={{ color: 'var(--text-default)' }}
+                                                className="block px-4 py-2 text-left hover:bg-gray-50 rounded-sm" // Lighter hover, slightly rounded
+                                                style={{ color: 'var(--text-default, #333)' }}
                                                 onClick={() => setIsSearchFocused(false)}
                                             >
                                                 {result.name}
                                             </Link>
-                                        )) : <span className="block px-4 py-2 text-left hover:bg-gray-100 rounded text-red-500">No Stores Found</span>}
-
+                                        ))}
                                     </div>
-
                                 ) : (
-                                    <div className="text-center px-4 py-2 text-red-500">
+                                    <div className="text-center px-4 py-2 text-gray-500"> {/* Softer "No Result" color */}
                                         No Result Found
                                     </div>
                                 )}
                             </div>
                         )}
-
                     </div>
 
-                    {/* Right Section: Blog, Summer Sales, Exclusive Vouchers */}
-                    {/* Adjusted gap-x here for tighter spacing between the links */}
-                    <div className="blogandcatlink flex items-center gap-x-2  mt-4 md:mt-0"> {/* Added mt-4 for mobile spacing, removed md:gap-x-4 */}
-                        <Link href="/all/blogs" className="font-medium text-sm whitespace-nowrap transition-colors duration-300" style={{ color: 'var(--text-default)' }}
-                            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-accent-hover)'}
-                            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-default)'}
-                        >
-                            <span className="inline-block align-middle mr-1" role="img" aria-label="blog-icon">📄</span>Blogs
+                    {/* Right Section: Blogs and Categories */}
+                    <div className="flex items-center gap-x-4 mt-4 md:mt-0"> {/* Adjusted gap-x for more breathing room */}
+                        <Link href="/all/blogs" className="font-semibold text-base whitespace-nowrap hover:text-blue-600 transition-colors duration-300" style={{ color: 'var(--text-default, #333)' }}>
+                            <span className="inline-block align-middle mr-1" role="img" aria-label="blog-icon">📰</span>Blogs
                         </Link>
 
-                        <Link href="/categories" className="font-medium text-sm whitespace-nowrap transition-colors duration-300" style={{ color: 'var(--text-default)' }}
-                            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-accent-hover)'}
-                            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-default)'}
-                        >
-                            <span className="inline-block align-middle mr-1" role="img" aria-label="exclusive-vouchers-icon">🏷️</span>Categories
+                        <Link href="/categories" className="font-semibold text-base whitespace-nowrap hover:text-blue-600 transition-colors duration-300" style={{ color: 'var(--text-default, #333)' }}>
+                            <span className="inline-block align-middle mr-1" role="img" aria-label="categories-icon">📚</span>Categories {/* Changed icon for categories */}
                         </Link>
+
+                        {/* Optional: User/Login Icon (if needed, otherwise remove) */}
+                        {/* <Link href="/profile" className="text-gray-700 hover:text-blue-600">
+                            <UserIcon className="h-6 w-6" />
+                        </Link> */}
                     </div>
-                </div>
-
-                {/* Categories Section (without heading) */}
-                <div className="relative text-center mt-4">
-                    <nav className="w-full overflow-x-auto custom-scrollbar pb-2">
-                        <ul className="flex justify-start sm:justify-center flex-wrap gap-2 sm:gap-3 text-sm font-medium headernav_ul">
-                            {staticCategories.map((category) => (
-                                <li key={category.slug}> {/* Using slug as key as there's no 'id' from a static list */}
-                                    <Link
-                                        href={`/category/${category.slug}`}
-                                        className="flex items-center px-3 transition-all duration-300 whitespace-nowrap"
-                                        style={{
-                                            backgroundColor: 'var(--category-button-bg-default)',
-                                            color: 'var(--category-button-text-default)'
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.backgroundColor = 'var(--category-button-bg-hover)';
-                                            e.currentTarget.style.color = 'var(--category-button-text-hover)';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.backgroundColor = 'var(--category-button-bg-default)';
-                                            e.currentTarget.style.color = 'var(--category-button-text-default)';
-                                        }}
-                                    >
-                                        {category.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
                 </div>
             </div>
 
-            {/* Mobile Categories Dropdown - Rendered OUTSIDE the .container for full width positioning */}
+            {/* Categories Section - Cleaned up and simplified */}
+            {/* Removed the border-t and shadow-sm from this div to rely only on the top section's shadow */}
+            <div className="container mx-auto px-4 md:px-6 lg:px-8 py-2"> {/* Retained py-2 for vertical spacing */}
+                <nav className="w-full overflow-x-auto custom-scrollbar"> {/* Removed pb-2 as it's not needed with no shadow here */}
+                    <ul className="flex justify-start sm:justify-center flex-wrap gap-x-4 gap-y-2 text-sm font-medium headernav_ul"> {/* Adjusted gap-x for category links */}
+                        {staticCategories.map((category) => (
+                            <li key={category.slug}>
+                                <Link
+                                    href={`/category/${category.slug}`}
+                                    className="block px-3 py-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 whitespace-nowrap" // Simplified styles for a cleaner look
+                                    // Removed specific background/text colors from style prop, rely on Tailwind classes and hover
+                                >
+                                    {category.name}
+                                </Link>
+                            </li>
+                        ))}
+
+                    </ul>
+                </nav>
+            </div>
+
+
+            {/* Mobile Menu (now includes Blogs, Categories, and other links if needed) */}
+            {/* This whole mobile menu is likely toggled by a hamburger icon on small screens,
+                which is not currently in your provided code, but good to keep in mind. */}
             {isMobileMenuOpen && (
                 <div
                     ref={mobileMenuRef}
-                    // Positioned relative to the <header> element now
-                    // w-[calc(100vw-2rem)] ensures full width minus padding relative to viewport
-                    // md:hidden ensures it only appears on small screens
-                    className="absolute top-full left-0 right-0 mx-auto mt-2 w-[calc(100vw-2rem)] sm:max-w-lg bg-white border rounded-lg shadow-xl z-50 py-3 animate-fadeInDown md:hidden"
-                    style={{ backgroundColor: 'var(--search-dropdown-bg)', borderColor: 'var(--search-dropdown-border)' }}
-                    onMouseLeave={handleMouseLeaveMobileMenuArea} // Keep for desktop hover close behavior if needed
+                    className="absolute top-full left-0 right-0 mx-auto mt-2 w-[calc(100vw-2rem)] sm:max-w-lg bg-white border border-gray-200 rounded-md shadow-lg z-50 py-3 animate-fadeInDown md:hidden"
+                    style={{ backgroundColor: 'var(--search-dropdown-bg, #fff)', borderColor: 'var(--search-dropdown-border, #ddd)' }}
+                    onMouseLeave={handleMouseLeaveMobileMenuArea}
                 >
                     <ul className="py-2">
-
                         <li>
-                            <Link href="/blog" className="block px-4 py-2 text-left hover:bg-gray-100" style={{ color: 'var(--text-default)' }} onClick={() => setIsMobileMenuOpen(false)}>
-                                <span className="inline-block align-middle mr-1" role="img" aria-label="blog-icon">📄</span>Blog
+                            <Link href="/all/blogs" className="block px-4 py-2 text-left hover:bg-gray-100 text-gray-700" onClick={() => setIsMobileMenuOpen(false)}>
+                                <span className="inline-block align-middle mr-1" role="img" aria-label="blog-icon">📰</span>Blogs
                             </Link>
                         </li>
                         <li>
-                            <Link href="/summer-sales" className="block px-4 py-2 text-left hover:bg-gray-100 font-bold" style={{ color: 'var(--text-default)' }} onClick={() => setIsMobileMenuOpen(false)}>
-                                <span className="inline-block align-middle mr-1" role="img" aria-label="summer-sales-icon">☀️</span>Summer Sales
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/exclusive-vouchers" className="block px-4 py-2 text-left hover:bg-gray-100 font-bold" style={{ color: 'var(--text-default)' }} onClick={() => setIsMobileMenuOpen(false)}>
-                                <span className="inline-block align-middle mr-1" role="img" aria-label="exclusive-vouchers-icon">💰</span>Exclusive Vouchers
+                            <Link href="/categories" className="block px-4 py-2 text-left hover:bg-gray-100 text-gray-700" onClick={() => setIsMobileMenuOpen(false)}>
+                                <span className="inline-block align-middle mr-1" role="img" aria-label="categories-icon">📚</span>Categories
                             </Link>
                         </li>
 
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 px-4 py-2">
-                            {/* CHANGED: Now uses staticDesktopCategories for mobile dropdown */}
+                        {/* Mobile grid for categories - removed rounded-full */}
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 px-4 py-2 mt-2 border-t border-gray-100 pt-3">
                             {staticDesktopCategories.map((category) => (
                                 <Link
-                                    key={category.slug} // Use slug as key
+                                    key={category.slug}
                                     href={`/category/${category.slug}`}
-                                    className="block px-4 py-2 text-center text-sm rounded-full shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap"
-                                    style={{
-                                        backgroundColor: 'var(--category-button-bg-default)',
-                                        color: 'var(--category-button-text-default)'
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        e.currentTarget.style.backgroundColor = 'var(--category-button-bg-hover)';
-                                        e.currentTarget.style.color = 'var(--category-button-text-hover)';
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        e.currentTarget.style.backgroundColor = 'var(--category-button-bg-default)';
-                                        e.currentTarget.style.color = 'var(--category-button-text-default)';
-                                    }}
+                                    className="block px-3 py-1 text-center text-sm bg-gray-50 text-gray-700 rounded-md shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-300 whitespace-nowrap" // Adjusted button styles
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     {category.name}
                                 </Link>
                             ))}
+                            {/* "More Categories" link for mobile */}
+                            <Link
+                                href="/categories"
+                                className="block px-3 py-1 text-center text-sm bg-gray-50 text-gray-700 rounded-md shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-300 whitespace-nowrap"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                More...
+                            </Link>
                         </div>
                     </ul>
                 </div>
