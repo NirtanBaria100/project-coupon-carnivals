@@ -233,6 +233,7 @@ class HomeController extends Controller
                 return $query;
             });
         }
+
         return response()->json(['coupons'=> $coupons]);
     }
 }

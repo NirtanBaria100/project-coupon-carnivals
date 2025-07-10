@@ -143,7 +143,7 @@ export default function Index() {
                         {coupons.data.map((coupon) => (
                             <TableRow key={coupon.id}>
                                 <TableCell>{coupon.title}</TableCell>
-                                <TableCell>{coupon.stores ? coupon.stores[0].name : ""}</TableCell>
+                                <TableCell>{coupon?.stores ? coupon?.stores[0]?.name || "No store selected" : "No store selected"}</TableCell>
                                 <TableCell>
                                     <Switch checked={coupon.is_published} onCheckedChange={(val) => toggleStatus(coupon.id, 'is_published', val)} />
                                 </TableCell>

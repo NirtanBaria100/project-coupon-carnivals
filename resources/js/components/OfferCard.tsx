@@ -26,7 +26,7 @@ const OfferCard = ({
     const [showTermsMessage, setShowTermsMessage] = useState(false);
 
     const offerValue = code;
-    const RedirectionURL = type == 'home' ? store_slug : (affiliate_url || store.home_url);
+    const RedirectionURL = type == 'home' ? store_slug : (affiliate_url || store?.home_url);
     const handleCopyCode = () => {
         navigator.clipboard
             .writeText(offerValue)
@@ -79,8 +79,8 @@ const OfferCard = ({
     const buttonBgColor = isExpired ? 'bg-[var(--offer-button-disabled-bg)] cursor-not-allowed' : 'bg-[var(--offer-button-bg)]';
     const buttonTextColor = 'text-[var(--offer-button-text)]';
 
-    const defaultStoreLogo = store.thumbnail;
-    const defaultStoreImage = store.thumbnail;
+    const defaultStoreLogo = store?.thumbnail;
+    const defaultStoreImage = store?.thumbnail;
 
     const tags = [];
     if (is_verified) {
@@ -294,7 +294,7 @@ const OfferCard = ({
                                     </button>
                                 </div>
                                 <p className="mt-3 text-center text-xs gotodivpopup" style={{ color: 'var(--modal-instructions-text)' }}>
-                                    <a target='_blank' href={type == 'stores' ? (affiliate_url || store.home_url) : store_slug}>Go to {storeName}</a>
+                                    <a target='_blank' href={type == 'stores' ? (affiliate_url || store?.home_url) : store_slug}>Go to {storeName}</a>
                                 </p>
                             </div>
                         ) : (
@@ -303,7 +303,7 @@ const OfferCard = ({
                                     Click the button below to go to the store and get this offer!
                                 </p>
                                 <a
-                                    href={type == 'stores' ? (affiliate_url || store.home_url) : store_slug}
+                                    href={type == 'stores' ? (affiliate_url || store?.home_url) : store_slug}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="focus:ring-opacity-50 mt-6 block w-full rounded-md py-3 text-center font-bold transition-colors duration-200 focus:ring-2 focus:outline-none"

@@ -62,7 +62,7 @@ const CategoryPage = ({ category }: Props) => {
         try {
             await axios.post(route('home.loadmore.coupons', skip), data).then((res) => {
                 const newCoupons = res.data.coupons || [];
-
+                console.log({newCoupons})
                 setCoupon(prev => [...prev, ...newCoupons]);
             });
 
@@ -109,10 +109,10 @@ const CategoryPage = ({ category }: Props) => {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         {/* Left Column: Offer Cards */}
                         <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8">
-                            {coupon.length > 0 ? coupon.map((offer, index) => (
-                                <OfferCard key={index} coupon_id={offer.id} store_slug={'/store/' + offer.stores[0].slug} store={offer.stores[0]} affiliate_url={offer.coupon_url || offer.stores[0].affiliate_irl} storeName={offer.stores[0].name} type={'categories'} {...offer} />
+                            {coupon?.length > 0 ? coupon?.map((offer, index) => (
+                                <OfferCard key={index} coupon_id={offer?.id} store_slug={'/store/' + offer?.stores[0]?.slug} store={offer?.stores[0]} affiliate_url={offer?.coupon_url || offer?.stores[0]?.affiliate_irl} storeName={offer?.stores[0]?.name} type={'categories'} {...offer} />
                             )) : <span className='text-red-500'>No Coupons Available</span>}
-                            {coupon.length > 50 ? <div className=" lg:col-span-2 text-center flex justify-center align-items-center w-full">
+                            {coupon?.length > 50 ? <div className=" lg:col-span-2 text-center flex justify-center align-items-center w-full">
                                 <button className='btn border border-orange-500 w-full text-orange-500 rounded shadow-sm hover:text-white hover:bg-orange-500 p-2 text-center' onClick={() => loadMore()}>Load More</button>
                             </div> : <></>}
                         </div>
