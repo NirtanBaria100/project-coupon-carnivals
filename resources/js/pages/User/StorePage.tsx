@@ -202,7 +202,11 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
 
                             {/* Store Short Descriptions */}
                             {stores.extra_info && <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-center text-gray-700 text-base h-auto min-h-[100px] border border-gray-200">
-                                <p className="text-center">{stores.extra_info || 'No Info Available'}</p>
+                                <div
+                                    className="prose max-w-none leading-relaxed"
+                                    style={{ color: "var(--text-default)" }}
+                                    dangerouslySetInnerHTML={{ __html: stores.extra_info }}
+                                ></div>
                             </div>}
 
                             {/* Featured Links */}
@@ -244,9 +248,11 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
 
                     {stores.desc ? <div className="bg-white p-6 rounded-lg shadow-md my-8 border border-gray-200 storepage_longdescsec">
                         <h3 className="text-xl font-bold text-gray-800 mb-4">About {stores.name}</h3>
-                        <p className="text-gray-700 text-sm leading-relaxed">
-                            {stores.desc}
-                        </p>
+                        <div
+                            className="prose max-w-none leading-relaxed"
+                            style={{ color: "var(--text-default)" }}
+                            dangerouslySetInnerHTML={{ __html: stores.desc }}
+                        ></div>
                     </div>
                         : <></>}
 

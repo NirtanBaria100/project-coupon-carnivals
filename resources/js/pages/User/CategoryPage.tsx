@@ -123,7 +123,11 @@ const CategoryPage = ({ category }: Props) => {
                             {category.desc ? <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">About {formattedCategoryName} Category</h3>
                                 <p className="text-gray-700 text-sm leading-relaxed">
-                                    {category.desc}
+                                <div
+                                    className="prose max-w-none leading-relaxed"
+                                    style={{ color: "var(--text-default)" }}
+                                    dangerouslySetInnerHTML={{ __html: category.desc }}
+                                ></div>
                                 </p>
                             </div> : <></>}
 
