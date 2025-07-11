@@ -46,6 +46,7 @@ class StoresController extends Controller
     {
         return Inertia::render('Admin/Store/Create',[
             'categories' => Category::select('id', 'name')->get(),
+            'csrfToken' => csrf_token(),
         ]);
     }
 
@@ -94,6 +95,7 @@ class StoresController extends Controller
     return Inertia::render('Admin/Store/Edit', [
         'store' => $store,
         'categories' => Category::select('id', 'name')->get(),
+        'csrfToken' => csrf_token(),
     ]);
 }
 

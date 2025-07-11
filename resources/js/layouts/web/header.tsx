@@ -117,8 +117,9 @@ const Header = () => {
 
             {/* Main Header Content - Logo, Search Bar, Blog/Categories Links */}
             {/* Added shadow-sm for a very subtle shadow */}
-            <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4 border-b border-gray-100 shadow-md"> {/* Increased py for more vertical space, subtle border-b, and shadow-sm */}
-                <div className="flex flex-wrap items-center justify-between gap-y-4 md:flex-nowrap">
+            <div className="  shadow-[0_4px_4px_-4px_rgba(0,0,0,0.2)]">
+            {/* Increased py for more vertical space, subtle border-b, and shadow-sm */}
+                <div className="flex px-4 md:px-6 lg:px-8 py-4 container mx-auto flex-wrap items-center justify-between gap-y-4 md:flex-nowrap">
                     {/* Left: Logo */}
                     <Link href="/" className="flex-shrink-0"> {/* Removed pr-4 md:pr-0 */}
                         <img

@@ -1,11 +1,12 @@
 'use client';
 
+import RichTextEditor from '@/components/Joditeditor/RichTextEditor';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import AppLayout from '@/layouts/app-layout';
 import { toastDirection } from '@/lib/utils/Constants';
 import { Head, useForm } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 type Category = {
@@ -14,9 +15,10 @@ type Category = {
 };
 interface CreateProp {
     categories: Category[];
+    csrfToken: string,
 }
 
-export default function Create({ categories }: CreateProp) {
+export default function Create({ categories, csrfToken }: CreateProp) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         slug: '',
@@ -30,7 +32,8 @@ export default function Create({ categories }: CreateProp) {
         seo_title: '',
         meta_description: '',
     });
-
+    const [content, setContent] = useState();
+    const [contentExtra, setContentExtra] = useState();
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, type, value, checked, files } = e.target as HTMLInputElement;
 
@@ -127,13 +130,9 @@ export default function Create({ categories }: CreateProp) {
                     </div>
 
                     <div>
-                        <textarea
-                            name="desc"
-                            placeholder="Description"
-                            value={data.desc}
-                            onChange={handleChange}
-                            className="w-full rounded border px-3 py-2"
-                        />
+                        <label className="block font-semibold text-sm">Long Description</label>
+                        <RichTextEditor content={content} setContent={setContent} setFormData={setData} name={'desc'} csrfToken={csrfToken} path={'categories'} />
+
                     </div>
 
                     <input
@@ -153,13 +152,9 @@ export default function Create({ categories }: CreateProp) {
                         <Switch checked={data.is_popular} onCheckedChange={(checked) => handleSwitch('is_popular', checked)} />
                     </div>
 
-                    <input
-                        name="single_line_desc"
-                        placeholder="Short Description"
-                        value={data.single_line_desc}
-                        onChange={handleChange}
-                        className="w-full rounded border px-3 py-2"
-                    />
+                    <label className="block font-semibold text-sm">Single Line Description</label>
+                    <RichTextEditor content={contentExtra} setContent={setContentExtra} setFormData={setData} name={'single_line_desc'} csrfToken={csrfToken} path={'categories'} />
+
 
                     <h1 className="text-xl font-semibold text-gray-800 dark:text-white">SEO</h1>
 

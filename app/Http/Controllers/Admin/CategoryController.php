@@ -41,6 +41,7 @@ class CategoryController extends Controller
 
         return Inertia::render('Admin/Category/Create', [
             'categories' => $categories,
+            'csrfToken' => csrf_token(),
         ]);
     }
     // Store a new category
@@ -78,6 +79,7 @@ class CategoryController extends Controller
 
         return Inertia::render('Admin/Category/Edit', [
             'category' => $category,
+            'csrfToken' => csrf_token(),
             'categories' => Category::where('id', '!=', $category->id)->get(), // Exclude current category as parent
         ]);
     }

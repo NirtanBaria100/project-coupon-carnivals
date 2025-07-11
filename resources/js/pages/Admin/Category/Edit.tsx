@@ -1,11 +1,12 @@
 'use client';
 
+import RichTextEditor from '@/components/Joditeditor/RichTextEditor';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import AppLayout from '@/layouts/app-layout';
 import { toastDirection } from '@/lib/utils/Constants';
 import { Head, router, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useState } from 'react';
 import toast from 'react-hot-toast';
 
 type Category = {
@@ -29,9 +30,10 @@ interface EditProps {
         meta_description: string;
     };
     categories: Category[];
+    csrfToken: string,
 }
 
-export default function Edit({ category, categories }: EditProps) {
+export default function Edit({ category, categories, csrfToken }: EditProps) {
     const { data, setData, post, processing, errors, reset } = useForm({
         id: category.id,
         name: category.name || '',
@@ -46,7 +48,8 @@ export default function Edit({ category, categories }: EditProps) {
         seo_title: category.seo_title || '',
         meta_description: category.meta_description || '',
     });
-
+    const [content, setContent] = useState(category.desc || '');
+    const [contentExtra, setContentExtra] = useState(category.single_line_desc || '');
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, type, value, checked, files } = e.target as HTMLInputElement;
 
@@ -96,7 +99,7 @@ export default function Edit({ category, categories }: EditProps) {
 
     const breadcrumbs = [
         { title: 'Categories', href: route('admin.categories.index') },
-        { title: 'Edit Category', href: route(`admin.categories.edit`,category.id) },
+        { title: 'Edit Category', href: route(`admin.categories.edit`, category.id) },
     ];
 
     return (
@@ -142,13 +145,10 @@ export default function Edit({ category, categories }: EditProps) {
                         ))}
                     </select>
 
-                    <textarea
-                        name="desc"
-                        placeholder="Description"
-                        value={data.desc}
-                        onChange={handleChange}
-                        className="w-full rounded border px-3 py-2"
-                    />
+
+                    <label className="block font-medium">Description</label>
+                    <RichTextEditor content={content} setContent={setContent} setFormData={setData} name={'desc'} csrfToken={csrfToken} path={'categories'} />
+
 
                     <input
                         name="icon"
@@ -172,7 +172,7 @@ export default function Edit({ category, categories }: EditProps) {
                         <Switch checked={data.is_popular} onCheckedChange={(checked) => handleSwitch('is_popular', checked)} />
                     </div>
 
-                
+
                     <h1 className="text-xl font-semibold text-gray-800 dark:text-white">SEO</h1>
 
                     <input

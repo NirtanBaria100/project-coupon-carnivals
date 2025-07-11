@@ -7,24 +7,29 @@ import { toastDirection } from '@/lib/utils/Constants';
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import Select from 'react-select';
-import { FormEventHandler, useEffect } from 'react';
+import { FormEventHandler, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import customSelectStyles from '@/components/ui/CustomSelectStyles';
+import RichTextEditor from '@/components/Joditeditor/RichTextEditor';
 interface Category {
     name: string,
     id: number,
 }
 interface Props {
     categories: Category[],
+    csrfToken: string,
+
 }
-export default function Create({ categories }: Props) {
+export default function Create({ categories, csrfToken }: Props) {
     const categoryOptions = categories?.map((cat) => ({ value: cat.id.toString(), label: cat.name })) ?? [];
+    const [content, setContent] = useState();
+    const [contentExtra, setContentExtra] = useState();
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         slug: '',
         desc: '',
         home_url: '',
-        category_id:'',
+        category_id: '',
         affiliate_irl: '',
         thumbnail: null as File | null,
         is_featured: false,
@@ -112,14 +117,15 @@ export default function Create({ categories }: Props) {
                             styles={customSelectStyles}
                         />
 
-                        <textarea
+                        {/* <textarea
                             name="desc"
                             placeholder="Description"
                             value={data.desc}
                             onChange={handleChange}
                             className="w-full rounded border px-3 py-2"
-                        />
-
+                        /> */}
+                        <label className="block font-medium">Description</label>
+                        <RichTextEditor content={content} setContent={setContent} setFormData={setData} name={'desc'} csrfToken={csrfToken} path={'stores'} />
                         <input
                             name="home_url"
                             placeholder="Homepage URL"
@@ -150,13 +156,16 @@ export default function Create({ categories }: Props) {
                             <Switch checked={data.is_featured} onCheckedChange={(checked) => handleSwitch('is_featured', checked)} />
                         </label>
 
-                        <textarea
+                        {/* <textarea
                             name="extra_info"
                             placeholder="Short Description Sidebar"
                             value={data.extra_info}
                             onChange={handleChange}
                             className="w-full rounded border px-3 py-2"
-                        />
+                        /> */}
+                        <label className="block font-semibold text-sm">Short Description</label>
+                        <RichTextEditor content={contentExtra} setContent={setContentExtra} setFormData={setData} name={'extra_info'} csrfToken={csrfToken} path={'stores'} />
+
                         <hr />
                         <h1>SEO</h1>
                         <input
