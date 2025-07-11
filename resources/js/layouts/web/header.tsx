@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline'; // Removed UserIcon
+import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import promocarnivals2Logo from '@/assets/promocarnivals2.png';
 import axios from 'axios';
 
@@ -20,7 +20,7 @@ const Header = () => {
     const searchInputRef = useRef(null);
     const searchDropdownRef = useRef(null);
     const mobileMenuRef = useRef(null);
-    const mobileCategoriesButtonRef = useRef(null); // Keep this if you plan to re-introduce a mobile categories button
+    const mobileCategoriesButtonRef = useRef(null);
 
     const staticCategories = [
         { slug: "travel", name: "Travel" },
@@ -35,19 +35,16 @@ const Header = () => {
         { slug: "gifts", name: "Gifts" }
     ];
 
-    const staticDesktopCategories = staticCategories; // Assuming same for both, as per previous logic
+    const staticDesktopCategories = staticCategories;
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            // Close search dropdown if click outside search input or dropdown itself
             if (
                 searchInputRef.current && !searchInputRef.current.contains(event.target) &&
                 searchDropdownRef.current && !searchDropdownRef.current.contains(event.target)
             ) {
                 setIsSearchFocused(false);
             }
-            // Close mobile menu if click outside menu button or menu itself
-            // Only relevant if a dedicated mobile menu button exists and toggles it
             if (
                 mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) &&
                 mobileCategoriesButtonRef.current && !mobileCategoriesButtonRef.current.contains(event.target)
@@ -94,51 +91,45 @@ const Header = () => {
     };
 
     const toggleMobileMenu = () => {
-        // This toggle is usually tied to a hamburger menu button
         setIsMobileMenuOpen(prevState => !prevState);
     };
 
     const handleMouseEnterMobileMenuButton = () => {
-        // Only open menu on hover for desktop (md breakpoint and up) if you have a hoverable mobile menu button
         if (window.innerWidth >= 768) {
             setIsMobileMenuOpen(true);
         }
     };
 
     const handleMouseLeaveMobileMenuArea = () => {
-        // Only close menu on mouse leave for desktop (md breakpoint and up) if needed
         if (window.innerWidth >= 768) {
             setIsMobileMenuOpen(false);
         }
     };
 
     return (
-        <header className="relative font-sans bg-white"> {/* Set explicit white background */}
-
+        <header className="relative font-sans bg-white">
             {/* Main Header Content - Logo, Search Bar, Blog/Categories Links */}
-            {/* Added shadow-sm for a very subtle shadow */}
-            <div className="  shadow-[0_4px_4px_-4px_rgba(0,0,0,0.2)]">
-            {/* Increased py for more vertical space, subtle border-b, and shadow-sm */}
+            {/* Changed shadow-sm to only show on the bottom */}
+            <div className="shadow-sm"> {/* Replaced custom shadow with Tailwind's shadow-sm for cleaner bottom shadow */}
                 <div className="flex px-4 md:px-6 lg:px-8 py-4 container mx-auto flex-wrap items-center justify-between gap-y-4 md:flex-nowrap">
                     {/* Left: Logo */}
-                    <Link href="/" className="flex-shrink-0"> {/* Removed pr-4 md:pr-0 */}
+                    <Link href="/" className="flex-shrink-0">
                         <img
                             src={promocarnivals2Logo}
                             alt="Site Logo"
-                            className="h-16 w-auto site_logo" // Adjusted logo height for a sleeker look
+                            className="h-16 w-auto site_logo"
                         />
                     </Link>
 
                     {/* Search Bar */}
-                    <div className="relative w-full md:w-auto md:flex-grow md:mx-6"> {/* Increased md:mx for more spacing */}
+                    <div className="relative w-full md:w-auto md:flex-grow md:mx-6">
                         <input
                             ref={searchInputRef}
                             type="text"
                             placeholder="Search for stores and categories"
-                            // No rounded-full
-                            className="w-full h-10 px-3 pl-10 text-sm border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" // Refined border and focus styles
+                            className="w-full h-10 px-3 pl-10 text-sm border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                             style={{
-                                backgroundColor: 'var(--search-input-bg, #f5f5f5)', // Added fallback for --search-input-bg
+                                backgroundColor: 'var(--search-input-bg, #f5f5f5)',
                                 color: 'var(--search-input-text, #333)',
                                 borderColor: 'var(--search-input-border, #e0e0e0)',
                                 '--tw-ring-color': 'var(--search-input-focus-ring, #3b82f6)',
@@ -148,13 +139,13 @@ const Header = () => {
                             onFocus={handleFocus}
                             onKeyPress={handleKeyPress}
                         />
-                        <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" style={{ color: 'var(--search-input-placeholder, #a0a0a0)' }} /> {/* Made icon lighter */}
+                        <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" style={{ color: 'var(--search-input-placeholder, #a0a0a0)' }} />
 
                         {/* Search Results Dropdown (Empty State) */}
                         {isSearchFocused && searchTerm.length === 0 && (
                             <div
                                 ref={searchDropdownRef}
-                                className="absolute top-full left-0 mt-2 w-full border border-gray-200 rounded-md shadow-lg z-50 py-3 text-center text-sm animate-fadeInDown" // Refined border and shadow
+                                className="absolute top-full left-0 mt-2 w-full border border-gray-200 rounded-md shadow-lg z-50 py-3 text-center text-sm animate-fadeInDown"
                                 style={{
                                     backgroundColor: 'var(--search-dropdown-bg, #fff)',
                                     borderColor: 'var(--search-dropdown-border, #ddd)',
@@ -168,7 +159,7 @@ const Header = () => {
                         {isSearchFocused && searchTerm.length > 0 && (
                             <div
                                 ref={searchDropdownRef}
-                                className="absolute top-full left-0 mt-2 w-full border border-gray-200 rounded-md shadow-lg z-50 py-3 text-sm animate-fadeInDown max-h-60 overflow-y-auto" // Refined border and shadow
+                                className="absolute top-full left-0 mt-2 w-full border border-gray-200 rounded-md shadow-lg z-50 py-3 text-sm animate-fadeInDown max-h-60 overflow-y-auto"
                                 style={{
                                     backgroundColor: 'var(--search-dropdown-bg, #fff)',
                                     borderColor: 'var(--search-dropdown-border, #ddd)',
@@ -176,12 +167,12 @@ const Header = () => {
                                 }}
                             >
                                 {storeResults.length > 0 ? (
-                                    <div className="space-y-1 px-3"> {/* Reduced space-y for tighter results */}
+                                    <div className="space-y-1 px-3">
                                         {storeResults.map((result) => (
                                             <Link
                                                 key={result.slug}
                                                 href={`/store/${result.slug}`}
-                                                className="block px-4 py-2 text-left hover:bg-gray-50 rounded-sm" // Lighter hover, slightly rounded
+                                                className="block px-4 py-2 text-left hover:bg-gray-50 rounded-sm"
                                                 style={{ color: 'var(--text-default, #333)' }}
                                                 onClick={() => setIsSearchFocused(false)}
                                             >
@@ -190,7 +181,7 @@ const Header = () => {
                                         ))}
                                     </div>
                                 ) : (
-                                    <div className="text-center px-4 py-2 text-gray-500"> {/* Softer "No Result" color */}
+                                    <div className="text-center px-4 py-2 text-gray-500">
                                         No Result Found
                                     </div>
                                 )}
@@ -199,48 +190,38 @@ const Header = () => {
                     </div>
 
                     {/* Right Section: Blogs and Categories */}
-                    <div className="flex items-center gap-x-4 mt-4 md:mt-0"> {/* Adjusted gap-x for more breathing room */}
+                    <div className="flex items-center gap-x-4 mt-4 md:mt-0">
                         <Link href="/all/blogs" className="font-semibold text-base whitespace-nowrap hover:text-blue-600 transition-colors duration-300" style={{ color: 'var(--text-default, #333)' }}>
                             <span className="inline-block align-middle mr-1" role="img" aria-label="blog-icon">📰</span>Blogs
                         </Link>
 
                         <Link href="/categories" className="font-semibold text-base whitespace-nowrap hover:text-blue-600 transition-colors duration-300" style={{ color: 'var(--text-default, #333)' }}>
-                            <span className="inline-block align-middle mr-1" role="img" aria-label="categories-icon">📚</span>Categories {/* Changed icon for categories */}
+                            <span className="inline-block align-middle mr-1" role="img" aria-label="categories-icon">📚</span>Categories
                         </Link>
-
-                        {/* Optional: User/Login Icon (if needed, otherwise remove) */}
-                        {/* <Link href="/profile" className="text-gray-700 hover:text-blue-600">
-                            <UserIcon className="h-6 w-6" />
-                        </Link> */}
                     </div>
                 </div>
             </div>
 
-            {/* Categories Section - Cleaned up and simplified */}
-            {/* Removed the border-t and shadow-sm from this div to rely only on the top section's shadow */}
-            <div className="container mx-auto px-4 md:px-6 lg:px-8 py-2"> {/* Retained py-2 for vertical spacing */}
-                <nav className="w-full overflow-x-auto custom-scrollbar"> {/* Removed pb-2 as it's not needed with no shadow here */}
-                    <ul className="flex justify-start sm:justify-center flex-wrap gap-x-4 gap-y-2 text-sm font-medium headernav_ul"> {/* Adjusted gap-x for category links */}
+            {/* Categories Section */}
+            <div className="container mx-auto px-4 md:px-6 lg:px-8 py-2">
+                <nav className="w-full overflow-x-auto custom-scrollbar">
+                    <ul className="flex justify-start sm:justify-center flex-wrap gap-x-4 gap-y-2 text-sm font-medium headernav_ul">
                         {staticCategories.map((category) => (
                             <li key={category.slug}>
                                 <Link
                                     href={`/category/${category.slug}`}
-                                    className="block px-3 py-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 whitespace-nowrap" // Simplified styles for a cleaner look
-                                    // Removed specific background/text colors from style prop, rely on Tailwind classes and hover
+                                    className="block px-3 py-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 whitespace-nowrap"
                                 >
                                     {category.name}
                                 </Link>
                             </li>
                         ))}
-
                     </ul>
                 </nav>
             </div>
 
 
             {/* Mobile Menu (now includes Blogs, Categories, and other links if needed) */}
-            {/* This whole mobile menu is likely toggled by a hamburger icon on small screens,
-                which is not currently in your provided code, but good to keep in mind. */}
             {isMobileMenuOpen && (
                 <div
                     ref={mobileMenuRef}
@@ -260,13 +241,13 @@ const Header = () => {
                             </Link>
                         </li>
 
-                        {/* Mobile grid for categories - removed rounded-full */}
+                        {/* Mobile grid for categories */}
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 px-4 py-2 mt-2 border-t border-gray-100 pt-3">
                             {staticDesktopCategories.map((category) => (
                                 <Link
                                     key={category.slug}
                                     href={`/category/${category.slug}`}
-                                    className="block px-3 py-1 text-center text-sm bg-gray-50 text-gray-700 rounded-md shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-300 whitespace-nowrap" // Adjusted button styles
+                                    className="block px-3 py-1 text-center text-sm bg-gray-50 text-gray-700 rounded-md shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-300 whitespace-nowrap"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     {category.name}
