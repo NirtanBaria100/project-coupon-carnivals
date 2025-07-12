@@ -72,7 +72,7 @@ const CategoryPage = ({ category }: Props) => {
     }
     useEffect(() => {
         loadMore();
-    }, [])
+    }, []);
 
     return (
         <WebLayout>

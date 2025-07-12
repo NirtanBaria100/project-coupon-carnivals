@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import promocarnivals2Logo from '@/assets/promocarnivals2.png';
 import axios from 'axios';
+import { MenuIcon, SidebarCloseIcon, ToggleLeftIcon } from 'lucide-react';
 
 type Search = {
     slug: string | null,
@@ -16,6 +17,7 @@ const Header = () => {
     const [storeResults, setstoreResults] = useState<Search[]>([]);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false); // NEW
 
     const searchInputRef = useRef(null);
     const searchDropdownRef = useRef(null);
@@ -35,8 +37,6 @@ const Header = () => {
         { slug: "gifts", name: "Gifts" }
     ];
 
-    const staticDesktopCategories = staticCategories;
-
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -50,6 +50,7 @@ const Header = () => {
                 mobileCategoriesButtonRef.current && !mobileCategoriesButtonRef.current.contains(event.target)
             ) {
                 setIsMobileMenuOpen(false);
+                setIsMobileCategoriesOpen(false);
             }
         };
 
@@ -85,43 +86,38 @@ const Header = () => {
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && searchTerm.trim()) {
             setIsSearchFocused(false);
-            // Example: Redirect to search results page
             // window.location.href = `/search?q=${encodeURIComponent(searchTerm)}`;
         }
     };
 
     const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(prevState => !prevState);
+        setIsMobileMenuOpen(prev => !prev);
     };
 
-    const handleMouseEnterMobileMenuButton = () => {
-        if (window.innerWidth >= 768) {
-            setIsMobileMenuOpen(true);
-        }
-    };
-
-    const handleMouseLeaveMobileMenuArea = () => {
-        if (window.innerWidth >= 768) {
-            setIsMobileMenuOpen(false);
-        }
+    const toggleMobileCategories = () => {
+        setIsMobileCategoriesOpen(prev => !prev);
     };
 
     return (
         <header className="relative font-sans bg-white">
-            {/* Main Header Content - Logo, Search Bar, Blog/Categories Links */}
-            {/* Changed shadow-sm to only show on the bottom */}
-            <div className="shadow-sm"> {/* Replaced custom shadow with Tailwind's shadow-sm for cleaner bottom shadow */}
+            <div className="shadow-sm">
                 <div className="flex px-4 md:px-6 lg:px-8 py-4 container mx-auto flex-wrap items-center justify-between gap-y-4 md:flex-nowrap">
-                    {/* Left: Logo */}
-                    <Link href="/" className="flex-shrink-0">
-                        <img
-                            src={promocarnivals2Logo}
-                            alt="Site Logo"
-                            className="h-16 w-auto site_logo"
-                        />
-                    </Link>
+                    <div className="flex justify-between w-full md:w-auto">
+                        <Link href="/" className="flex-shrink-0">
+                            <img
+                                src={promocarnivals2Logo}
+                                alt="Site Logo"
+                                className="h-16 w-auto site_logo"
+                            />
+                        </Link>
+                        <button
+                            ref={mobileCategoriesButtonRef}
+                            className="md:hidden font-semibold text-end text-base text-gray-700 hover:text-orange-600 transition duration-300"
+                            onClick={toggleMobileCategories}
+                        > {isMobileCategoriesOpen ? <SidebarCloseIcon className="w-4 h-4 inline ml-1" /> : <MenuIcon className="w-4 h-4 inline ml-1" />}
+                        </button>
+                    </div>
 
-                    {/* Search Bar */}
                     <div className="relative w-full md:w-auto md:flex-grow md:mx-6">
                         <input
                             ref={searchInputRef}
@@ -139,9 +135,8 @@ const Header = () => {
                             onFocus={handleFocus}
                             onKeyPress={handleKeyPress}
                         />
-                        <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" style={{ color: 'var(--search-input-placeholder, #a0a0a0)' }} />
+                        <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
 
-                        {/* Search Results Dropdown (Empty State) */}
                         {isSearchFocused && searchTerm.length === 0 && (
                             <div
                                 ref={searchDropdownRef}
@@ -155,7 +150,6 @@ const Header = () => {
                                 Type to search...
                             </div>
                         )}
-                        {/* Search Results Dropdown (Results/No Results) */}
                         {isSearchFocused && searchTerm.length > 0 && (
                             <div
                                 ref={searchDropdownRef}
@@ -187,23 +181,31 @@ const Header = () => {
                                 )}
                             </div>
                         )}
+
                     </div>
 
-                    {/* Right Section: Blogs and Categories */}
-                    <div className="flex items-center gap-x-4 mt-4 md:mt-0">
-                        <Link href="/all/blogs" className="font-semibold text-base whitespace-nowrap hover:text-blue-600 transition-colors duration-300" style={{ color: 'var(--text-default, #333)' }}>
-                            <span className="inline-block align-middle mr-1" role="img" aria-label="blog-icon">📰</span>Blogs
+                    <div className="flex items-center justify-center w-100 gap-x-4  md:mt-0">
+                        <Link href="/all/blogs" className="font-semibold text-base whitespace-nowrap hover:text-orange-600 transition-colors duration-300">
+                            📰 Blogs
                         </Link>
 
-                        <Link href="/categories" className="font-semibold text-base whitespace-nowrap hover:text-blue-600 transition-colors duration-300" style={{ color: 'var(--text-default, #333)' }}>
-                            <span className="inline-block align-middle mr-1" role="img" aria-label="categories-icon">📚</span>Categories
+                        {/* Show this only on desktop */}
+                        <Link
+                            href="/categories"
+                            className=" md:inline font-semibold text-base hover:text-orange-600 transition-colors duration-300"
+                        >
+                            📚 Categories
                         </Link>
+
+                        {/* Toggle button visible only on mobile */}
+
                     </div>
+
                 </div>
             </div>
 
-            {/* Categories Section */}
-            <div className="container mx-auto px-4 md:px-6 lg:px-8 py-2">
+            {/* Desktop Categories */}
+            <div className="hidden md:block container mx-auto px-4 md:px-6 lg:px-8 py-2">
                 <nav className="w-full overflow-x-auto custom-scrollbar">
                     <ul className="flex justify-start sm:justify-center flex-wrap gap-x-4 gap-y-2 text-sm font-medium headernav_ul">
                         {staticCategories.map((category) => (
@@ -220,49 +222,23 @@ const Header = () => {
                 </nav>
             </div>
 
+            {/* Mobile Categories Toggle Section */}
+            {isMobileCategoriesOpen && (
+                <div className="block md:hidden px-4 py-2 bg-white border-t border-gray-100 animate-fadeInDown">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
 
-            {/* Mobile Menu (now includes Blogs, Categories, and other links if needed) */}
-            {isMobileMenuOpen && (
-                <div
-                    ref={mobileMenuRef}
-                    className="absolute top-full left-0 right-0 mx-auto mt-2 w-[calc(100vw-2rem)] sm:max-w-lg bg-white border border-gray-200 rounded-md shadow-lg z-50 py-3 animate-fadeInDown md:hidden"
-                    style={{ backgroundColor: 'var(--search-dropdown-bg, #fff)', borderColor: 'var(--search-dropdown-border, #ddd)' }}
-                    onMouseLeave={handleMouseLeaveMobileMenuArea}
-                >
-                    <ul className="py-2">
-                        <li>
-                            <Link href="/all/blogs" className="block px-4 py-2 text-left hover:bg-gray-100 text-gray-700" onClick={() => setIsMobileMenuOpen(false)}>
-                                <span className="inline-block align-middle mr-1" role="img" aria-label="blog-icon">📰</span>Blogs
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/categories" className="block px-4 py-2 text-left hover:bg-gray-100 text-gray-700" onClick={() => setIsMobileMenuOpen(false)}>
-                                <span className="inline-block align-middle mr-1" role="img" aria-label="categories-icon">📚</span>Categories
-                            </Link>
-                        </li>
-
-                        {/* Mobile grid for categories */}
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 px-4 py-2 mt-2 border-t border-gray-100 pt-3">
-                            {staticDesktopCategories.map((category) => (
-                                <Link
-                                    key={category.slug}
-                                    href={`/category/${category.slug}`}
-                                    className="block px-3 py-1 text-center text-sm bg-gray-50 text-gray-700 rounded-md shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-300 whitespace-nowrap"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                    {category.name}
-                                </Link>
-                            ))}
-                            {/* "More Categories" link for mobile */}
+                        {staticCategories.map((category) => (
                             <Link
-                                href="/categories"
-                                className="block px-3 py-1 text-center text-sm bg-gray-50 text-gray-700 rounded-md shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-300 whitespace-nowrap"
-                                onClick={() => setIsMobileMenuOpen(false)}
+                                key={category.slug}
+                                href={`/category/${category.slug}`}
+                                className="block px-3 py-1 text-center text-[10px] bg-gray-50 text-gray-700 rounded-md shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-300 whitespace-nowrap"
+                                onClick={() => setIsMobileCategoriesOpen(false)}
                             >
-                                More...
+                                {category.name}
                             </Link>
-                        </div>
-                    </ul>
+                        ))}
+
+                    </div>
                 </div>
             )}
         </header>
