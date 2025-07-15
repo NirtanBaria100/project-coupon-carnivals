@@ -1,8 +1,16 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, Link } from '@inertiajs/react';
 import { Card, CardContent } from '@/components/ui/card';
-import { BarChart2, Tag, Store, ClipboardList, UserIcon } from 'lucide-react';
+import { BarChart2, Tag, Store, ClipboardList, UserIcon ,Star} from 'lucide-react';
 
+interface Rating {
+    id:number,
+    store_id:number,
+    ratings:number,
+    is_approved:number
+    created_at:Date,
+    updated_at:Date,
+}
 interface DashboardProps {
     stats: {
         totalCoupons: number;
@@ -10,6 +18,7 @@ interface DashboardProps {
         totalCategories: number;
         totalTags: number;
         totalUsers: number | 0;
+        ratings: Rating[];
     };
 }
 
@@ -76,6 +85,15 @@ export default function Dashboard({ stats }: DashboardProps) {
                         </CardContent>
                     </Card>
                 </Link>
+                    <Card>
+                        <CardContent className="flex items-center gap-4 p-6">
+                            <Star className="h-10 w-10 text-primary" />
+                            <div>
+                                <h2 className="text-lg font-semibold">Daily Ratings</h2>
+                                <p className="text-2xl font-bold">{stats.ratings.reduce((t,r)=> t+(r.ratings??0),0)}</p>
+                            </div>
+                        </CardContent>
+                    </Card>
             </div>
         </AppLayout>
     );

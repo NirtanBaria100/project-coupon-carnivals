@@ -36,7 +36,9 @@ interface Props {
 }
 const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
     const { categories } = usePage().props;
-    const popularCategories = categories.filter(e => e.is_popular == true);
+    const popularCategories = Array.isArray(categories)
+        ? categories.filter((e: { is_popular:boolean }) => e.is_popular === true).slice(0, 8)
+        : [];
     // Carousel state and logic START - MODIFIED
     const [currentSlide, setCurrentSlide] = useState(0);
     const bannerData = [
