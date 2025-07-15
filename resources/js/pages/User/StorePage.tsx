@@ -7,6 +7,7 @@ import { Link, useForm } from '@inertiajs/react';
 import { toastDirection } from '@/lib/utils/Constants';
 import toast from 'react-hot-toast';
 import PageMeta from '@/components/PageMeta';
+import { json } from 'stream/consumers';
 
 interface SimilarStore {
     name: string | null,
@@ -16,7 +17,15 @@ interface FeaturedLinks {
     name: string | null,
     slug: string | null,
 }
-
+interface StoreRating {
+  id: number;
+  store_id: number;
+  ip_address: string;
+  ratings: number;
+  is_approved: number;
+  created_at: string;
+  updated_at: string;
+}
 interface Store {
     id: number | null,
     totalRatings: number | 0,
@@ -30,7 +39,9 @@ interface Store {
     home_url: string | null,
     meta_description: string | '',
     seo_title: string | '',
-    focus_keyphrase: string | ''
+    focus_keyphrase: string | '',
+    store_ratings: StoreRating[],
+    updated_at:Date,
 }
 
 interface Coupon {
@@ -48,6 +59,7 @@ interface Coupon {
 }
 
 interface ExpiredCoupon {
+    id:number,
     featured_image: string | null,
     title: string | null,
     coupon_type: string | null,
@@ -73,15 +85,25 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
     const [userRating, setUserRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
 
-    const { data, post, setData, reset } = useForm({
+    const { data, post, setData,  } = useForm({
         store_id: stores.id,
         ratings: stores.ratings
     });
     // Load rating from local storage when the component mounts
     useEffect(() => {
+        const ratingsArray = stores.store_ratings || [];
+        let ratings:number=0;
+        // calculating avg
+        if (ratingsArray.length > 0) {
+            const sum = ratingsArray.reduce((acc, r) => acc + r.ratings, 0);
+            const average = sum / ratingsArray.length;
+            ratings=average
+        } else {
+            ratings=0;
+        }
         // Initialize userRating with the store's average rating from props
-        setUserRating(stores.ratings);
-    }, [stores.ratings]); // Depend on stores.ratings to update if it changes
+        setUserRating(ratings);
+    }, [stores.store_ratings]); // Depend on stores.store_ratings to update if it changes
 
     // Handle click on a star - this part still sends rating to backend
     const [pendingRating, setPendingRating] = useState<number | null>(null);
@@ -185,18 +207,35 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">Offer Summary</h3>
                                 <p className="text-gray-700 text-sm">Active Codes: {coupons.filter(e => e.coupon_type == 'code').length}</p>
                                 <p className="text-gray-700 text-sm">Active Deals: {coupons.filter(e => e.coupon_type == 'deal').length}</p>
-                                <p className="text-gray-500 text-xs mt-2">Last updated: {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                                
+                                {
+                                    stores?.updated_at &&
+                                     <p className="text-gray-500 text-xs mt-2">Last updated:{' '}{stores.updated_at? new Date(stores.updated_at).toLocaleDateString('en-GB', {day: 'numeric',month: 'short',year: 'numeric'}): 'N/A'}</p>
+                                    
+                                }
+
                             </div>
 
                             {/* Rate Store Name - Dynamic */}
                             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">Rate {stores?.name}</h3>
                                 <div className="flex justify-center mb-2">
+                                 
                                     {renderStars(userRating, true)} {/* Pass true to make stars interactive */}
                                 </div>
-                                <p className="text-gray-500 text-sm mt-1 text-center">
-                                    {/* Updated message to match the desired format */}
-                                    <span className="font-semibold text-gray-700">{stores.totalRatings || 0} ratings</span> with the average rating of <span className="font-semibold text-gray-700">{stores.ratings.toFixed(0)} out of 5 stars.</span>
+                              <p className="text-gray-500 text-sm mt-1 text-center">
+                                <span className="font-semibold text-gray-700">
+                                    {stores.store_ratings?.length || 0} &nbsp; rating{stores.store_ratings?.length === 1 ? '' : 's'}
+                                </span>{' '}
+                                with an average rating of{' '}
+                                <span className="font-semibold text-gray-700">
+                                    {stores.store_ratings && stores.store_ratings.length > 0
+                                    ? (
+                                        stores.store_ratings.reduce((sum, r) => sum + r.ratings, 0) /
+                                        stores.store_ratings.length
+                                        ).toFixed(1)
+                                    : '0.0'} out of 5 stars.
+                                </span>
                                 </p>
                             </div>
 
