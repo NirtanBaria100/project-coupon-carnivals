@@ -49,8 +49,20 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        $user = Auth::user();
+
+        if ($user->email_verified_at == null) {
+            Auth::logout();
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => 'Your account is not approved yet.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
+
 
     /**
      * Ensure the login request is not rate limited.
@@ -80,6 +92,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }

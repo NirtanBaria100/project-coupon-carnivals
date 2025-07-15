@@ -19,9 +19,10 @@ type LoginForm = {
 interface LoginProps {
     status?: string;
     canResetPassword: boolean;
+    waitingForapproval:boolean;
 }
 
-export default function Login({ status, canResetPassword }: LoginProps) {
+export default function Login({ status, canResetPassword ,waitingForapproval}: LoginProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         email: '',
         password: '',
@@ -38,7 +39,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     return (
         <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
             <Head title="Log in" />
-
+            {waitingForapproval?<InputError message={"Waiting For admin To Approve"} />:""}
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
