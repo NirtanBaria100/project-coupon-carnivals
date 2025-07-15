@@ -20,6 +20,23 @@ const OfferCard = ({
     store,
     type,
 }) => {
+
+    console.log({  featured_image,
+    title,
+    coupon_type,
+    code,
+    isExpired,
+    is_verified,
+    is_featured,
+    coupon_id,
+    is_exclusive,
+    expires,
+    coupon_url,
+    storeName,
+    store_slug,
+    affiliate_url,
+    store,
+    type,})
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [copyStatus, setCopyStatus] = useState('');
@@ -124,12 +141,12 @@ const OfferCard = ({
 
             {/* Left Section: Logo & Text */}
             <div
-                className="flex w-full flex-shrink-0 flex-col items-center justify-center border-b p-4 md:w-1/4 md:border-r md:border-b-0"
+                className="flex w-full flex-shrink-0 flex-col items-center justify-center border-b p-4 md:w-1/4 md:border-r md:border-b-0 offercard_bg"
                 style={{ borderColor: 'var(--offer-card-border)', backgroundColor: 'var(--offer-card-left-section-bg)' }}
             >
                 <div className="mb-2 flex items-center justify-center overflow-hidden bg-[var(--offer-card-bg)] shadow-inner">
                     <button onClick={handleOfferAction}>
-                        <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-30 w-full object-contain p-2" />
+                        <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-25 w-full object-contain p-2" />
                     </button>
                 </div>
 
@@ -242,19 +259,20 @@ const OfferCard = ({
                         </div>
 
                         <div className="mb-6 flex flex-col items-center">
-                            <button onClick={handleOfferAction}>
+                            {/* <button onClick={handleOfferAction}> */}
                                 <img
                                     src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo}
                                     alt={storeName}
-                                    className="mb-4 border-2 shadow-sm w-full h-40"
+                                    className="mb-4 border-2 shadow-sm w-30"
                                     style={{ borderColor: 'var(--modal-logo-border)' }}
-                                /></button>
-                            <button onClick={handleOfferAction}>
+                                />
+                            {/* </button> */}
+                            {/* <button onClick={handleOfferAction}> */}
                                 <h3 className="mb-1 text-xl font-semibold sm:text-2xl" style={{ color: 'var(--modal-store-name-text)' }}>
                                     {storeName}
                                 </h3>
-                            </button>
-                            <p onClick={handleOfferAction} className="text-center text-base leading-snug" style={{ color: 'var(--modal-offer-text-description)' }}>
+                            {/* </button> */}
+                            <p className="text-center text-base leading-snug" style={{ color: 'var(--modal-offer-text-description)' }}>
                                 {title}
                             </p>
                         </div>

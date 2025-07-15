@@ -31,8 +31,8 @@ class HomeController extends Controller
             ->get()
             ->map(function ($coupon) {
                 $coupon->featured_image = $coupon->featured_image
-                    ? asset($coupon->featured_image)
-                    : asset('images/placeholder.png');
+                    ? asset($coupon->featured_image) :"";
+                    // : asset('images/placeholder.png');
                 return $coupon;
             });
         $featuredCoupons->transform(function ($query) {
@@ -80,8 +80,8 @@ class HomeController extends Controller
             ->get()
             ->map(function ($coupon) {
                 $coupon->featured_image = $coupon->featured_image
-                    ? asset($coupon->featured_image)
-                    : asset('images/placeholder.png');
+                    ? asset($coupon->featured_image):"";
+                    // : asset('images/placeholder.png');
                 return $coupon;
             });
 
@@ -105,6 +105,7 @@ class HomeController extends Controller
             'featuredLinks' => $featuredLinks,
         ]);
     }
+
     public function CategoryPage($slug)
     {
         $category = Category::latest()->where('slug', $slug)->first();
@@ -189,13 +190,14 @@ class HomeController extends Controller
         ]]);
     }
 
-    public function AllCategoryPage()
-    {
-        $allCategories = Category::latest()->get();
-        return Inertia::render('User/AllCategoryPage', [
-            'allCategories' => $allCategories
-        ]);
-    }
+  public function AllCategoryPage()
+{
+    $allCategories = Category::orderBy('name', 'asc')->get(); // alphabetical order A-Z
+    return Inertia::render('User/AllCategoryPage', [
+        'allCategories' => $allCategories
+    ]);
+}
+
     public function loadMoreCoupons(Request $request , $skip)
     {
 
@@ -221,8 +223,8 @@ class HomeController extends Controller
                $coupons = $coupons->get()
                 ->map(function ($coupon) {
                     $coupon->featured_image = $coupon->featured_image
-                        ? asset($coupon->featured_image)
-                        : asset('images/placeholder.png');
+                        ? asset($coupon->featured_image):"";
+                        // : asset('images/placeholder.png');
                     return $coupon;
                 });
             $coupons->transform(function ($query) {
@@ -235,5 +237,27 @@ class HomeController extends Controller
         }
 
         return response()->json(['coupons'=> $coupons]);
+    }
+
+
+    public function policy(){
+        return Inertia::render('User/Policy');
+    }
+    public function terms(){
+        return Inertia::render('User/Terms');
+    }
+    public function faqs(){
+        return Inertia::render('User/Faqs');
+    }
+
+    public function imprint(){
+        return Inertia::render("User/Imprint");
+    }
+
+    public function HowToMakeMoney(){
+        return Inertia::render("User/HowToMakeMoney");
+    }
+    public function HowToUseCoupons(){
+        return Inertia::render("User/HowToUseCoupons");
     }
 }

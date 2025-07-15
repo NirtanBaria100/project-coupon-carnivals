@@ -33,8 +33,8 @@ class ReorderController extends Controller
             ->get()
             ->map(function ($coupon) {
                 $coupon->featured_image = $coupon->featured_image
-                    ? asset($coupon->featured_image)
-                    : asset('images/placeholder.png');
+                    ? asset($coupon->featured_image):"";
+                    // : asset('images/placeholder.png');
                 return $coupon;
             });
 

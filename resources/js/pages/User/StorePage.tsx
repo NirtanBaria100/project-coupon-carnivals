@@ -155,7 +155,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
     return (
         <WebLayout>
             <PageMeta title={stores.seo_title} description={stores.meta_description} keywords={stores.focus_keyphrase} />
-            <div className="bg-gray-100 pb-8 min-h-screen">
+            <div className="bg-white pb-8 min-h-screen">
                 <div className="container mx-auto px-4 py-8">
                     {/* Breadcrumbs */}
                     <nav className="text-sm text-gray-600 mb-6">
@@ -169,7 +169,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                     <div className="store-thumbnail-div flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md justify-center">
                         <div className="flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200 mb-0 store-thumbnail-firstdiv">
                             {/* Removed: The <a> tag around the image */}
-                            <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-30 h-30 object-contain p-2" />
+                            <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-40 h-30 object-contain p-2" />
                         </div>
                         {/* Ensure text content (h1, p) is centered on smaller screens and aligns below image */}
                         <div className="flex-grow flex flex-col items-center sm:items-start w-full store-thumbnail-secdiv">
@@ -240,7 +240,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                             </div>
 
                             {/* Store Short Descriptions */}
-                            {stores.extra_info && <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-center text-gray-700 text-base h-auto min-h-[100px] border border-gray-200">
+                            {stores.extra_info && <div className="bg-white p-6 rounded-lg shadow-md flex text-gray-700 text-base h-auto min-h-[100px] border border-gray-200 store_sidebar_above">
                                 <div
                                     className="prose max-w-none leading-relaxed"
                                     style={{ color: "var(--text-default)" }}
@@ -248,7 +248,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                                 ></div>
                             </div>}
 
-                            {/* Featured Links */}
+                            {/* Popular Categories */}
                             {featuredLinks.length > 0 && (
                                 <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                                     <h3 className="text-xl font-bold text-gray-800 mb-4">Popular Categories</h3>
@@ -286,7 +286,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                     {/* Long Description Section */}
 
                     {stores.desc ? <div className="bg-white p-6 rounded-lg shadow-md my-8 border border-gray-200 storepage_longdescsec">
-                        <h3 className="text-xl font-bold text-gray-800 mb-4">About {stores.name}</h3>
+                        {/* <h3 className="text-xl font-bold text-gray-800 mb-4">About {stores.name}</h3> */}
                         <div
                             className="prose max-w-none leading-relaxed"
                             style={{ color: "var(--text-default)" }}

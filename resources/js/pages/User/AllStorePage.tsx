@@ -172,7 +172,7 @@ const AllStorePage = ({ allStores }: Props) => {
                             className="text-3xl sm:text-4xl font-extrabold mb-6 text-center"
                             style={{ color: "var(--main-heading-color, #1a202c)" }}
                         >
-                            Explore All Stores A-Z
+                            All Stores
                         </h1>
                         <div
                             className="flex flex-wrap justify-center gap-2 sm:gap-3 p-4 rounded-lg shadow-md border mb-6 max-w-4xl mx-auto"
@@ -216,7 +216,7 @@ const AllStorePage = ({ allStores }: Props) => {
 
                     {/* All Stores List (using alphaFilteredStores) */}
                     {alphaFilteredStores.length > 0 ? (
-                        <div className="grid bg-white p-4 shadow-sm rounded-lg grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-3 sm:gap-y-4">
+                        <div className="grid bg-white p-4 shadow-sm rounded-lg grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-3 sm:gap-y-4">
                             {alphaFilteredStores.map((store) => (
                                 <Link
                                     key={store.id}

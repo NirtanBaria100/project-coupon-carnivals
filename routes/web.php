@@ -25,6 +25,12 @@ Route::prefix("")->name("home.")->group(function () {
     Route::get("/all/blogs", [HomeController::class, 'AllBlogs']);
     Route::get("/blogs/category/{category}", [HomeController::class, 'AllBlogs']);
     Route::post("/search/stores", [HomeController::class, 'searchStores']);
+    Route::get("/privacy-policy",[HomeController::class,'policy'])->name('policy');
+    Route::get("/terms-of-use",[HomeController::class,'terms'])->name('terms');
+    Route::get("/faq",[HomeController::class,'faqs'])->name('faqs');
+    Route::get("/imprint",[HomeController::class,'imprint'])->name('imprint');
+    Route::get("/how-we-make-money",[HomeController::class,'HowToMakeMoney'])->name('howToMakeMony');
+    Route::get("/how-to-use-coupons",[HomeController::class,'HowToUseCoupons'])->name('HowToUseCoupons');
 });
 
 

@@ -123,9 +123,9 @@ export default function Index() {
                             <TableHead onClick={() => sortBy('slug')} className="cursor-pointer">
                                 Slug
                             </TableHead>
-                            <TableHead>Description</TableHead>
+                            {/* <TableHead>Description</TableHead> */}
                             <TableHead>Parent</TableHead>
-                            <TableHead>Icon</TableHead>
+                            {/* <TableHead>Icon</TableHead> */}
                             <TableHead>Popular</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
@@ -147,9 +147,9 @@ export default function Index() {
                                     <span>{category.name}</span>
                                 </TableCell>
                                 <TableCell>{category.slug}</TableCell>
-                                <TableCell>{category.desc || '-'}</TableCell>
+                                {/* <TableCell>{category.desc || '-'}</TableCell> */}
                                 <TableCell>{category.parent?.name || '-'}</TableCell>
-                                <TableCell>{category.icon || '-'}</TableCell>
+                                {/* <TableCell>{category.icon || '-'}</TableCell> */}
                                 <TableCell>{category.is_popular ? 'Yes' : 'No'}</TableCell>
                                 <TableCell className="space-x-2 text-right">
                                     <Link href={route(`admin.categories.edit`,category.id)}>

@@ -99,7 +99,7 @@ const Header = () => {
     };
 
     return (
-        <header className="relative font-sans bg-white">
+        <header className="relative font-sans bg-white shadow-sm">
             <div className="shadow-sm">
                 <div className="flex px-4 md:px-6 lg:px-8 py-4 container mx-auto flex-wrap items-center justify-between gap-y-4 md:flex-nowrap">
                     <div className="flex justify-between w-full md:w-auto">
@@ -114,7 +114,7 @@ const Header = () => {
                             ref={mobileCategoriesButtonRef}
                             className="md:hidden font-semibold text-end text-base text-gray-700 hover:text-orange-600 transition duration-300"
                             onClick={toggleMobileCategories}
-                        > {isMobileCategoriesOpen ? <SidebarCloseIcon className="w-4 h-4 inline ml-1" /> : <MenuIcon className="w-4 h-4 inline ml-1" />}
+                        > {isMobileCategoriesOpen ? <SidebarCloseIcon className="w-6 h-6 inline ml-1" /> : <MenuIcon className="w-6 h-6 inline ml-1" />}
                         </button>
                     </div>
 
@@ -184,7 +184,7 @@ const Header = () => {
 
                     </div>
 
-                    <div className="flex items-center justify-center w-100 gap-x-4  md:mt-0">
+                    <div className="flex items-center justify-center w-60 gap-x-4  md:mt-0 hd_blogandcat">
                         <Link href="/all/blogs" className="font-semibold text-base whitespace-nowrap hover:text-orange-600 transition-colors duration-300">
                             📰 Blogs
                         </Link>
@@ -194,7 +194,7 @@ const Header = () => {
                             href="/categories"
                             className=" md:inline font-semibold text-base hover:text-orange-600 transition-colors duration-300"
                         >
-                            📚 Categories
+                            🏷️ Categories
                         </Link>
 
                         {/* Toggle button visible only on mobile */}
@@ -231,7 +231,7 @@ const Header = () => {
                             <Link
                                 key={category.slug}
                                 href={`/category/${category.slug}`}
-                                className="block px-3 py-1 text-center text-[10px] bg-gray-50 text-gray-700 rounded-md shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-300 whitespace-nowrap"
+                                className="block px-3 py-1 text-[13px] bg-gray-50 text-gray-700 rounded-md shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-300 whitespace-nowrap"
                                 onClick={() => setIsMobileCategoriesOpen(false)}
                             >
                                 {category.name}

@@ -426,6 +426,7 @@ button{
 }
 .affiliate_line{
       margin-bottom: 0;
+      background-color: #f5f5f5 !important;
 }
 .footer_site a,
 .footer_site p{
@@ -461,6 +462,18 @@ color: #1F2937;
       color: #000;
     text-decoration: underline;
 }
+.offercard_bg{
+  background-color: #f3f4f6 !important;
+}
+.store_sidebar_above h2{
+  font-size: 1.25rem;
+}
+.category_sidebar_desc h2{
+  font-size: 1.25rem;
+}
+.storepage_longdescsec h2{
+font-size: 1.5rem;
+}
 
 @media only screen and (max-width: 1023px) {
   .home_featuredoffers_div {
@@ -473,6 +486,14 @@ color: #1F2937;
   padding-left: 0;
 }
 }
+
+@media only screen and (max-width: 767px){
+.hd_blogandcat{
+  width: 100%;
+}
+}
+
+
 @media only screen and (max-width: 650px) {
   .midsec_offerdesc{
     padding-bottom: 0px !important;

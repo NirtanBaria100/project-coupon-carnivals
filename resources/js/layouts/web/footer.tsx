@@ -85,6 +85,11 @@ const Footer = () => {
                             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
                         >Blogs</Link></li>
+                        <li><Link href="/imprint" className="text-sm transition-colors duration-300"
+                            style={{ color: 'var(--footer-text-secondary)' }}
+                            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--footer-link-hover)'}
+                            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--footer-text-secondary)'}
+                        >Imprint</Link></li>
                     </ul>
                 </div>
 
@@ -119,7 +124,7 @@ const Footer = () => {
                     <div className="flex space-x-3 mt-4">
                         {/* Social Icons */}
                         {/* Using inline styles with onMouseEnter/onMouseLeave for hover effects */}
-                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                        <a href="https://www.facebook.com/promocarnivals/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
                             className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
                             style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-facebook-hover)'}
@@ -128,7 +133,7 @@ const Footer = () => {
                             <FaFacebookF className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
                         </a>
 
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                        <a href="https://www.instagram.com/promocarnivals/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
                             className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
                             style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-instagram-hover)'}
@@ -147,9 +152,9 @@ const Footer = () => {
             >
                 <p>&copy; {new Date().getFullYear()} PromoCarnivals. All rights reserved.
                 </p>
-                <p className="mt-3">
+                {/* <p className="mt-3">
                    Nexura Systems Ltd • 124 City Road, London, United Kingdom, EC1V 2NX • Company Number: 15966170
-                </p>
+                </p> */}
             </div>
         </footer>
         </>

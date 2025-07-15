@@ -43,6 +43,8 @@ interface Props {
 // Accept props from the Inertia controller, including categoryName
 const CategoryPage = ({ category }: Props) => {
     const { categories } = usePage().props;
+
+    console.log({categories});
     const [skip, setSkip] = useState(0);
     const [coupon, setCoupon] = useState<Coupons[]>([]);
     const { data } = useForm({
@@ -77,7 +79,7 @@ const CategoryPage = ({ category }: Props) => {
     return (
         <WebLayout>
             <PageMeta title={category.seo_title} description={category.meta_description} keywords={category.focus_keyphrase} />
-            <div className="bg-gray-100 pb-8 min-h-screen">
+            <div className="bg-white pb-8 min-h-screen">
                 <div className="container mx-auto px-4 py-8">
                     {/* Breadcrumbs */}
                     <nav className="text-sm text-gray-600 mb-6">
@@ -88,7 +90,7 @@ const CategoryPage = ({ category }: Props) => {
 
                     {/* Category Header - Adjusted for responsiveness */}
                     <div className="flex flex-col md:flex-row items-center md:space-x-4 mb-8 text-center md:text-left">
-                        <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden shadow-sm flex items-center justify-center text-gray-600 mb-4 md:mb-0 flex-shrink-0">
+                        <div className="p-2 w-16 h-16 bg-gray-100 rounded-sm overflow-hidden shadow-sm flex items-center justify-center text-gray-600 mb-4 md:mb-0 flex-shrink-0">
                             {/* Category Icon/Image Placeholder */}
                             <img src={category.image_icon && category.image_icon !== ''
                                 ? category.image_icon
@@ -120,8 +122,8 @@ const CategoryPage = ({ category }: Props) => {
                         {/* Right Column: Sidebar */}
                         <div className="lg:col-span-1 p-4 lg:pl-8 space-y-8 mt-8 lg:mt-0">
                             {/* Category Description */}
-                            {category.desc ? <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                <h3 className="text-xl font-bold text-gray-800 mb-4">About {formattedCategoryName} Category</h3>
+                            {category.desc ? <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 category_sidebar_desc">
+                                {/* <h3 className="text-xl font-bold text-gray-800 mb-4">About {formattedCategoryName} Category</h3> */}
                                 <p className="text-gray-700 text-sm leading-relaxed">
                                 <div
                                     className="prose max-w-none leading-relaxed"
