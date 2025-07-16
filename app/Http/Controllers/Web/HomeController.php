@@ -98,11 +98,26 @@ class HomeController extends Controller
         });
         $coupons->transform(function ($query) {
             $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
+
+            // Coupons ko latest (updated_at ya created_at) ke hisaab se sort karen
+            $latestCoupon = $query->coupon
+                ->sortByDesc(function ($item) {
+                    return $item->updated_at ?? $item->created_at;
+                })->first();
+
+            if ($latestCoupon) {
+                $query->coupon_updated = $latestCoupon->updated_at ?? $latestCoupon->created_at;
+            } else {
+                $query->coupon_updated = $query->updated_at ?? $query->created_at;
+            }
+
             if (!empty($query->expires)) {
                 $query->expires = Carbon::parse($query->expires)->format('F d , Y');
             }
+
             return $query;
         });
+
         if (!empty($store)) {
             $store->thumbnail = asset($store->thumbnail);
             $store->ratings = $store->storeRatings->where('is_approved', 1)->sum('ratings');

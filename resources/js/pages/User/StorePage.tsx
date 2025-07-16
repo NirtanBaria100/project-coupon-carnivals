@@ -42,6 +42,7 @@ interface Store {
     focus_keyphrase: string | '',
     store_ratings: StoreRating[],
     updated_at:Date,
+    coupon_updated:Date | null,
 }
 
 interface Coupon {
@@ -208,12 +209,18 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">Offer Summary</h3>
                                 <p className="text-gray-700 text-sm">Active Codes: {coupons.filter(e => e.coupon_type == 'code').length}</p>
                                 <p className="text-gray-700 text-sm">Active Deals: {coupons.filter(e => e.coupon_type == 'deal').length}</p>
-                                
-                                {
-                                    stores?.updated_at &&
-                                     <p className="text-gray-500 text-xs mt-2">Last updated:{' '}{stores.updated_at? new Date(stores.updated_at).toLocaleDateString('en-GB', {day: 'numeric',month: 'short',year: 'numeric'}): 'N/A'}</p>
-                                    
-                                }
+                               {(stores?.coupon_updated || stores?.updated_at) && (
+                                <>
+                                <p className="text-gray-500 text-xs mt-2">
+                                    Last updated:{' '}
+                                    {new Date(stores.coupon_updated || stores.updated_at).toLocaleDateString('en-GB', {
+                                    day: 'numeric',
+                                    month: 'short',
+                                    year: 'numeric',
+                                    })}
+                                </p>
+                                </>
+                                )}
 
                             </div>
 
