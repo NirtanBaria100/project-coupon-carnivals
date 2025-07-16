@@ -1,6 +1,6 @@
     // src/components/Footer.jsx
 import { Link, usePage } from '@inertiajs/react';
-import { FaFacebookF, FaTwitter, FaInstagram, FaTelegramPlane } from 'react-icons/fa';
+import { FaFacebookF, FaPinterest , FaInstagram } from 'react-icons/fa';
 import PromoCarnivalsIcon from '@/assets/white logo.png'; // <--- IMPORTANT: Adjust this path to your actual logo image
 
 const Footer = () => {
@@ -140,6 +140,14 @@ const Footer = () => {
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-icon-bg)'}
                         >
                             <FaInstagram className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
+                        </a>
+                         <a href="https://www.instagram.com/promocarnivals/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                            className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
+                            style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-instagram-hover)'}
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-icon-bg)'}
+                        >
+                            <FaPinterest className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
                         </a>
                     </div>
                 </div>
