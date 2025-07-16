@@ -141,10 +141,10 @@ const Footer = () => {
                         >
                             <FaInstagram className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
                         </a>
-                         <a href="https://www.instagram.com/promocarnivals/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                         <a href="https://www.pinterest.com/promocarnivals/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
                             className="w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-colors duration-300"
                             style={{ backgroundColor: 'var(--footer-social-icon-bg)' }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-instagram-hover)'}
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'red'}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--footer-social-icon-bg)'}
                         >
                             <FaPinterest className="h-4 w-4" style={{ color: 'var(--footer-social-icon-color)' }} />
