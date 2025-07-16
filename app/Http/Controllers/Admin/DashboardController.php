@@ -20,7 +20,7 @@ class DashboardController extends Controller
                 'totalStores' => Store::count(),
                 'totalCategories' => Category::count(),
                 'totalTags' => Tag::count(),
-                'totalUsers' => User::whereNot('email_verified_at', null)->count(),
+                'totalUsers' => User::count(),
                 'ratings' => Rating::where('created_at',Carbon::today())->get(),
             ],
         ]);
