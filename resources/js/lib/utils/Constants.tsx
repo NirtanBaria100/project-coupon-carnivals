@@ -1,10 +1,15 @@
-import { ArrowDownUp, CirclePlus, LayoutGrid, StoreIcon, Tag, UserIcon } from "lucide-react";
+import { ArrowDownUp, CirclePlus, LayoutGrid, StoreIcon, Tag, UserIcon, UserPlus } from "lucide-react";
 
 export const ADMIN_NAVITIEMS = [
     {
         title: 'Dashboard',
         href: '/99k356ha56/',
         icon: LayoutGrid,
+    },
+    {
+        title: 'Create Users',
+        href: '/99k356ha56/users/create',
+        icon: UserPlus,
     },
     {
         title: 'Users',

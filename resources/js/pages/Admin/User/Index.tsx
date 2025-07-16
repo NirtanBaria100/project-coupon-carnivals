@@ -139,7 +139,11 @@ export default function Index() {
                                     <Switch checked={user.email_verified_at} onCheckedChange={() => { toggleStatus(user) }} />
                                 </TableCell>
                                 <TableCell className="space-x-2 text-right">
-
+                                <Link href={route(`admin.users.create`, user.id)}>
+                                            <Button variant="outline" size="sm">
+                                                Edit
+                                            </Button>
+                                        </Link>
                                     <AlertDialog>
                                         <AlertDialogTrigger asChild>
                                             <Button variant="destructive" size="sm">

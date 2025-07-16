@@ -25,17 +25,17 @@ Route::prefix("")->name("home.")->group(function () {
     Route::get("/all/blogs", [HomeController::class, 'AllBlogs']);
     Route::get("/blogs/category/{category}", [HomeController::class, 'AllBlogs']);
     Route::post("/search/stores", [HomeController::class, 'searchStores']);
-    Route::get("/privacy-policy",[HomeController::class,'policy'])->name('policy');
-    Route::get("/terms-of-use",[HomeController::class,'terms'])->name('terms');
-    Route::get("/faq",[HomeController::class,'faqs'])->name('faqs');
-    Route::get("/imprint",[HomeController::class,'imprint'])->name('imprint');
-    Route::get("/how-we-make-money",[HomeController::class,'HowToMakeMoney'])->name('howToMakeMony');
-    Route::get("/how-to-use-coupons",[HomeController::class,'HowToUseCoupons'])->name('HowToUseCoupons');
+    Route::get("/privacy-policy", [HomeController::class, 'policy'])->name('policy');
+    Route::get("/terms-of-use", [HomeController::class, 'terms'])->name('terms');
+    Route::get("/faq", [HomeController::class, 'faqs'])->name('faqs');
+    Route::get("/imprint", [HomeController::class, 'imprint'])->name('imprint');
+    Route::get("/how-we-make-money", [HomeController::class, 'HowToMakeMoney'])->name('howToMakeMony');
+    Route::get("/how-to-use-coupons", [HomeController::class, 'HowToUseCoupons'])->name('HowToUseCoupons');
 });
 
 
-Route::prefix('/rating')->name('ratings.')->group(function(){
-    Route::post('/store', [HomeController::class,'storeRating'])->name('store');
+Route::prefix('/rating')->name('ratings.')->group(function () {
+    Route::post('/store', [HomeController::class, 'storeRating'])->name('store');
 });
 
 
@@ -45,10 +45,12 @@ Route::prefix('99k356ha56')->middleware('auth')->group(function () {
     Route::get("/", [DashboardController::class, 'index'])->name("home");
     Route::get("/", [DashboardController::class, 'index'])->name("admin.dashboard");
     // Users Route
-    Route::prefix('users')->name("admin.users.")->group(function(){
-        Route::get('/', [UserController::class,'index'])->name('index');
-        Route::put('/{user}/destroy', [UserController::class,'destroy'])->name('destroy');
-        Route::put('/{user}/status', [UserController::class,'toggleStatus'])->name('status');
+    Route::prefix('users')->name("admin.users.")->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create/{id?}', [UserController::class, 'create'])->name('create');
+        Route::post('/store/{id?}', [UserController::class, 'store'])->name('store');
+        Route::put('/{user}/destroy', [UserController::class, 'destroy'])->name('destroy');
+        Route::put('/{user}/status', [UserController::class, 'toggleStatus'])->name('status');
     });
 
     // Coupon Routes
@@ -63,7 +65,6 @@ Route::prefix('99k356ha56')->middleware('auth')->group(function () {
         Route::put('/{coupon}/{field}/toggle', [CouponsController::class, 'toggleStatus'])->name('toggle');
         Route::get('/store-types/{storeType}/reorder', [ReorderController::class, 'edit'])->name('reorder.edit');
         Route::post('/store-types/{storeType}/reorder', [ReorderController::class, 'updateOrder'])->name('reorder');
-
     });
 
     // Tag Routes
@@ -85,7 +86,6 @@ Route::prefix('99k356ha56')->middleware('auth')->group(function () {
         Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit');
         Route::put('/{category}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
-
     });
 
 
@@ -99,7 +99,6 @@ Route::prefix('99k356ha56')->middleware('auth')->group(function () {
         Route::get('/{store}/destroy/ratings', [StoresController::class, 'destroyRatings'])->name('ratings.destroy');
         Route::post('/update-rating-status', [StoresController::class, 'updateRatings'])->name('update.ratings');
         Route::put('/{store}', [StoresController::class, 'update'])->name('update');
-
     });
 
     Route::prefix('/blogs')->name('admin.blogs.')->group(function () {
@@ -111,9 +110,6 @@ Route::prefix('99k356ha56')->middleware('auth')->group(function () {
         Route::put('/toggle-status/{blog}', [BlogsController::class, 'toggleStatus'])->name('status');
         Route::get('/{blog}/edit', [BlogsController::class, 'edit'])->name('edit');
     });
-
-
-
 });
 
 
@@ -121,10 +117,10 @@ Route::prefix('99k356ha56')->middleware('auth')->group(function () {
 
 
 
-Route::post('store/editorImage', [RichTextEditorController::class ,'storeImage']);
+Route::post('store/editorImage', [RichTextEditorController::class, 'storeImage']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::prefix('99k356ha56')->group(function (){
+    Route::prefix('99k356ha56')->group(function () {
 
         Route::get('dashboard', function () {
             return Inertia::render('dashboard');
