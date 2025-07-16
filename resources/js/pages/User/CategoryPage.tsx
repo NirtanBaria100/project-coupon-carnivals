@@ -45,7 +45,6 @@ interface Props {
 const CategoryPage = ({ category,categories }: Props) => {
     // const { categories } = usePage().props;
 
-    console.log({categories});
     const [skip, setSkip] = useState(0);
     const [coupon, setCoupon] = useState<Coupons[]>([]);
     const { data } = useForm({
@@ -79,7 +78,7 @@ const CategoryPage = ({ category,categories }: Props) => {
 
     return (
         <WebLayout>
-            <PageMeta title={category.seo_title} description={category.meta_description} keywords={category.focus_keyphrase} />
+            {/* <PageMeta title={category.seo_title} description={category.meta_description} keywords={category.focus_keyphrase} /> */}
             <div className="bg-white pb-8 min-h-screen">
                 <div className="container mx-auto px-4 py-8">
                     {/* Breadcrumbs */}

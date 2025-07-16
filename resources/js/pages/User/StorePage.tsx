@@ -155,7 +155,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
 
     return (
         <WebLayout>
-            <PageMeta title={stores.seo_title} description={stores.meta_description} keywords={stores.focus_keyphrase} />
+            {/* <PageMeta title={'A'} description={stores.meta_description} keywords={stores.focus_keyphrase} /> */}
             <div className="bg-white pb-8 min-h-screen">
                 <div className="container mx-auto px-4 py-8">
                     {/* Breadcrumbs */}
