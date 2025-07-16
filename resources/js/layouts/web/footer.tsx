@@ -8,7 +8,7 @@ const Footer = () => {
 
     // Define the static categories for the footer
     const footerCategories = [
-        { name: 'Sports', slug: 'sports' },
+        { name: 'Sports & Outdoors', slug: 'sports-&-outdoors' },
         { name: 'Home & Garden', slug: 'home-and-garden' },
         { name: 'Pet Supplies', slug: 'pet-supplies' },
         { name: 'Free Shipping', slug: 'free-shipping' },

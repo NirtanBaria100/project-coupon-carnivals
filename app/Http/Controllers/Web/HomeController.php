@@ -49,18 +49,21 @@ class HomeController extends Controller
             $query->imageURL = asset($query->image);
             return $query;
         });
+
+        $popularCategories = Category::latest()->where("is_popular",1)->limit(8)->get();
         return Inertia::render("Web/Index", [
             'featured_coupons' => $featuredCoupons,
             'popular_stores' => $similarStores,
-            'blogs' => $blogs
+            'blogs' => $blogs,
+            'popular_categories'=>$popularCategories
         ]);
     }
     public function StorePage($slug)
     {
         $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl', 'home_url', 'name', 'desc', 'extra_info', 'seo_title', 'meta_description', 'focus_keyphrase', 'thumbnail', 'category_id','updated_at'])->first();
         $store->totalRatings = count($store->storeRatings->where('is_approved')) ?? 0;
-        $similarStores = Store::latest()->whereNot('slug', $slug)->where('category_id', $store->category_id)->select(['name', 'slug'])->limit(8)->get();
-        $featuredLinks = Category::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_popular', 1)->limit(8)->get();
+        $similarStores = Store::latest()->whereNot('slug', $slug)->where('category_id', $store->category_id)->select(['name', 'slug'])->limit(10)->get();
+        $featuredLinks = Category::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_popular', 1)->limit(10)->get();
         $storeCoupons = \DB::table('coupon_store')
             ->where('store_id', $store->id)
             ->pluck('coupon_id');
@@ -86,6 +89,13 @@ class HomeController extends Controller
             });
 
         $expiredCoupons = Coupon::whereIn('id', $storeCoupons)->with('stores')->where('is_published', 1)->whereDate('expires', '<=', Carbon::now())->get();
+      
+        $expiredCoupons->transform(function ($query) {
+            if (!empty($query->expires)) {
+                $query->expires = Carbon::parse($query->expires)->format('F d , Y');
+            }
+            return $query;
+        });
         $coupons->transform(function ($query) {
             $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
             if (!empty($query->expires)) {
@@ -109,8 +119,10 @@ class HomeController extends Controller
     public function CategoryPage($slug)
     {
         $category = Category::latest()->where('slug', $slug)->first();
+         $popularCategories = Category::latest()->where("is_popular",1)->limit(10)->get();
         return Inertia::render("User/CategoryPage", [
             'category' => $category,
+            'categories'=>$popularCategories
         ]);
     }
 
@@ -146,8 +158,11 @@ class HomeController extends Controller
             $query->date = Carbon::parse($query->created_at)->format('F d,Y');
             return $query;
         });
+
+         $popularCategories = Category::latest()->where("is_popular",1)->limit(8)->get();
         return Inertia::render("User/BlogPage", [
-            'blogs' => $blogs
+            'blogs' => $blogs,
+            'popularCategories'=>$popularCategories
         ]);
     }
 
@@ -161,7 +176,7 @@ class HomeController extends Controller
         });
         $post->imageURL = asset($post->image);
         $post->date = Carbon::parse($post->created_at)->format('F d,Y');
-        $featuredcategories = Category::whereHas('blogs')->select(['name', 'id', 'slug'])->limit(5)->get();
+        $featuredcategories = Category::whereHas('blogs')->select(['name', 'id', 'slug'])->limit(10)->get();
         return Inertia::render("User/SingleBlog", [
             'post' => $post,
             'featuredcategories' => $featuredcategories,

@@ -177,7 +177,7 @@ export default function Index() {
                                             <AlertDialogHeader>
                                                 <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                                                 <AlertDialogDescription>
-                                                    This action will permanently delete this coupon. This cannot be undone.
+                                                    This action will permanently delete this tag. This cannot be undone.
                                                 </AlertDialogDescription>
                                             </AlertDialogHeader>
                                             <AlertDialogFooter>

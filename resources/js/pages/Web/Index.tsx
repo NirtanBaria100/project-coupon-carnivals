@@ -5,6 +5,7 @@ import banner1Image from '@/assets/banner 1.webp'; // Import the banner image di
 import banner2Image from '@/assets/banner 2.webp'; // Import the banner image directly
 import OfferCard from '@/components/OfferCard';
 import WebLayout from '@/layouts/web-layout';
+import { excerptFromHtml } from '@/lib/excerptFromHtml';
 interface Coupons {
     featured_image: string | null,
     title: string | null,
@@ -27,18 +28,26 @@ interface Stores {
 interface Blogs {
     title: string | null,
     slug: string | null,
-    imageURL: string | null
+    imageURL: string | null,
+    content:any
+}
+
+interface Category{
+    id:Number|null,
+    name:string|null,
+    slug:string|null,
 }
 interface Props {
     featured_coupons: Coupons[],
     popular_stores: Stores[],
-    blogs: Blogs[]
+    blogs: Blogs[],
+    popular_categories:Category[]
 }
-const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
+const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }: Props) => {
     const { categories } = usePage().props;
-    const popularCategories = Array.isArray(categories)
-        ? categories.filter((e: { is_popular:boolean }) => e.is_popular === true).slice(0, 8)
-        : [];
+    const popularCategories = popular_categories;//Array.isArray(categories)
+        //? categories.filter((e: { is_popular:boolean }) => e.is_popular === true).slice(0, 8)
+        //: [];
     // Carousel state and logic START - MODIFIED
     const [currentSlide, setCurrentSlide] = useState(0);
     const bannerData = [
@@ -60,6 +69,15 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
         return () => clearInterval(slideInterval);
     }, [nextSlide]);
     // Carousel state and logic END
+
+    const remapBlogs = blogs.map(blog=>{
+
+
+        return {
+            ...blog,
+            excerpt:excerptFromHtml(blog.content, 150)
+        }
+    })
 
     return (
         <WebLayout>
@@ -137,7 +155,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
 
                 <div className="container mx-auto">
                     {/* Main Content Grid */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8 p-5 home2colmaindiv" >
                         {/* Left Column: Offers List */}
                         <div className="lg:col-span-2 home_featuredoffers_maindiv ">
                             <div
@@ -243,7 +261,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                     </div>
 
                     {/* Popular Posts From Our Blog Section */}
-                    <div className="mb-10 homeblog_sec">
+                    <div className="mb-10 homeblog_sec p-5">
                         <h2
                             className="text-2xl font-extrabold mb-8 border-l-4 pl-4 blog_headinghome"
                             style={{ color: 'var(--main-heading-color)', borderColor: 'var(--heading-border-accent)' }}
@@ -251,9 +269,9 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                             Savings tips from the blog
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                            {blogs.map((blog, i) => (
+                            {remapBlogs.map((blog, i) => (
                                 <Link
-                                    href={`/blog/${blog.slug}`}
+                                    href={`/blog/${blog?.slug}`}
                                     key={i}
                                     className="rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 block"
                                     style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}
@@ -263,11 +281,11 @@ const HomePage = ({ featured_coupons, popular_stores, blogs }: Props) => {
                                         style={{ backgroundColor: 'var(--blog-placeholder-bg)', color: 'var(--text-muted)' }}
                                     >
                                         {/* Using the same banner1Image for blog placeholders as well, for consistency */}
-                                        <img src={blog.imageURL || ""} alt={`Blog Post ${i + 1}`} className="w-full h-full object-cover" />
+                                        <img src={blog?.imageURL || ""} alt={`Blog Post ${i + 1}`} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="p-4">
-                                        <p className="text-base font-semibold mb-2" style={{ color: 'var(--blog-card-text)' }}>{blog.title}</p>
-                                        <p className="text-sm" style={{ color: 'var(--blog-card-description)' }}>Short description of the blog post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        <p className="text-base font-semibold mb-2" style={{ color: 'var(--blog-card-text)' }}>{blog?.title}</p>
+                                        <p className="text-sm" style={{ color: 'var(--blog-card-description)' }}>{blog?.excerpt || ""}</p>
                                     </div>
                                 </Link>
                             ))}

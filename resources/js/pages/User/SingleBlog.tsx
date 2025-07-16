@@ -31,18 +31,7 @@ interface Props {
     featuredcategories: Category[]
 }
 const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
-    const staticCategories = [
-        { slug: "travel", name: "Travel" },
-        { slug: "home-and-garden", name: "Home & Garden" },
-        { slug: "jewellery-watches", name: "Jewellery & Watches" },
-        { slug: "clothing", name: "Clothing" },
-        { slug: "sports", name: "Sports" },
-        { slug: "arts-crafts", name: "Arts & Crafts" },
-        { slug: "pet-supplies", name: "Pet Supplies" },
-        { slug: "electronics", name: "Electronics" },
-        { slug: "free-shipping", name: "Free Shipping" },
-        { slug: "gifts", name: "Gifts" }
-    ];
+    const staticCategories = featuredcategories;
     return (
         <WebLayout>
             <PageMeta title={post.seo_title} description={post.meta_description} keywords={post.focus_keyphrase} />
@@ -129,22 +118,11 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                     </span>
                                 </span>
                                 <span>•</span>
-                                <span>Published Date:{" "}
+                                <span>{" "}
                                     <span
                                         className="font-semibold"
                                         style={{ color: "var(--primary-orange)" }}
                                     >{post.date}</span></span>
-                                <span>•</span>
-                                {post.category.length > 0 ? <span>
-                                    Category:
-                                    <Link
-                                        href={`/blogs/category/${post.category[0] ? post.category[0].slug : ""}`}
-                                        className="hover:underline"
-                                        style={{ color: "var(--primary-orange)" }}
-                                    >
-                                        {post.category[0] ? post.category[0].name : ""}
-                                    </Link>
-                                </span> : <></>}
                             </div>
 
                             <img src={post.imageURL}
@@ -193,8 +171,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                             <li key={index}>
                                                 <Link
                                                     href={`/blog/${p.slug}`}
-                                                    className="text-sm transition-colors duration-300"
-                                                    style={{ color: "var(--text-muted)" }}
+                                                    className="transition-colors duration-300"
                                                     onMouseEnter={(e) =>
                                                     (e.currentTarget.style.color =
                                                         "var(--text-accent-hover)")
@@ -236,7 +213,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                         <li key={category.slug}>
                                             <Link
                                                 href={`/blogs/category/${category.slug}`}
-                                                className="flex items-center px-2 py-1 transition-all duration-300 whitespace-nowrap"
+                                                className="flex items-center transition-all duration-300 whitespace-nowrap"
                                                 style={{
                                                     backgroundColor: 'var(--category-button-bg-default)',
                                                     color: 'var(--category-button-text-default)'

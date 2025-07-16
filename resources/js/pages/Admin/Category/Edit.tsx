@@ -146,7 +146,7 @@ export default function Edit({ category, categories, csrfToken }: EditProps) {
                     </select>
 
 
-                    <label className="block font-medium">Description</label>
+                    <label className="block font-medium">Sidebar Description</label>
                     <RichTextEditor content={content} setContent={setContent} setFormData={setData} name={'desc'} csrfToken={csrfToken} path={'categories'} />
 
 

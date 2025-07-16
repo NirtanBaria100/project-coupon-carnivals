@@ -39,10 +39,11 @@ interface Coupons {
 
 interface Props {
     category: SingleCategory,
+    categories:SingleCategory[]
 }
 // Accept props from the Inertia controller, including categoryName
-const CategoryPage = ({ category }: Props) => {
-    const { categories } = usePage().props;
+const CategoryPage = ({ category,categories }: Props) => {
+    // const { categories } = usePage().props;
 
     console.log({categories});
     const [skip, setSkip] = useState(0);
@@ -50,7 +51,7 @@ const CategoryPage = ({ category }: Props) => {
     const { data } = useForm({
         category_id: category.id
     });
-    const popularCategories = categories.filter(e => e.slug != category.slug && e.is_popular == true);
+    const popularCategories = categories; //.filter(e => e.slug != category.slug && e.is_popular == true);
     const formatCategoryName = (name) => {
         if (!name) return 'Category';
         // Ensure the name is formatted correctly for display
@@ -112,7 +113,7 @@ const CategoryPage = ({ category }: Props) => {
                         {/* Left Column: Offer Cards */}
                         <div className="lg:col-span-2 lg:border-r lg:border-dotted lg:border-gray-400 lg:pr-8">
                             {coupon?.length > 0 ? coupon?.map((offer, index) => (
-                                <OfferCard key={index} coupon_id={offer?.id} store_slug={'/store/' + offer?.stores[0]?.slug} store={offer?.stores[0]} affiliate_url={offer?.coupon_url || offer?.stores[0]?.affiliate_irl} storeName={offer?.stores[0]?.name} type={'categories'} {...offer} />
+                                <OfferCard key={index} coupon_id={offer?.id} store_slug={'/store/' + offer?.stores[0]?.slug} store={offer?.stores[0]} affiliate_url={offer?.coupon_url || offer?.stores[0]?.affiliate_irl} storeName={offer?.stores[0]?.name} type={'home'} {...offer}  />
                             )) : <span className='text-red-500'>No Coupons Available</span>}
                             {coupon?.length > 50 ? <div className=" lg:col-span-2 text-center flex justify-center align-items-center w-full">
                                 <button className='btn border border-orange-500 w-full text-orange-500 rounded shadow-sm hover:text-white hover:bg-orange-500 p-2 text-center' onClick={() => loadMore()}>Load More</button>
@@ -120,7 +121,7 @@ const CategoryPage = ({ category }: Props) => {
                         </div>
 
                         {/* Right Column: Sidebar */}
-                        <div className="lg:col-span-1 p-4 lg:pl-8 space-y-8 mt-8 lg:mt-0">
+                        <div className="lg:col-span-1 p-4 lg:pl-8 space-y-8 mt-8 lg:mt-0 catmain_sidebardiv">
                             {/* Category Description */}
                             {category.desc ? <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 category_sidebar_desc">
                                 {/* <h3 className="text-xl font-bold text-gray-800 mb-4">About {formattedCategoryName} Category</h3> */}
@@ -141,7 +142,7 @@ const CategoryPage = ({ category }: Props) => {
                                         <li key={category.id}>
                                             <Link
                                                 href={`/category/${category.slug}`}
-                                                className="flex items-center px-3 py-1.5 transition-all duration-300 whitespace-nowrap"
+                                                className="flex items-center transition-all duration-300 whitespace-nowrap"
                                                 style={{
                                                     backgroundColor: 'var(--category-button-bg-default)',
                                                     color: 'var(--category-button-text-default)'

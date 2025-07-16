@@ -28,8 +28,8 @@ const Header = () => {
         { slug: "travel", name: "Travel" },
         { slug: "home-and-garden", name: "Home & Garden" },
         { slug: "jewellery-watches", name: "Jewellery & Watches" },
-        { slug: "clothing", name: "Clothing" },
-        { slug: "sports", name: "Sports" },
+        { slug: "clothing-and-apparel", name: "Clothing & Apparel" },
+        { slug: "sports-&-outdoors", name: "Sports & Outdoors" },
         { slug: "arts-crafts", name: "Arts & Crafts" },
         { slug: "pet-supplies", name: "Pet Supplies" },
         { slug: "electronics", name: "Electronics" },
@@ -212,7 +212,7 @@ const Header = () => {
                             <li key={category.slug}>
                                 <Link
                                     href={`/category/${category.slug}`}
-                                    className="block px-3 py-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 whitespace-nowrap"
+                                    className="block px-2 py-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 whitespace-nowrap"
                                 >
                                     {category.name}
                                 </Link>

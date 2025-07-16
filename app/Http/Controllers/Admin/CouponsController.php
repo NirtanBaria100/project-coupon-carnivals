@@ -132,6 +132,7 @@ class CouponsController extends Controller
     // Update the specified resource in storage.
     public function update(Request $request, Coupon $coupon)
     {
+        
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'long_desc' => 'nullable|string',
@@ -153,7 +154,6 @@ class CouponsController extends Controller
             'category_ids.*' => 'exists:categories,id',
         ]);
 
-
         if ($request->hasFile('featured_image')) {
             $file = $request->file('featured_image');
             $filename = Str::slug($request->name) . '-' . time() . '.' . $file->getClientOriginalExtension();
@@ -173,13 +173,13 @@ class CouponsController extends Controller
         // Sync many-to-many relationships
         $coupon->stores()->sync($request->input('store_ids', []));
 
-        if (!empty($request->input('tag_ids'))) {
+        // if (!empty($request->input('tag_ids'))) {
             $coupon->tags()->sync($request->input('tag_ids'));
-        }
+        // }
 
-        if (!empty($request->input('category_ids'))) {
+        // if (!empty($request->input('category_ids'))) {
             $coupon->categories()->sync($request->input('category_ids'));
-        }
+        // }
 
         return redirect()->route('admin.coupons.index')->with('success', 'Coupon updated successfully.');
     }

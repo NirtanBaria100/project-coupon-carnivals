@@ -169,7 +169,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                     <div className="store-thumbnail-div flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md justify-center">
                         <div className="flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200 mb-0 store-thumbnail-firstdiv">
                             {/* Removed: The <a> tag around the image */}
-                            <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-40 h-30 object-contain p-2" />
+                           <Link target='_blank' href={stores?.home_url?.toString() ||stores?.affiliate_irl?.toString() }> <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-40 h-30 object-contain p-2" /></Link>
                         </div>
                         {/* Ensure text content (h1, p) is centered on smaller screens and aligns below image */}
                         <div className="flex-grow flex flex-col items-center sm:items-start w-full store-thumbnail-secdiv">
@@ -178,7 +178,8 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                                 <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
                                     {stores.name}
                                 </h1>
-                                <p className="text-base sm:text-xl text-gray-600 mt-2">{stores.desc}</p>
+                                <div  className="prose max-w-none leading-relaxed"
+                            style={{ color: "var(--text-default)" }}  dangerouslySetInnerHTML={{ __html: stores.desc }} ></div>
                             </div>
                         </div>
                     </div>
@@ -290,7 +291,8 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                         <div
                             className="prose max-w-none leading-relaxed"
                             style={{ color: "var(--text-default)" }}
-                            dangerouslySetInnerHTML={{ __html: stores.desc }}
+                             dangerouslySetInnerHTML={{ __html: stores.extra_info }} 
+                           
                         ></div>
                     </div>
                         : <></>}

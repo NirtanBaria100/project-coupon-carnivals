@@ -1,8 +1,8 @@
 // src/components/BlogPage.jsx
 import WebLayout from '@/layouts/web-layout';
+import { excerptFromHtml } from '@/lib/excerptFromHtml';
 import { Link } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
-
 interface Blog {
     title: string | null;
     slug: string | null;
@@ -10,6 +10,7 @@ interface Blog {
     date: string | null;
     imageURL: string | null;
     category: { name: string; slug: string; } | null; // Assuming category is an object with name and slug
+    content:any
 }
 
 // Updated interface to reflect Inertia's pagination structure
@@ -32,37 +33,50 @@ interface PaginatedBlogs {
     to: number;
     total: number;
 }
-
+interface SingleCategory {
+    name: string | '',
+    id: number,
+    slug: string | null,
+  
+}
 interface Props {
     blogs: PaginatedBlogs;
+    popularCategories:SingleCategory[]
 }
 
-const BlogPage = ({ blogs }: Props) => {
+const BlogPage = ({ blogs ,popularCategories}: Props) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('date'); // 'offers' or 'name'
+    // console.log({blogs})
     // Use blogs.data for filtering and sorting
-    const filteredAndSortedBlogs = useMemo(() => {
+        const filteredAndSortedBlogs = useMemo(() => {
+        let filtered = [...blogs.data];
 
-        let filtered = [...blogs.data]; // Create a copy to avoid mutating the original prop
-
-        // Filter by search term
+        // 🔎 search
         if (searchTerm) {
-            filtered = filtered.filter((blog) =>
-                blog.title?.toLowerCase().includes(searchTerm.toLowerCase())
+            filtered = filtered.filter((b) =>
+            (b.title || "").toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
-        // Sort
-        // Note: The original code was sorting 'stores' but the component is 'BlogPage'
-        // and data is 'blogs'. Assuming sorting applies to blog titles.
-        if (sortOrder === 'name') {
-            filtered.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
-        } else if (sortOrder === 'date') {
-            // Assuming 'date' is a sortable string like 'YYYY-MM-DD'
-            filtered.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+
+        // ↕ sort
+        if (sortOrder === "name") {
+            filtered.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+        } else if (sortOrder === "date") {
+            filtered.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
         }
-        return filtered;
-    }, [blogs.data, searchTerm, sortOrder]); // Dependency on blogs.data
+
+        // ✂️ add excerpt (first 150 chars – tweak as needed)
+        return filtered.map((b) => ({
+            ...b,
+            excerpt: excerptFromHtml(b.content, 150),
+        }));
+        }, [blogs.data, searchTerm, sortOrder]);
+
+
+   
 
     return (
         <WebLayout>
@@ -165,9 +179,11 @@ const BlogPage = ({ blogs }: Props) => {
                                             {post.title}
                                         </Link>
                                     </h3>
-                                    
+                                        <p className="text-sm  mb-3">
+                                            {post.excerpt}
+                                        </p>
 
-                                    <div className="flex items-center justify-between text-xs" style={{ color: 'var(--text-muted)' }}>
+                                    <div className="flex items-center justify-between text-xs" style={{ color: 'var(--text-)' }}>
                                         <span>By {post.author?.name.toUpperCase() || ''}</span> {/* Used optional chaining for author.name */}
                                         <span>{post.date}</span>
                                     </div>

@@ -130,7 +130,7 @@ export default function Create({ categories, csrfToken }: CreateProp) {
                     </div>
 
                     <div>
-                        <label className="block font-semibold text-sm">Long Description</label>
+                        <label className="block font-semibold text-sm">Sidebar Description</label>
                         <RichTextEditor content={content} setContent={setContent} setFormData={setData} name={'desc'} csrfToken={csrfToken} path={'categories'} />
 
                     </div>

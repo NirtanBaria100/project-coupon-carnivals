@@ -21,22 +21,7 @@ const OfferCard = ({
     type,
 }) => {
 
-    console.log({  featured_image,
-    title,
-    coupon_type,
-    code,
-    isExpired,
-    is_verified,
-    is_featured,
-    coupon_id,
-    is_exclusive,
-    expires,
-    coupon_url,
-    storeName,
-    store_slug,
-    affiliate_url,
-    store,
-    type,})
+    console.log({type});
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [copyStatus, setCopyStatus] = useState('');
@@ -145,9 +130,17 @@ const OfferCard = ({
                 style={{ borderColor: 'var(--offer-card-border)', backgroundColor: 'var(--offer-card-left-section-bg)' }}
             >
                 <div className="mb-2 flex items-center justify-center overflow-hidden bg-[var(--offer-card-bg)] shadow-inner">
+                   
+                   {type == "home" ?  
+                   <Link  href={RedirectionURL}>
+                        <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-25 w-full object-contain p-2" />
+                    </Link>
+                    :
+                   
                     <button onClick={handleOfferAction}>
                         <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-25 w-full object-contain p-2" />
                     </button>
+                    }
                 </div>
 
             </div>
@@ -156,9 +149,18 @@ const OfferCard = ({
             {/* Middle Section: Offer Description */}
             <div className="flex flex-grow flex-col justify-start p-5 text-start md:p-6 midsec_offerdesc">
                 {/* Heading Click Handler */}
-                <button onClick={handleOfferAction} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
-                    {title}
-                </button>
+
+                {
+                    type == "home"? 
+                       <Link  href={RedirectionURL} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
+                            {title}
+                        </Link>
+                    :
+                       <button onClick={handleOfferAction} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
+                            {title}
+                        </button>
+                }
+             
                 <p
                     className={`text-sm text-left ${isExpired ? 'font-bold' : ''}`}
                     style={{ color: isExpired ? 'var(--offer-card-expired-text)' : 'var(--offer-card-expires-text)' }}

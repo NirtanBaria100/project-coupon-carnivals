@@ -485,6 +485,13 @@ font-size: 1.5rem;
 .storepage_rightcolsidebar{
   padding-left: 0;
 }
+.catmain_sidebardiv{
+  padding: 0 !important;
+  margin-top: 0!important;
+}
+.home2colmaindiv{
+  padding: 0 !important;
+}
 }
 
 @media only screen and (max-width: 767px){

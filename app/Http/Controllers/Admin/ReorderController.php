@@ -13,7 +13,7 @@ class ReorderController extends Controller
     // Show reorder page
     public function edit($storeId)
     {
-        $stores = Store::select('id', 'name')->get();
+        $stores = Store::select('id', 'name','thumbnail')->latest()->get();
 
 
         if ($storeId == "default") {

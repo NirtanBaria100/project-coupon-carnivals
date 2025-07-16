@@ -93,7 +93,7 @@ export default function Index({ blogs }: Props) {
                                         <AlertDialogHeader>
                                             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                                             <AlertDialogDescription>
-                                                This action will permanently delete this coupon. This cannot be undone.
+                                                This action will permanently delete this blog. This cannot be undone.
                                             </AlertDialogDescription>
                                         </AlertDialogHeader>
                                         <AlertDialogFooter>

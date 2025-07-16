@@ -14,6 +14,7 @@ const ItemType = 'COUPON';
 interface Store {
     id: number;
     name: string;
+    thumbnail:string;
 }
 
 interface Props {
@@ -40,8 +41,9 @@ interface DragItem {
 const DraggableCoupon: React.FC<{
     coupon: Coupon;
     index: number;
+    thumbnail:string
     move: (from: number, to: number) => void;
-}> = ({ coupon, index, move }) => {
+}> = ({ coupon, index, move,thumbnail }) => {
     const ref = useRef<HTMLDivElement>(null);
 
     const [, drop] = useDrop<DragItem>({
@@ -66,8 +68,8 @@ const DraggableCoupon: React.FC<{
             ref={ref}
             className={`flex flex-col items-center gap-4 rounded-lg bg-white p-4 shadow transition-opacity ${isDragging ? 'opacity-50' : 'opacity-100'}`}
         >
-            <img src={coupon.featured_image} className="h-50 w-80 rounded" alt="" />
-            <span>{coupon.title}</span>
+            <img src={coupon.featured_image || thumbnail} className="h-20 rounded" alt="" />
+            <span className='text-sm'>{coupon.title}</span>
         </div>
     );
 };
@@ -75,7 +77,7 @@ const DraggableCoupon: React.FC<{
 export default function Reorder({ storeId, stores, coupons: initial }: Props) {
     const [selectedStoreId, setSelectedStoreId] = useState<number>(storeId);
     const [items, setItems] = useState<Coupon[]>(initial);
-
+    const thumbnail = stores.find(x=>x.id == selectedStoreId)?.thumbnail;
     const move = useCallback((from: number, to: number) => {
         setItems((prev) => {
             const next = [...prev];
@@ -140,7 +142,7 @@ export default function Reorder({ storeId, stores, coupons: initial }: Props) {
                 <DndProvider backend={HTML5Backend}>
                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6">
                         {items.map((coupon, i) => (
-                            <DraggableCoupon key={coupon.id} coupon={coupon} index={i} move={move} />
+                            <DraggableCoupon key={coupon.id} coupon={coupon} index={i} move={move} thumbnail={thumbnail} />
                         ))}
                     </div>
                 </DndProvider>
