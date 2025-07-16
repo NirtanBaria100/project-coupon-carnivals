@@ -100,10 +100,7 @@ class HomeController extends Controller
             $query->isExpired = Carbon::now() >= Carbon::parse($query->expires) ? true : false;
 
             // Coupons ko latest (updated_at ya created_at) ke hisaab se sort karen
-            $latestCoupon = $query->coupon
-                ->sortByDesc(function ($item) {
-                    return $item->updated_at ?? $item->created_at;
-                })->first();
+            $latestCoupon = $query->coupon->latest()->first();
 
             if ($latestCoupon) {
                 $query->coupon_updated = $latestCoupon->updated_at ?? $latestCoupon->created_at;
