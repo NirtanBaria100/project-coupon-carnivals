@@ -74,7 +74,7 @@ class StoresController extends Controller
             $appUrl = config("app.url");
             $validated['thumbnail'] = $appUrl . '/storage/' . $path; // public URL
         }
-        $validated['category_id'] = $validated['category_id']['value'];
+        $validated['category_id'] = $validated['category_id']['value']??null;
         Store::create($validated);
 
         return redirect()->route('admin.stores.index')->with('success', 'Store created successfully.');

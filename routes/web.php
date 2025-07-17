@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::prefix("")->name("home.")->group(function () {
-    Route::get("/", [HomeController::class, 'Index']);
+    Route::get("/", [HomeController::class, 'Index']); 
     Route::get("/store/{slug}", [HomeController::class, 'StorePage']);
     Route::get("/stores", [HomeController::class, 'AllStorePage']);
     Route::get("/category/{slug}", [HomeController::class, 'CategoryPage']);

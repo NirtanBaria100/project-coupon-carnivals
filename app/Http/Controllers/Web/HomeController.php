@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
+ 
     public function Index()
     {
         // $featuredCoupons = Coupon::whereDate('expires' , '>' , Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])->latest()->with('stores', function($query){

@@ -170,7 +170,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                     <div className="store-thumbnail-div flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md justify-center">
                         <div className="flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200 mb-0 store-thumbnail-firstdiv">
                             {/* Removed: The <a> tag around the image */}
-                           <Link target='_blank' href={stores?.home_url?.toString() ||stores?.affiliate_irl?.toString() }> <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-40 h-30 object-contain p-2" /></Link>
+                           <Link target='_blank' href={stores?.affiliate_irl?.toString() || stores?.home_url?.toString() }> <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-40 h-30 object-contain p-2" /></Link>
                         </div>
                         {/* Ensure text content (h1, p) is centered on smaller screens and aligns below image */}
                         <div className="flex-grow flex flex-col items-center sm:items-start w-full store-thumbnail-secdiv">

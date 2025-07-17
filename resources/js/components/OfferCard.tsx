@@ -189,11 +189,11 @@ const OfferCard = ({
 
                             type="button"
                             disabled={isExpired}
-                            className={`absolute inset-0 h-full w-full ${buttonBgColor} ${buttonTextColor} flex  items-center justify-center rounded-md font-extrabold transition-transform duration-300 ease-in-out ${isHovered && !isExpired ? '-translate-x-[60px]' : '-translate-x-[25px]'} ${isExpired ? 'opacity-60' : ''} z-20`}
+                            className={`absolute inset-0 h-full w-full ${buttonBgColor} ${buttonTextColor} flex  items-center justify-center rounded-md font-extrabold transition-transform duration-300 ease-in-out ${isHovered && !isExpired ? '-translate-x-[60px]' : '-translate-x-[25px]'} ${isExpired ? 'opacity-60' : ''} z-50`}
                             onMouseEnter={(e) => !isExpired && (e.currentTarget.style.backgroundColor = 'var(--offer-button-hover-bg)')}
                             onMouseLeave={(e) => !isExpired && (e.currentTarget.style.backgroundColor = 'var(--offer-button-bg)')}
                         >
-                            <span className="px-2 text-end text-sm tracking-wider whitespace-nowrap uppercase" >{buttonText}</span>
+                            <span className="ps-5  text-end text-sm tracking-wider whitespace-nowrap uppercase" >{buttonText}</span>
                         </button>
                         <div
                             className={`absolute top-0 right-0 flex h-full w-[60px] items-center justify-center rounded-r-md text-lg font-extrabold transition-transform duration-300 ease-in-out ${isHovered && !isExpired ? 'translate-x-0' : 'translate-x-0'} ${isExpired ? 'translate-x-0 opacity-100' : ''} z-10`}
@@ -240,7 +240,7 @@ const OfferCard = ({
             {/* Modal */}
             {isModalOpen && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center p-4 font-sans"
+                    className="fixed inset-0 z-51 flex items-center justify-center p-4 font-sans"
                     style={{ backgroundColor: 'var(--modal-backdrop-bg)' }}
                     onClick={handleBackdropClick}
                 >
