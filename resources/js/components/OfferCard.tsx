@@ -2,22 +2,22 @@ import { useCallback, useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { Link } from '@inertiajs/react';
 type StoreType = {
-    featured_image : string,
+    featured_image: string,
     title: string,
-    coupon_type : string,
-    code : string,
-    isExpired : boolean,
-    is_verified : string,
-    is_featured : string,
-    coupon_id : string,
-    is_exclusive : string,
-    expires : string,
-    coupon_url : string,
-    storeName : string,
-    store_slug : string,
-    affiliate_url  : string,
-    store  : string,
-    type  : string,
+    coupon_type: string,
+    code: string,
+    isExpired: boolean,
+    is_verified: string,
+    is_featured: string,
+    coupon_id: string,
+    is_exclusive: string,
+    expires: string,
+    coupon_url: string,
+    storeName: string,
+    store_slug: string,
+    affiliate_url: string,
+    store: string,
+    type: string,
 }
 const OfferCard = ({
     featured_image,
@@ -302,7 +302,7 @@ const OfferCard = ({
                                     Your Coupon Code:
                                 </label>
                                 <div
-                                    className="flex items-center overflow-hidden rounded-lg border-2 border-dashed"
+                                    className="flex flex-col sm:flex-row items-stretch sm:items-center overflow-hidden rounded-lg border-2 border-dashed"
                                     style={{ borderColor: 'var(--modal-code-input-border)', backgroundColor: 'var(--modal-code-input-bg)' }}
                                 >
                                     <input
@@ -318,7 +318,7 @@ const OfferCard = ({
                                     />
                                     <button
                                         onClick={handleCopyCode}
-                                        className="focus:ring-opacity-50 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors duration-200 focus:ring-2 focus:outline-none sm:px-5 sm:text-base"
+                                        className="w-full sm:w-auto  sm:mt-0 sm:ml-2 px-4 py-3 text-sm font-bold text-center whitespace-nowrap transition-colors duration-200 focus:ring-2 focus:outline-none"
                                         style={{
                                             backgroundColor: 'var(--modal-copy-button-bg)',
                                             color: 'var(--modal-copy-button-text)',
@@ -329,6 +329,7 @@ const OfferCard = ({
                                     >
                                         {copyStatus || 'Copy Code'}
                                     </button>
+
                                 </div>
                                 <p className="mt-3 text-center text-xs gotodivpopup" style={{ color: 'var(--modal-instructions-text)' }}>
                                     <a target='_blank' href={type == 'stores' ? (affiliate_url || store?.home_url) : store_slug}>Go to {storeName}</a>
