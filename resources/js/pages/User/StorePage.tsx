@@ -114,7 +114,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
             post(route('ratings.store'), {
                 forceFormData: true,
                 onSuccess: () => {
-                    toast.success('Thanks for Your Ratings!', { position: toastDirection });
+                    toast.success('Thanks for your rating. Your rating will be added soon.', { position: toastDirection });
                     setPendingRating(null); // reset
                 },
             });
@@ -228,7 +228,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">Rate {stores?.name}</h3>
                                 <div className="flex justify-center mb-2">
-                                 
+
                                     {renderStars(userRating, true)} {/* Pass true to make stars interactive */}
                                 </div>
                               <p className="text-gray-500 text-sm mt-1 text-center">
@@ -298,8 +298,8 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                         <div
                             className="prose max-w-none leading-relaxed"
                             style={{ color: "var(--text-default)" }}
-                             dangerouslySetInnerHTML={{ __html: stores.extra_info }} 
-                           
+                             dangerouslySetInnerHTML={{ __html: stores.extra_info }}
+
                         ></div>
                     </div>
                         : <></>}

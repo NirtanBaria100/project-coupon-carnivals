@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
- 
+
     public function Index()
     {
         // $featuredCoupons = Coupon::whereDate('expires' , '>' , Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])->latest()->with('stores', function($query){
@@ -90,7 +90,7 @@ class HomeController extends Controller
             });
 
         $expiredCoupons = Coupon::whereIn('id', $storeCoupons)->with('stores')->where('is_published', 1)->whereDate('expires', '<=', Carbon::now())->get();
-      
+
         $expiredCoupons->transform(function ($query) {
             if (!empty($query->expires)) {
                 $query->expires = Carbon::parse($query->expires)->format('F d , Y');
@@ -203,7 +203,7 @@ class HomeController extends Controller
         $store = Rating::updateOrCreate(['ip_address' => $data['ip_address']], $data);
 
         if ($store) {
-            return redirect()->back()->with('success', 'Thanks for your Ratings..!');
+            return redirect()->back()->with('success', 'Thanks for your rating. Your rating will be added soon.');
         } else {
             return redirect()->back()->with(['error' => true], 500);
         }
