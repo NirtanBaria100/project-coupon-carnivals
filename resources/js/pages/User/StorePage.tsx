@@ -18,13 +18,13 @@ interface FeaturedLinks {
     slug: string | null,
 }
 interface StoreRating {
-  id: number;
-  store_id: number;
-  ip_address: string;
-  ratings: number;
-  is_approved: number;
-  created_at: string;
-  updated_at: string;
+    id: number;
+    store_id: number;
+    ip_address: string;
+    ratings: number;
+    is_approved: number;
+    created_at: string;
+    updated_at: string;
 }
 interface Store {
     id: number | null,
@@ -41,8 +41,8 @@ interface Store {
     seo_title: string | '',
     focus_keyphrase: string | '',
     store_ratings: StoreRating[],
-    updated_at:Date,
-    coupon_updated:Date | null,
+    updated_at: Date,
+    coupon_updated: Date | null,
 }
 
 interface Coupon {
@@ -60,7 +60,7 @@ interface Coupon {
 }
 
 interface ExpiredCoupon {
-    id:number,
+    id: number,
     featured_image: string | null,
     title: string | null,
     coupon_type: string | null,
@@ -86,21 +86,21 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
     const [userRating, setUserRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
 
-    const { data, post, setData,  } = useForm({
+    const { data, post, setData, } = useForm({
         store_id: stores.id,
         ratings: stores.ratings
     });
     // Load rating from local storage when the component mounts
     useEffect(() => {
         const ratingsArray = stores.store_ratings || [];
-        let ratings:number=0;
+        let ratings: number = 0;
         // calculating avg
         if (ratingsArray.length > 0) {
             const sum = ratingsArray.reduce((acc, r) => acc + r.ratings, 0);
             const average = sum / ratingsArray.length;
-            ratings=average
+            ratings = average
         } else {
-            ratings=0;
+            ratings = 0;
         }
         // Initialize userRating with the store's average rating from props
         setUserRating(ratings);
@@ -170,17 +170,17 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                     <div className="store-thumbnail-div flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-8 mb-8 p-4 bg-white rounded-lg shadow-md justify-center">
                         <div className="flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200 mb-0 store-thumbnail-firstdiv">
                             {/* Removed: The <a> tag around the image */}
-                           <Link target='_blank' href={stores?.affiliate_irl?.toString() || stores?.home_url?.toString() }> <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-40 h-30 object-contain p-2" /></Link>
+                            <a target='_blank' href={stores?.affiliate_irl?.toString() || stores?.home_url?.toString()}> <img src={stores.thumbnail || "https://via.placeholder.com/128x128?text=Store+Logo"} alt={`${stores.name} Logo`} className="w-40 h-30 object-contain p-2" /></a>
                         </div>
                         {/* Ensure text content (h1, p) is centered on smaller screens and aligns below image */}
                         <div className="flex-grow flex flex-col items-center sm:items-start w-full store-thumbnail-secdiv">
                             <div className="text-center sm:text-left sm:flex-grow w-full"> {/* Added w-full here for better centering control */}
                                 {/* Removed: The <a> tag around the h1 */}
-                                <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
+                                <a href={stores?.affiliate_irl?.toString() || stores?.home_url?.toString()} target='_blank' className="text-3xl sm:text-4xl font-bold text-gray-800">
                                     {stores.name}
-                                </h1>
-                                <div  className="prose max-w-none leading-relaxed"
-                            style={{ color: "var(--text-default)" }}  dangerouslySetInnerHTML={{ __html: stores.desc }} ></div>
+                                </a>
+                                <div className="prose max-w-none leading-relaxed"
+                                    style={{ color: "var(--text-default)" }} dangerouslySetInnerHTML={{ __html: stores.desc }} ></div>
                             </div>
                         </div>
                     </div>
@@ -209,17 +209,17 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">Offer Summary</h3>
                                 <p className="text-gray-700 text-sm">Active Codes: {coupons.filter(e => e.coupon_type == 'code').length}</p>
                                 <p className="text-gray-700 text-sm">Active Deals: {coupons.filter(e => e.coupon_type == 'deal').length}</p>
-                               {(stores?.coupon_updated || stores?.updated_at) && (
-                                <>
-                                <p className="text-gray-500 text-xs mt-2">
-                                    Last updated:{' '}
-                                    {new Date(stores.coupon_updated || stores.updated_at).toLocaleDateString('en-GB', {
-                                    day: 'numeric',
-                                    month: 'short',
-                                    year: 'numeric',
-                                    })}
-                                </p>
-                                </>
+                                {(stores?.coupon_updated || stores?.updated_at) && (
+                                    <>
+                                        <p className="text-gray-500 text-xs mt-2">
+                                            Last updated:{' '}
+                                            {new Date(stores.coupon_updated || stores.updated_at).toLocaleDateString('en-GB', {
+                                                day: 'numeric',
+                                                month: 'short',
+                                                year: 'numeric',
+                                            })}
+                                        </p>
+                                    </>
                                 )}
 
                             </div>
@@ -231,19 +231,19 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
 
                                     {renderStars(userRating, true)} {/* Pass true to make stars interactive */}
                                 </div>
-                              <p className="text-gray-500 text-sm mt-1 text-center">
-                                <span className="font-semibold text-gray-700">
-                                    {stores.store_ratings?.length || 0} &nbsp; rating{stores.store_ratings?.length === 1 ? '' : 's'}
-                                </span>{' '}
-                                with an average rating of{' '}
-                                <span className="font-semibold text-gray-700">
-                                    {stores.store_ratings && stores.store_ratings.length > 0
-                                    ? (
-                                        stores.store_ratings.reduce((sum, r) => sum + r.ratings, 0) /
-                                        stores.store_ratings.length
-                                        ).toFixed(1)
-                                    : '0.0'} out of 5 stars.
-                                </span>
+                                <p className="text-gray-500 text-sm mt-1 text-center">
+                                    <span className="font-semibold text-gray-700">
+                                        {stores.store_ratings?.length || 0} &nbsp; rating{stores.store_ratings?.length === 1 ? '' : 's'}
+                                    </span>{' '}
+                                    with an average rating of{' '}
+                                    <span className="font-semibold text-gray-700">
+                                        {stores.store_ratings && stores.store_ratings.length > 0
+                                            ? (
+                                                stores.store_ratings.reduce((sum, r) => sum + r.ratings, 0) /
+                                                stores.store_ratings.length
+                                            ).toFixed(1)
+                                            : '0.0'} out of 5 stars.
+                                    </span>
                                 </p>
                             </div>
 
@@ -298,7 +298,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                         <div
                             className="prose max-w-none leading-relaxed"
                             style={{ color: "var(--text-default)" }}
-                             dangerouslySetInnerHTML={{ __html: stores.extra_info }}
+                            dangerouslySetInnerHTML={{ __html: stores.extra_info }}
 
                         ></div>
                     </div>

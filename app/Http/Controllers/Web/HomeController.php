@@ -17,7 +17,7 @@ class HomeController extends Controller
         // $featuredCoupons = Coupon::whereDate('expires' , '>' , Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])->latest()->with('stores', function($query){
         //     $query->first();
         // })->limit(30)->get();
-        $featuredCoupons = Coupon::select('coupons.*', 'coupon_order.position')->whereDate('expires', '>', Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])
+        $featuredCoupons = Coupon::select('coupons.*', 'coupon_order.position')->latest()->whereDate('expires', '>', Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])
             ->where('is_published', 1)
             ->leftJoin('coupon_order', function ($join) {
                 $join->on('coupon_order.coupon_id', '=', 'coupons.id');
