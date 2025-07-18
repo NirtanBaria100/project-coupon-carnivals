@@ -1,7 +1,24 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { Link } from '@inertiajs/react';
-
+type StoreType = {
+    featured_image: string,
+    title: string,
+    coupon_type: string,
+    code: string,
+    isExpired: boolean,
+    is_verified: string,
+    is_featured: string,
+    coupon_id: string,
+    is_exclusive: string,
+    expires: string,
+    coupon_url: string,
+    storeName: string,
+    store_slug: string,
+    affiliate_url: string,
+    store: string,
+    type: string,
+}
 const OfferCard = ({
     featured_image,
     title,
@@ -19,9 +36,9 @@ const OfferCard = ({
     affiliate_url,
     store,
     type,
-}) => {
+}: StoreType) => {
 
-    console.log({type});
+    console.log({ type });
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [copyStatus, setCopyStatus] = useState('');
@@ -61,7 +78,7 @@ const OfferCard = ({
 
             window.open(redirectCurrent, '_blank');
 
-            window.location.href = RedirectionURL;
+            window.location.href = affiliate_url;
         }
     };
 
@@ -130,16 +147,16 @@ const OfferCard = ({
                 style={{ borderColor: 'var(--offer-card-border)', backgroundColor: 'var(--offer-card-left-section-bg)' }}
             >
                 <div className="mb-2 flex items-center justify-center overflow-hidden bg-[var(--offer-card-bg)] shadow-inner">
-                   
-                   {type == "home" ?  
-                   <Link  href={RedirectionURL}>
-                        <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-25 w-full object-contain p-2" />
-                    </Link>
-                    :
-                   
-                    <button onClick={handleOfferAction}>
-                        <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-25 w-full object-contain p-2" />
-                    </button>
+
+                    {type == "home" ?
+                        <Link href={RedirectionURL}>
+                            <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-25 w-full object-contain p-2" />
+                        </Link>
+                        :
+
+                        <button onClick={handleOfferAction}>
+                            <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-25 w-full object-contain p-2" />
+                        </button>
                     }
                 </div>
 
@@ -151,16 +168,16 @@ const OfferCard = ({
                 {/* Heading Click Handler */}
 
                 {
-                    type == "home"? 
-                       <Link  href={RedirectionURL} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
+                    type == "home" ?
+                        <Link href={RedirectionURL} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
                             {title}
                         </Link>
-                    :
-                       <button onClick={handleOfferAction} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
+                        :
+                        <button onClick={handleOfferAction} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
                             {title}
                         </button>
                 }
-             
+
                 <p
                     className={`text-sm text-left ${isExpired ? 'font-bold' : ''}`}
                     style={{ color: isExpired ? 'var(--offer-card-expired-text)' : 'var(--offer-card-expires-text)' }}
@@ -231,7 +248,7 @@ const OfferCard = ({
                     </button>
                     {showTermsMessage && (
                         <p className="mt-1 text-xs italic transition-opacity duration-300 ease-in-out" style={{ color: 'var(--terms-message-text)' }}>
-                            {coupon_type == 'code' ? 'Click "Show Code" To Activate This Deal. Exclusions May Apply' : 'No Promo Code Needed. Click "Get Offer" To Activate This Deal. Exclusions May Apply'}
+                            {coupon_type == 'code' ? 'Click "Show Code" To Activate This Code. Exclusions May Apply' : 'No Promo Code Needed. Click "Get Offer" To Activate This Offer. Exclusions May Apply'}
                         </p>
                     )}
                 </div>
@@ -262,17 +279,17 @@ const OfferCard = ({
 
                         <div className="mb-6 flex flex-col items-center">
                             {/* <button onClick={handleOfferAction}> */}
-                                <img
-                                    src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo}
-                                    alt={storeName}
-                                    className="mb-4 border-2 shadow-sm w-30"
-                                    style={{ borderColor: 'var(--modal-logo-border)' }}
-                                />
+                            <img
+                                src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo}
+                                alt={storeName}
+                                className="mb-4 border-2 shadow-sm w-30"
+                                style={{ borderColor: 'var(--modal-logo-border)' }}
+                            />
                             {/* </button> */}
                             {/* <button onClick={handleOfferAction}> */}
-                                <h3 className="mb-1 text-xl font-semibold sm:text-2xl" style={{ color: 'var(--modal-store-name-text)' }}>
-                                    {storeName}
-                                </h3>
+                            <h3 className="mb-1 text-xl font-semibold sm:text-2xl" style={{ color: 'var(--modal-store-name-text)' }}>
+                                {storeName}
+                            </h3>
                             {/* </button> */}
                             <p className="text-center text-base leading-snug" style={{ color: 'var(--modal-offer-text-description)' }}>
                                 {title}
@@ -285,7 +302,7 @@ const OfferCard = ({
                                     Your Coupon Code:
                                 </label>
                                 <div
-                                    className="flex items-center overflow-hidden rounded-lg border-2 border-dashed"
+                                    className="flex flex-col sm:flex-row items-stretch sm:items-center overflow-hidden rounded-lg border-2 border-dashed"
                                     style={{ borderColor: 'var(--modal-code-input-border)', backgroundColor: 'var(--modal-code-input-bg)' }}
                                 >
                                     <input
@@ -301,7 +318,7 @@ const OfferCard = ({
                                     />
                                     <button
                                         onClick={handleCopyCode}
-                                        className="focus:ring-opacity-50 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors duration-200 focus:ring-2 focus:outline-none sm:px-5 sm:text-base"
+                                        className="w-full sm:w-auto  sm:mt-0 sm:ml-2 px-4 py-3 text-sm font-bold text-center whitespace-nowrap transition-colors duration-200 focus:ring-2 focus:outline-none"
                                         style={{
                                             backgroundColor: 'var(--modal-copy-button-bg)',
                                             color: 'var(--modal-copy-button-text)',
@@ -312,6 +329,7 @@ const OfferCard = ({
                                     >
                                         {copyStatus || 'Copy Code'}
                                     </button>
+
                                 </div>
                                 <p className="mt-3 text-center text-xs gotodivpopup" style={{ color: 'var(--modal-instructions-text)' }}>
                                     <a target='_blank' href={type == 'stores' ? (affiliate_url || store?.home_url) : store_slug}>Go to {storeName}</a>
@@ -347,7 +365,7 @@ const OfferCard = ({
                         >
                             <p className="mb-2 font-semibold">Details:</p>
                             <ul className="list-inside list-disc space-y-1 text-xs">
-                                <li> {coupon_type == 'code' ? 'Click "Show Code" To Activate This Deal. Exclusions May Apply' : 'No Promo Code Needed. Click "Get Offer" To Activate This Deal. Exclusions May Apply'}</li>
+                                <li> {coupon_type == 'code' ? 'Click "Show Code" To Activate This Code. Exclusions May Apply' : 'No Promo Code Needed. Click "Get Offer" To Activate This Offer. Exclusions May Apply'}</li>
                             </ul>
                         </div>
                     </div>

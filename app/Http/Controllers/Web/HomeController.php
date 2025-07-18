@@ -11,13 +11,13 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
- 
+
     public function Index()
     {
         // $featuredCoupons = Coupon::whereDate('expires' , '>' , Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])->latest()->with('stores', function($query){
         //     $query->first();
         // })->limit(30)->get();
-        $featuredCoupons = Coupon::select('coupons.*', 'coupon_order.position')->whereDate('expires', '>', Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])
+        $featuredCoupons = Coupon::select('coupons.*', 'coupon_order.position')->latest()->whereDate('expires', '>', Carbon::now())->where(['is_featured' => 1, 'is_published' => 1])
             ->where('is_published', 1)
             ->leftJoin('coupon_order', function ($join) {
                 $join->on('coupon_order.coupon_id', '=', 'coupons.id');
@@ -92,7 +92,7 @@ class HomeController extends Controller
             });
 
         $expiredCoupons = Coupon::whereIn('id', $storeCoupons)->with('stores')->where('is_published', 1)->whereDate('expires', '<=', Carbon::now())->get();
-      
+
         $expiredCoupons->transform(function ($query) {
             if (!empty($query->expires)) {
                 $query->expires = Carbon::parse($query->expires)->format('F d , Y');
@@ -205,7 +205,7 @@ class HomeController extends Controller
         $store = Rating::updateOrCreate(['ip_address' => $data['ip_address']], $data);
 
         if ($store) {
-            return redirect()->back()->with('success', 'Thanks for your Ratings..!');
+            return redirect()->back()->with('success', 'Thanks for your rating. Your rating will be added soon.');
         } else {
             return redirect()->back()->with(['error' => true], 500);
         }

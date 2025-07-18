@@ -20,7 +20,7 @@ class TagsController extends Controller
                     ->orWhere('slug', 'like', "%{$search}%")
                     ->orWhere('desc', 'like', "%{$search}%");
             })
-            ->orderBy($sort, $direction)
+            ->orderBy($sort, $direction)->latest()
             ->paginate(50)
             ->appends($request->only('search', 'sort', 'direction'));
 

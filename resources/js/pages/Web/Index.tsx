@@ -65,7 +65,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
     }, [totalSlides]);
 
     useEffect(() => {
-        const slideInterval = setInterval(nextSlide, 15000); // changed from 50000 to 5000
+        const slideInterval = setInterval(nextSlide, 5000); // changed from 50000 to 5000
         return () => clearInterval(slideInterval);
     }, [nextSlide]);
     // Carousel state and logic END

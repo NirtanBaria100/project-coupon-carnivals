@@ -30,7 +30,7 @@ class StoresController extends Controller
         $query->orderBy($sortBy, $sortDir);
 
         // Paginate
-        $stores = $query->paginate(50)->withQueryString();
+        $stores = $query->latest()->paginate(50)->withQueryString();
         $stores->getCollection()->transform(function ($query) {
             $query->ratings = $query->storeRatings->count();
             return $query;

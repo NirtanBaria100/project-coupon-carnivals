@@ -56,7 +56,7 @@ export default function Dashboard({ stats }: DashboardProps) {
                         <CardContent className="flex items-center gap-4 p-6">
                             <UserIcon className="h-10 w-10 text-primary" />
                             <div>
-                                <h2 className="text-lg font-semibold">Active Users</h2>
+                                <h2 className="text-lg font-semibold">Total Users</h2>
                                 <p className="text-2xl font-bold">{stats.totalUsers}</p>
                             </div>
                         </CardContent>
