@@ -48,7 +48,7 @@ const CategoryPage = ({ category,categories }: Props) => {
     const [skip, setSkip] = useState(0);
     const [coupon, setCoupon] = useState<Coupons[]>([]);
     const { data } = useForm({
-        category_id: category.id
+        category_id: category?.id
     });
     const popularCategories = categories; //.filter(e => e.slug != category.slug && e.is_popular == true);
     const formatCategoryName = (name) => {
@@ -57,7 +57,7 @@ const CategoryPage = ({ category,categories }: Props) => {
         return name.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     };
 
-    const formattedCategoryName = formatCategoryName(category.name);
+    const formattedCategoryName = formatCategoryName(category?.name);
 
     const loadMore = async () => {
         setSkip(skip + 50);
@@ -85,17 +85,17 @@ const CategoryPage = ({ category,categories }: Props) => {
                     <nav className="text-sm text-gray-600 mb-6">
                         <Link href="/" className="hover:underline">Home</Link> &nbsp; &gt; &nbsp;
                         <Link href="/categories" className="hover:underline">Category</Link>&nbsp; &gt;
-                        <span className="ml-1 font-semibold">{category.name}</span>
+                        <span className="ml-1 font-semibold">{category?.name}</span>
                     </nav>
 
                     {/* Category Header - Adjusted for responsiveness */}
                     <div className="flex flex-col md:flex-row items-center md:space-x-4 mb-8 text-center md:text-left">
                         <div className="p-2 w-16 h-16 bg-gray-100 rounded-sm overflow-hidden shadow-sm flex items-center justify-center text-gray-600 mb-4 md:mb-0 flex-shrink-0">
                             {/* Category Icon/Image Placeholder */}
-                            <img src={category.image_icon && category.image_icon !== ''
-                                ? category.image_icon
+                            <img src={category?.image_icon && category?.image_icon !== ''
+                                ? category?.image_icon
                                 : "https://placehold.co/40x40"}
-                                alt={category.name || "Category image"} className={'object-cover'} />
+                                alt={category?.name || "Category image"} className={'object-cover'} />
                         </div>
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 leading-tight">
@@ -122,13 +122,13 @@ const CategoryPage = ({ category,categories }: Props) => {
                         {/* Right Column: Sidebar */}
                         <div className="lg:col-span-1 p-4 lg:pl-8 space-y-8 mt-8 lg:mt-0 catmain_sidebardiv">
                             {/* Category Description */}
-                            {category.desc ? <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 category_sidebar_desc">
+                            {category?.desc ? <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 category_sidebar_desc">
                                 {/* <h3 className="text-xl font-bold text-gray-800 mb-4">About {formattedCategoryName} Category</h3> */}
                                 <p className="text-gray-700 text-sm leading-relaxed">
                                 <div
                                     className="prose max-w-none leading-relaxed"
                                     style={{ color: "var(--text-default)" }}
-                                    dangerouslySetInnerHTML={{ __html: category.desc }}
+                                    dangerouslySetInnerHTML={{ __html: category?.desc }}
                                 ></div>
                                 </p>
                             </div> : <></>}
@@ -138,9 +138,9 @@ const CategoryPage = ({ category,categories }: Props) => {
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">Popular Categories</h3>
                                 <ul className="space-y-3">
                                     {popularCategories.length > 0 ? popularCategories.map((category) => (
-                                        <li key={category.id}>
+                                        <li key={category?.id}>
                                             <Link
-                                                href={`/category/${category.slug}`}
+                                                href={`/category/${category?.slug}`}
                                                 className="flex items-center transition-all duration-300 whitespace-nowrap"
                                                 style={{
                                                     backgroundColor: 'var(--category-button-bg-default)',
@@ -153,7 +153,7 @@ const CategoryPage = ({ category,categories }: Props) => {
                                                     e.currentTarget.style.color = 'var(--category-button-text-default)';
                                                 }}
                                             >
-                                                {category.name}
+                                                {category?.name}
                                             </Link>
                                         </li>
                                     )) : <span className='text-red-500'>No Popular Categories Available</span>}
