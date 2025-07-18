@@ -140,6 +140,7 @@ export default function Edit({ blog, categories, csrfToken }: Props) {
                         <div className="space-y-6 rounded-xl bg-white p-4 shadow-md md:p-6 dark:bg-black">
                             <label className="block font-medium">Category</label>
                             <Select
+                                isClearable={true}
                                 options={categoryOptions}
                                 value={categoryOptions.find(opt => opt.value === data.category_id)}
                                 onChange={(selected) => setData('category_id', selected?.value || '')}

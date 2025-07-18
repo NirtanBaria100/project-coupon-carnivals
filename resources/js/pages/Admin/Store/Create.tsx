@@ -115,6 +115,7 @@ export default function Create({ categories, csrfToken }: Props) {
                             onChange={(selected) => setData('category_id', selected)}
                             placeholder="Select store category"
                             styles={customSelectStyles}
+                            isClearable={true}
                         />
 
                         {/* <textarea

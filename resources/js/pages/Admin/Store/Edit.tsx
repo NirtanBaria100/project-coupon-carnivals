@@ -44,10 +44,10 @@ export default function Edit() {
         store: Store;
         categories: Category[];
         tags: Tag[];
-        csrfToken:string,
+        csrfToken: string,
     }>();
 
-    const { store , csrfToken } = props;
+    const { store, csrfToken } = props;
 
     const categoryOptions = props.categories.map((cat) => ({
         value: cat.id.toString(),
@@ -179,6 +179,7 @@ export default function Edit() {
 
                         <label className="block font-medium">Store Category</label>
                         <Select
+                            isClearable={true}
                             value={categoryOptions.find((opt) => opt.value === data.category_id)}
                             options={categoryOptions}
                             onChange={(selected) => setData('category_id', selected?.value ?? '')}
