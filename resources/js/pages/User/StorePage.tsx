@@ -285,7 +285,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                                             </li>
                                         ))}
                                     </ul>
-                                    <p className="text-gray-500 text-sm mt-4">{similarStores.length} similar stores in this category.</p>
+                                    {/* <p className="text-gray-500 text-sm mt-4">{similarStores.length} similar stores in this category.</p> */}
                                 </div>
                             )}
                         </div>

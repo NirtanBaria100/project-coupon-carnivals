@@ -248,7 +248,7 @@ const OfferCard = ({
                     </button>
                     {showTermsMessage && (
                         <p className="mt-1 text-xs italic transition-opacity duration-300 ease-in-out" style={{ color: 'var(--terms-message-text)' }}>
-                            {coupon_type == 'code' ? 'Click "Show Code" To Activate This Deal. Exclusions May Apply' : 'No Promo Code Needed. Click "Get Offer" To Activate This Deal. Exclusions May Apply'}
+                            {coupon_type == 'code' ? 'Click "Show Code" To Activate This Code. Exclusions May Apply' : 'No Promo Code Needed. Click "Get Offer" To Activate This Offer. Exclusions May Apply'}
                         </p>
                     )}
                 </div>
@@ -365,7 +365,7 @@ const OfferCard = ({
                         >
                             <p className="mb-2 font-semibold">Details:</p>
                             <ul className="list-inside list-disc space-y-1 text-xs">
-                                <li> {coupon_type == 'code' ? 'Click "Show Code" To Activate This Deal. Exclusions May Apply' : 'No Promo Code Needed. Click "Get Offer" To Activate This Deal. Exclusions May Apply'}</li>
+                                <li> {coupon_type == 'code' ? 'Click "Show Code" To Activate This Code. Exclusions May Apply' : 'No Promo Code Needed. Click "Get Offer" To Activate This Offer. Exclusions May Apply'}</li>
                             </ul>
                         </div>
                     </div>
