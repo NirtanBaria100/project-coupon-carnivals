@@ -26,7 +26,7 @@ class UserController extends Controller
         $query->orderBy($sortBy, $sortDir);
 
         // Paginate
-        $users = $query->paginate(50)->withQueryString();
+        $users = $query->latest()->paginate(50)->withQueryString();
         return Inertia::render('Admin/User/Index', [
             'users' => $users,
             'filters' => $request->only(['search', 'sort', 'direction']),

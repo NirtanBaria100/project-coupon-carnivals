@@ -25,7 +25,7 @@ class CategoryController extends Controller
             $query->orderBy($sort, $direction);
         }
 
-        $categories = $query->paginate(50)->withQueryString();
+        $categories = $query->latest()->paginate(50)->withQueryString();
 
         return Inertia::render('Admin/Category/Index', [
             'categories' => $categories,
