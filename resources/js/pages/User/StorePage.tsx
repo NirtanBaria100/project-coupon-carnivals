@@ -114,7 +114,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
             post(route('ratings.store'), {
                 forceFormData: true,
                 onSuccess: () => {
-                    toast.success('Thanks  for you rating your rating will bhi added soon!', { position: toastDirection });
+                    toast.success('Thanks  for you rating your rating will be added soon!', { position: toastDirection });
                     setPendingRating(null); // reset
                 },
             });
