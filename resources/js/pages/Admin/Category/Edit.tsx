@@ -171,6 +171,9 @@ export default function Edit({ category, categories, csrfToken }: EditProps) {
                         </label>
                         <Switch checked={data.is_popular} onCheckedChange={(checked) => handleSwitch('is_popular', checked)} />
                     </div>
+                    <label className="block font-semibold text-sm">Single Line Description</label>
+                    <RichTextEditor content={contentExtra} setContent={setContentExtra} setFormData={setData} name={'single_line_desc'} csrfToken={csrfToken} path={'categories'} />
+
 
 
                     <h1 className="text-xl font-semibold text-gray-800 dark:text-white">SEO</h1>
