@@ -45,7 +45,7 @@ const OfferCard = ({
     const [showTermsMessage, setShowTermsMessage] = useState(false);
 
     const offerValue = code;
-    const RedirectionURL = type == 'home' ? store_slug : (affiliate_url || store?.home_url);
+    const RedirectionURL = affiliate_url || store?.home_url;
     const handleCopyCode = () => {
         navigator.clipboard
             .writeText(offerValue)
@@ -78,7 +78,7 @@ const OfferCard = ({
 
             window.open(redirectCurrent, '_blank');
 
-            window.location.href = affiliate_url;
+            window.location.href = RedirectionURL;
         }
     };
 
@@ -149,7 +149,7 @@ const OfferCard = ({
                 <div className="mb-2 flex items-center justify-center overflow-hidden bg-[var(--offer-card-bg)] shadow-inner">
 
                     {type == "home" ?
-                        <Link href={RedirectionURL}>
+                        <Link href={ type == 'home'  ? store_slug : (affiliate_url || store?.home_url)}>
                             <img src={type == 'stores' ? (featured_image || defaultStoreLogo) : defaultStoreLogo} alt={`${storeName} Logo`} className="h-25 w-full object-contain p-2" />
                         </Link>
                         :
@@ -169,7 +169,7 @@ const OfferCard = ({
 
                 {
                     type == "home" ?
-                        <Link href={RedirectionURL} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
+                        <Link href={type == 'home'  ? store_slug : (affiliate_url || store?.home_url)} disabled={isExpired} className={`mb-2 text-lg font-bold sm:text-xl text-left cursor-pointer focus:outline-none ${isExpired ? 'cursor-not-allowed' : ''}`} style={{ color: 'var(--offer-card-offer-heading-text)' }}>
                             {title}
                         </Link>
                         :
