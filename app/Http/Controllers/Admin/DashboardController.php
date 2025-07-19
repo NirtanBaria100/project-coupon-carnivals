@@ -21,7 +21,7 @@ class DashboardController extends Controller
                 'totalCategories' => Category::count(),
                 'totalTags' => Tag::count(),
                 'totalUsers' => User::count(),
-                'ratings' => Rating::all(),
+                'ratings' => Rating::whereDate('created_at','==', Carbon::now())->count(),
             ],
         ]);
     }
