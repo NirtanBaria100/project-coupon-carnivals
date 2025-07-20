@@ -1,13 +1,10 @@
-import { Head } from '@inertiajs/react'
-import React from 'react'
+import {useEffect} from 'react'
 type MetaProps = {
     title: string,
     description : string ,
     keywords:string,
 }
-export default function PageMeta({title , description , keywords}:MetaProps) {
-  return (
-   export default function PageMeta({ title, description, keywords }: MetaProps) {
+export default function PageMeta({ title, description, keywords }: MetaProps) {
   useEffect(() => {
     document.title = title;
 
@@ -18,7 +15,7 @@ export default function PageMeta({title , description , keywords}:MetaProps) {
 
     const keyw = document.createElement('meta');
     keyw.name = 'keywords';
-    keyw.content = ${keywords}, coupons, discounts, deals;
+    keyw.content = `${keywords}, coupons, discounts, deals`;
     document.head.appendChild(keyw);
 
     // Optional cleanup on unmount
@@ -28,7 +25,5 @@ export default function PageMeta({title , description , keywords}:MetaProps) {
     };
   }, [title, description, keywords]);
 
-  return null;
-}
-  )
+  return null;
 }
