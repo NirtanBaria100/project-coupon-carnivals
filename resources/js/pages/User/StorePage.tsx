@@ -181,9 +181,9 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                         <div className="flex-grow flex flex-col items-center sm:items-start w-full store-thumbnail-secdiv">
                             <div className="text-center sm:text-left sm:flex-grow w-full"> {/* Added w-full here for better centering control */}
                                 {/* Removed: The <a> tag around the h1 */}
-                                <a href={stores?.affiliate_irl?.toString() || stores?.home_url?.toString()} target='_blank' className="text-3xl sm:text-4xl font-bold text-gray-800">
+                                <h1  className="text-3xl sm:text-4xl font-bold text-gray-800">
                                     {stores.name}
-                                </a>
+                                </h1>
                                 <div className="prose max-w-none leading-relaxed"
                                     style={{ color: "var(--text-default)" }} dangerouslySetInnerHTML={{ __html: stores.desc }} ></div>
                             </div>
