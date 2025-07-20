@@ -64,7 +64,6 @@ class HomeController extends Controller
         $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl', 'home_url', 'name', 'desc', 'extra_info', 'seo_title', 'meta_description', 'focus_keyphrase', 'thumbnail', 'category_id','updated_at'])->with(['storeRatings'=>function ($q)  {
             $q->where('is_approved',1);
         }])->first();
-        $store->totalRatings = count($store->storeRatings->where('is_approved')) ?? 0;
         $similarStores = Store::latest()->whereNot('slug', $slug)->where('category_id', $store->category_id)->select(['name', 'slug'])->limit(10)->get();
         $featuredLinks = Category::latest()->whereNot('slug', $slug)->select(['name', 'slug'])->where('is_popular', 1)->limit(10)->get();
         $storeCoupons = \DB::table('coupon_store')
@@ -120,7 +119,7 @@ class HomeController extends Controller
 
         if (!empty($store)) {
             $store->thumbnail = asset($store->thumbnail);
-            $store->ratings = $store->storeRatings->where('is_approved', 1)->sum('ratings');
+          $store->ratings = Rating::where(['store_id' => $store->id ,'ip' => request()->ip() ,'is_approved' => 1])->count();
         }
         return Inertia::render("User/StorePage", [
             'stores' => $store,
