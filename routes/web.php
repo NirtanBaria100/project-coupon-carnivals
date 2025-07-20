@@ -40,6 +40,15 @@ Route::prefix('/rating')->name('ratings.')->group(function () {
 
 
 // Admin Dashboard or Home
+/*
+if user is not logged  a 500 internal server eror occured which is handled in bootstrap/app.php as
+    else if ($response->getStatusCode() == 500) {
+        if (Auth::guest()) {
+            return redirect('/99k356ha56/login');
+        }
+    }
+SO if in future you  change the login route then change it in bootstrap/app.php
+*/
 Route::prefix('99k356ha56')->middleware('auth')->group(function () {
 
     Route::get("/", [DashboardController::class, 'index'])->name("home");

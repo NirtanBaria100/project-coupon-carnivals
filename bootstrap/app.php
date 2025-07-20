@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
-        $middleware->web(append: [
+        $middleware->web(append: [ 
             HandleAppearance::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
@@ -26,10 +27,15 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->respond(function (Response $response) {
+            
             if ($response->getStatusCode() == 404) {
                 return Inertia::render("Web/NotFound", [
-                "Image"=>asset('404.png')
-            ]);
+                    "Image" => asset('404.png')
+                ]);
+            }else if ($response->getStatusCode() == 500) {
+                if (Auth::guest()) {
+                    return redirect('/99k356ha56/login');
+                }
             }
         });
     })->create();
