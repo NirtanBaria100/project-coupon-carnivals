@@ -23,6 +23,7 @@ interface Store {
     is_featured: boolean;
     extra_info?: string;
     focus_keyphrase?: string;
+    single_line_desc?:string;
     seo_title?: string;
     meta_description?: string;
     category_id: number; // assume only one category used here
@@ -106,6 +107,7 @@ export default function Edit() {
         formData.append('affiliate_irl', data.affiliate_irl);
         formData.append('is_featured', data.is_featured ? '1' : '0');
         formData.append('extra_info', data.extra_info);
+        formData.append('single_line_desc', data.single_line_desc);
         formData.append('focus_keyphrase', data.focus_keyphrase);
         formData.append('seo_title', data.seo_title);
         formData.append('meta_description', data.meta_description);

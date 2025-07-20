@@ -61,7 +61,9 @@ class HomeController extends Controller
     }
     public function StorePage($slug)
     {
-        $store = Store::latest()->where('slug', $slug)->select(['id', 'affiliate_irl', 'home_url', 'name', 'desc', 'extra_info', 'seo_title', 'meta_description', 'focus_keyphrase', 'thumbnail', 'category_id','updated_at'])->with(['storeRatings'=>function ($q)  {
+      
+       try{
+         $store = Store::latest()->where('slug', $slug)->select(['id','single_line_desc', 'affiliate_irl', 'home_url', 'name', 'desc', 'extra_info', 'seo_title', 'meta_description', 'focus_keyphrase', 'thumbnail', 'category_id','updated_at'])->with(['storeRatings'=>function ($q)  {
             $q->where('is_approved',1);
         }])->first();
         $similarStores = Store::latest()->whereNot('slug', $slug)->where('category_id', $store->category_id)->select(['name', 'slug'])->limit(10)->get();
@@ -120,10 +122,11 @@ class HomeController extends Controller
         $store->totalRatings = 0 ;
         if (!empty($store)) {
             $store->thumbnail = asset($store->thumbnail);
-            $ratings =  Rating::where(['store_id' => $store->id ,'ip' => request()->ip() ,'is_approved' => 1]);
+            $ratings =  Rating::where(['store_id' => $store->id ,'ip_address' => request()->ip() ,'is_approved' => 1]);
             $store->ratings = $ratings->sum('ratings');
             $store->totalRatings = $ratings->count();
         }
+        
         return Inertia::render("User/StorePage", [
             'stores' => $store,
             'coupons' => $coupons,
@@ -131,6 +134,10 @@ class HomeController extends Controller
             'similarStores' => $similarStores,
             'featuredLinks' => $featuredLinks,
         ]);
+       }
+       catch(\Exception $e){
+        return $e;
+       }
     }
 
     public function CategoryPage($slug)

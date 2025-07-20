@@ -29,6 +29,7 @@ interface StoreRating {
 interface Store {
     id: number | null,
     totalRatings: number | 0,
+    single_line_desc  : string | "",
     name: string | null,
     thumbnail: string | null,
     affiliate_irl: string | null, // Keeping this for OfferCard but removed from direct UI links
@@ -185,7 +186,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                                     {stores.name}
                                 </h1>
                                 <div className="prose max-w-none leading-relaxed"
-                                    style={{ color: "var(--text-default)" }} dangerouslySetInnerHTML={{ __html: stores.desc }} ></div>
+                                    style={{ color: "var(--text-default)" }} dangerouslySetInnerHTML={{ __html: stores.single_line_desc }} ></div>
                             </div>
                         </div>
                     </div>

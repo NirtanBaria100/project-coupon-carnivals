@@ -33,9 +33,10 @@ return Application::configure(basePath: dirname(__DIR__))
                     "Image" => asset('404.png')
                 ]);
             }else if ($response->getStatusCode() == 500) {
-                if (Auth::guest()) {
+                if (Auth::guest() && strpos(url()->current(), '99k356ha56') !== false) {
                     return redirect('/99k356ha56/login');
                 }
+
             }
         });
     })->create();

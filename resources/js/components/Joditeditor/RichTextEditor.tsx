@@ -29,6 +29,9 @@ export default function RichTextEditor({
     { name: "store", label: "Stores" },
     { name: "category", label: "Categories" },
   ];
+  const prefersDark = window.matchMedia &&  
+  window.matchMedia("(prefers-color-scheme: dark)").matches;
+
   const config = useMemo(
     () => ({
       readonly: false,
@@ -50,7 +53,7 @@ export default function RichTextEditor({
       style: {
         textAlign: "left", // This will be applied inline
       },
-
+      theme: prefersDark ? "dark" : "default",
       extraButtons: [
         {
           name: "Add Templates", // Button name (used in `buttons` list)
@@ -58,6 +61,7 @@ export default function RichTextEditor({
           exec: () => {
             setShowModal(true);
           },
+          
           tooltip: "Select Templates",
           mode: JoditEditor.MODE_WYSIWYG,
           className:

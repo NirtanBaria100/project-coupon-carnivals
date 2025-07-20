@@ -16,17 +16,16 @@ export default function PageMeta({ title, description, keywords }: MetaProps) {
     desc.content = description || 'Find the best coupons and offers.';
     document.head.appendChild(desc);
 
-    const keyw = document.createElement('meta');
-    keyw.name = 'keywords';
-    keyw.content = `${keywords}, coupons, discounts, deals`;
-    document.head.appendChild(keyw);
+    // const keyw = document.createElement('meta');
+    // keyw.name = 'keywords';
+    // keyw.content = `${keywords}, coupons, discounts, deals`;
+    // document.head.appendChild(keyw);
 
     // Optional cleanup on unmount
     return () => {
       document.head.removeChild(desc);
-      document.head.removeChild(keyw);
     };
-  }, [title, description, keywords]);
+  }, [title, description]);
 
   return null;
 }
