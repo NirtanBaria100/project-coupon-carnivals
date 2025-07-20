@@ -56,6 +56,7 @@ export default function Edit() {
     const [content, setContent] = useState(store.desc || '');
     const [contentExtra, setContentExtra] = useState(store.extra_info || '');
     const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [singleLineContent, setSingleLineContent] = useState(store.single_line_desc || '');
 
     const { data, setData, post, processing, errors } = useForm({
         _method: 'PUT',
@@ -187,13 +188,10 @@ export default function Edit() {
                             placeholder="Select store category"
                             styles={customSelectStyles}
                         />
-                        <textarea
-                            name="single_line_desc"
-                            placeholder="Single Line Description"
-                            value={data.single_line_desc}
-                            onChange={handleChange}
-                            className="w-full rounded border px-3 py-2"
-                        />
+                      
+                        <label className="block font-medium">Single Line Description</label>
+                        <RichTextEditor content={singleLineContent} setContent={setSingleLineContent} setFormData={setData} name={'single_line_desc'} csrfToken={csrfToken} path={'stores'} />
+
                         <label className="block font-medium">Description</label>
                         <RichTextEditor content={content} setContent={setContent} setFormData={setData} name={'desc'} csrfToken={csrfToken} path={'stores'} />
 

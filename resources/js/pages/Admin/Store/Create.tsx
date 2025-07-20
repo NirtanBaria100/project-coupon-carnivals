@@ -24,6 +24,7 @@ export default function Create({ categories, csrfToken }: Props) {
     const categoryOptions = categories?.map((cat) => ({ value: cat.id.toString(), label: cat.name })) ?? [];
     const [content, setContent] = useState();
     const [contentExtra, setContentExtra] = useState();
+    const [singleLineContent, setSingleLineContent] = useState();
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         slug: '',
@@ -119,13 +120,9 @@ export default function Create({ categories, csrfToken }: Props) {
                             isClearable={true}
                         />
 
-                        <textarea
-                            name="single_line_desc"
-                            placeholder="Single Line Description"
-                            value={data.single_line_desc}
-                            onChange={handleChange}
-                            className="w-full rounded border px-3 py-2"
-                        />
+                         <label className="block font-medium">Single Line Description</label>
+                         <RichTextEditor content={singleLineContent} setContent={setSingleLineContent} setFormData={setData} name={'single_line_desc'} csrfToken={csrfToken} path={'stores'} />
+
                         <label className="block font-medium">Description</label>
                         <RichTextEditor content={content} setContent={setContent} setFormData={setData} name={'desc'} csrfToken={csrfToken} path={'stores'} />
                         <input
