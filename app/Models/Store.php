@@ -19,7 +19,7 @@ class Store extends Model
         'focus_keyphrase',
         'seo_title',
         'meta_description',
-        'single_line_description',
+        'single_line_desc',
     ];
 
     public function coupons()
