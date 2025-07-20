@@ -116,10 +116,13 @@ class HomeController extends Controller
 
             return $query;
         });
-
+        $store->ratings = 0;
+        $store->totalRatings = 0 ;
         if (!empty($store)) {
             $store->thumbnail = asset($store->thumbnail);
-          $store->ratings = Rating::where(['store_id' => $store->id ,'ip' => request()->ip() ,'is_approved' => 1])->count();
+            $ratings =  Rating::where(['store_id' => $store->id ,'ip' => request()->ip() ,'is_approved' => 1]);
+            $store->ratings = $ratings->sum('ratings');
+            $store->totalRatings = $ratings->count();
         }
         return Inertia::render("User/StorePage", [
             'stores' => $store,
