@@ -133,7 +133,7 @@ export default function Edit({ blog, categories, csrfToken }: Props) {
                             )}
 
                             <Input name="seo_title" placeholder="SEO Title" value={data.seo_title} onChange={(e) => setData('seo_title', e.target.value)} />
-                            <Input name="focus_keyphrase" placeholder="Focus Keyphrase" value={data.focus_keyphrase} onChange={(e) => setData('focus_keyphrase', e.target.value)} />
+                            {/* <Input name="focus_keyphrase" placeholder="Focus Keyphrase" value={data.focus_keyphrase} onChange={(e) => setData('focus_keyphrase', e.target.value)} /> */}
                             <Textarea name="meta_description" placeholder="Meta Description" value={data.meta_description} onChange={(e) => setData('meta_description', e.target.value)} />
                         </div>
 

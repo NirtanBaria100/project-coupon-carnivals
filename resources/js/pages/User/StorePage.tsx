@@ -156,7 +156,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
     return (
         <WebLayout>
             <PageMeta 
-                title={stores.seo_title || `${stores.name}`} 
+                title={stores.seo_title || `${stores.name} - Promo Carnivals`} 
                 description={stores.meta_description||""} 
                 keywords={stores.focus_keyphrase||""} 
             />

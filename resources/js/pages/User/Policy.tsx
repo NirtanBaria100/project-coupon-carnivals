@@ -6,7 +6,7 @@ const Policy = () => {
     <WebLayout>
       {/* SEO helpers — tweak as needed */}
       <PageMeta
-        title="Privacy Policy"
+        title="Privacy Policy - Promo Carnivals"
         description="How we collect, use, and safeguard your data."
         keywords="privacy, policy, data protection"
       />

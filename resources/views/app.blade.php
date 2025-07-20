@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html  lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
     <head>
-
-
-
                 <!-- Google tag (gtag.js) -->
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-F5YQTKPDCX"></script>
             <script>
@@ -43,7 +40,7 @@
             }
         </style>
 
-        <title inertia>Promo Carnivals</title>
+        <!-- <title >Promo Carnivals</title> -->
         <!-- <meta name="description" content="Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"> -->
 
         <link rel="icon" href="{{ asset('favicon-carnivals.png') }}" sizes="any">
@@ -57,10 +54,14 @@
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
         @inertiaHead
-
+       
 
     </head>
     <body class="font-sans antialiased">
         @inertia
+         <script>
+                document.querySelectorAll('[inertia]').forEach(el => {
+             el.removeAttribute('inertia');});
+        </script>
     </body>
 </html>

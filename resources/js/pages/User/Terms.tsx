@@ -5,7 +5,7 @@ const TermsOfService = () => {
   return (
     <WebLayout>
       <PageMeta
-        title="Terms of Service"
+        title="Terms of Service - Promo Carnivals"
         description="Review the terms and conditions of using our services."
         keywords="terms, service, conditions"
       />

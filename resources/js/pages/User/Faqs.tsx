@@ -5,7 +5,7 @@ const FAQ = () => {
   return (
     <WebLayout>
       <PageMeta
-        title="Frequently Asked Questions"
+        title="Frequently Asked Questions - Promo Carnivals"
         description="Answers to common questions about our services."
         keywords="faq, help, questions, support"
       />

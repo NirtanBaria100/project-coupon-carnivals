@@ -5,7 +5,7 @@ const Imprint = () => {
   return (
     <WebLayout>
       <PageMeta
-        title="Imprint"
+        title="Imprint - Promo Carnivals"
         description="Legal disclosure and contact information for Nexura Systems Ltd."
         keywords="imprint, company information, contact, Nexura Systems"
       />

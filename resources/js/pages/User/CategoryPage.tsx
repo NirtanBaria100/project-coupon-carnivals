@@ -78,7 +78,7 @@ const CategoryPage = ({ category,categories }: Props) => {
 
     return (
         <WebLayout>
-            <PageMeta title={category.seo_title||category?.name} description={category.meta_description || ""} keywords={category.focus_keyphrase || ""} />
+            <PageMeta title={category.seo_title||category?.name+" - Promo Carnivals"} description={category.meta_description || ""} keywords={category.focus_keyphrase || ""} />
             <div className="bg-white pb-8 min-h-screen">
                 <div className="container mx-auto px-4 py-8">
                     {/* Breadcrumbs */}

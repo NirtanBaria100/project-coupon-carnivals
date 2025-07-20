@@ -85,7 +85,7 @@ export default function Create({ categories , csrfToken }: CreateProps) {
                                 className="w-full rounded border px-3 py-2"
                             />
                             <Input name="seo_title" placeholder="SEO Title" value={data.seo_title} onChange={handleChange} />
-                            <Input name="focus_keyphrase" placeholder="Focus Keyphrase" value={data.focus_keyphrase} onChange={handleChange} />
+                            {/* <Input name="focus_keyphrase" placeholder="Focus Keyphrase" value={data.focus_keyphrase} onChange={handleChange} /> */}
                             <Textarea name="meta_description" placeholder="Meta Description" value={data.meta_description} onChange={handleChange} />
 
                         </div>
