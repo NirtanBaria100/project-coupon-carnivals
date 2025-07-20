@@ -39,10 +39,25 @@ export default function Create({ categories, csrfToken }: CreateProp) {
 
         if (type === 'file' && files) {
             setData(name, files[0]); // Store file
+            setImagePreview(URL.createObjectURL( files[0]));
         } else {
             setData(name, type === 'checkbox' ? checked : value);
+            setImagePreview("");
         }
+
+ 
     };
+const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+const handleRemoveImage = () => {
+    setData('image_icon', null);
+    setImagePreview(null);
+    // Optionally clear the file input as well if you want to reset the actual <input> value
+    const fileInput = document.getElementById('image_icon_input') as HTMLInputElement;
+    if (fileInput) {
+        fileInput.value = '';
+    }
+};
 
     const handleSwitch = (name: string, value: boolean) => {
         setData(name, value);
@@ -143,7 +158,26 @@ export default function Create({ categories, csrfToken }: CreateProp) {
                         className="w-full rounded border px-3 py-2"
                     />
 
-                    <input type="file" name="image_icon" accept="image/*" onChange={handleChange} className="w-full rounded border px-3 py-2" />
+              <div>
+    <label className="block font-semibold text-sm mb-2">Image Icon</label>
+    <input
+        id="image_icon_input"
+        type="file"
+        name="image_icon"
+        accept="image/*"
+        onChange={handleChange}
+        className="w-full rounded border px-3 py-2"
+    />
+
+    {imagePreview && (
+        <div className="mt-3">
+            <img src={imagePreview} alt="Preview" className="h-24 w-24 object-cover rounded border" />
+            <Button type="button" variant="destructive" className="mt-2" onClick={handleRemoveImage}>
+                Remove Image
+            </Button>
+        </div>
+    )}
+</div>
 
                     <div className="flex items-center space-x-2">
                         <label htmlFor="is_popular" className="text-gray-800 dark:text-white">

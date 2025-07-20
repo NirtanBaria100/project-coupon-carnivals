@@ -9,8 +9,8 @@ const appName = 'Promo Carnivals - Find Exclusive Coupons and Discounts';
 const desc = 'Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!'
 
 createInertiaApp({
-    title: (title) => `${appName}`,
-    description: (description)=> `${desc}`,
+    title: (title) => `Promo Carnivals - ${title}`,
+    description: (description)=> description,
     resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx')),
     setup({ el, App, props }) {
         const root = createRoot(el);

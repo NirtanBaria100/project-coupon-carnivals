@@ -6,6 +6,7 @@ import banner2Image from '@/assets/banner 2.webp'; // Import the banner image di
 import OfferCard from '@/components/OfferCard';
 import WebLayout from '@/layouts/web-layout';
 import { excerptFromHtml } from '@/lib/excerptFromHtml';
+import PageMeta from '@/components/PageMeta';
 interface Coupons {
     featured_image: string | null,
     title: string | null,
@@ -52,7 +53,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
     const [currentSlide, setCurrentSlide] = useState(0);
     const bannerData = [
         { image: banner1Image , url : '/stores' }, // Use the imported image
-        { image: banner2Image , url : '/category/clothing-and-apparel'}, // Use the imported image again for the second slide
+        // { image: banner2Image , url : '/category/clothing-and-apparel'}, // Use the imported image again for the second slide
     ];
     const totalSlides = bannerData.length;
 
@@ -64,10 +65,10 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
         setCurrentSlide((prevSlide) => (prevSlide - 1 + totalSlides) % totalSlides);
     }, [totalSlides]);
 
-    useEffect(() => {
-        const slideInterval = setInterval(nextSlide, 5000); // changed from 50000 to 5000
-        return () => clearInterval(slideInterval);
-    }, [nextSlide]);
+    // useEffect(() => {
+    //     const slideInterval = setInterval(nextSlide, 5000); // changed from 50000 to 5000
+    //     return () => clearInterval(slideInterval);
+    // }, [nextSlide]);
     // Carousel state and logic END
 
     const remapBlogs = blogs.map(blog=>{
@@ -81,6 +82,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
 
     return (
         <WebLayout>
+            <PageMeta title={"Find Exclusive Coupons and Discounts"} description={"Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"} keywords={""} />
             <div className="pb-12 font-sans" style={{ backgroundColor: 'var(--page-bg)' }}>
                 {/* Banners Slider Section START */}
                 <div className="w-full h-60 sm:h-96 md:h-[450px] lg:h-[400px] xl:h-[550px] overflow-hidden relative shadow-lg mb-10">
@@ -101,7 +103,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
                     </div>
 
                     {/* Previous Button */}
-                    <button
+                    {/* <button
                         onClick={prevSlide}
                         className="absolute top-1/2 left-4 transform -translate-y-1/2 p-3 sm:p-4 rounded-full transition-all duration-300 z-20 focus:outline-none focus:ring-2"
                         style={{
@@ -116,10 +118,10 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 sm:h-7 sm:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
-                    </button>
+                    </button> */}
 
                     {/* Next Button */}
-                    <button
+                    {/* <button
                         onClick={nextSlide}
                         className="absolute top-1/2 right-4 transform -translate-y-1/2 p-3 sm:p-4 rounded-full transition-all duration-300 z-20 focus:outline-none focus:ring-2"
                         style={{
@@ -134,10 +136,10 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 sm:h-7 sm:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
-                    </button>
+                    </button> */}
 
                     {/* Indicator Dots */}
-                    <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+                    {/* <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
                         {bannerData.map((_, index) => (
                             <button
                                 key={index}
@@ -149,7 +151,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
                                 aria-label={`Go to slide ${index + 1}`}
                             ></button>
                         ))}
-                    </div>
+                    </div> */}
                 </div>
                 {/* Banners Slider Section END */}
 

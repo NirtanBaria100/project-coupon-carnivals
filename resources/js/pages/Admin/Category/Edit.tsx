@@ -50,15 +50,23 @@ export default function Edit({ category, categories, csrfToken }: EditProps) {
     });
     const [content, setContent] = useState(category.desc || '');
     const [contentExtra, setContentExtra] = useState(category.single_line_desc || '');
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, type, value, checked, files } = e.target as HTMLInputElement;
+ const [imagePreview, setImagePreview] = useState<string | null>(category.image_icon || null);
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, type, value, checked, files } = e.target as HTMLInputElement;
 
-        if (type === 'file' && files?.length) {
-            setData(name, files[0]);
-        } else {
-            setData(name, type === 'checkbox' ? checked : value);
-        }
-    };
+    if (type === 'file' && files?.length) {
+        setData(name, files[0]);
+        const previewURL = URL.createObjectURL(files[0]);
+        setImagePreview(previewURL);
+    } else {
+        setData(name, type === 'checkbox' ? checked : value);
+    }
+};
+
+const handleRemoveImage = () => {
+    setData('image_icon', null);
+    setImagePreview(null);
+};
     const handleSwitch = (name: string, value: boolean) => {
         setData(name, value);
     };
@@ -158,13 +166,27 @@ export default function Edit({ category, categories, csrfToken }: EditProps) {
                         className="w-full rounded border px-3 py-2"
                     />
 
-                    <div>
-                        <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Current Image</label>
-                        {category.image_icon && (
-                            <img src={category.image_icon} alt="Current" className="mb-2 h-16 w-16 rounded border object-cover" />
-                        )}
-                        <input type="file" name="image_icon" accept="image/*" onChange={handleChange} className="w-full rounded border px-3 py-2" />
-                    </div>
+                   <div>
+    <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Image</label>
+
+    {imagePreview && (
+        <div className="mb-2 flex items-center space-x-4">
+            <img src={imagePreview} alt="Preview" className="h-16 w-16 rounded border object-cover" />
+            <Button type="button" variant="destructive" onClick={handleRemoveImage}>
+                Remove
+            </Button>
+        </div>
+    )}
+
+    <input
+        type="file"
+        name="image_icon"
+        accept="image/*"
+        onChange={handleChange}
+        className="w-full rounded border px-3 py-2"
+    />
+</div>
+
                     <div className="flex items-center space-x-2">
                         <label htmlFor="is_popular" className="text-gray-800 dark:text-white">
                             Is Popular

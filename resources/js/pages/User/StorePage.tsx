@@ -155,7 +155,12 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
 
     return (
         <WebLayout>
-            {/* <PageMeta title={'A'} description={stores.meta_description} keywords={stores.focus_keyphrase} /> */}
+            <PageMeta 
+                title={stores.seo_title || `${stores.name}`} 
+                description={stores.meta_description||""} 
+                keywords={stores.focus_keyphrase||""} 
+            />
+            
             <div className="bg-white pb-8 min-h-screen">
                 <div className="container mx-auto px-4 py-8">
                     {/* Breadcrumbs */}
@@ -196,7 +201,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                                 These offers have expired, but may still work
                             </p> {expiredCoupons.map((offer, index) => (
 
-                                <OfferCard key={index} coupon_id={offer.id} store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} type={"stores"} />
+                                <OfferCard coupon_expired={true} key={index} coupon_id={offer.id} store_slug={'/store/' + stores.slug} store={stores} affiliate_url={offer.coupon_url || stores.affiliate_irl} storeName={stores.name} {...offer} type={"stores"} />
                             ))}</> : <>
                                 {/* <hr /> <br /> <span className="text-red-500">No Expired Coupons Available</span> */}
                             </>}

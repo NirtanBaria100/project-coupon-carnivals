@@ -34,7 +34,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
     const staticCategories = featuredcategories;
     return (
         <WebLayout>
-            {/* <PageMeta title={post.seo_title} description={post.meta_description} keywords={post.focus_keyphrase} /> */}
+            <PageMeta title={post?.seo_title || `${post?.title}`} description={post.meta_description || ""} keywords={post.focus_keyphrase || ""} />
             <div
                 className="pb-12 font-sans"
                 style={{ backgroundColor: "var(--page-bg)" }}

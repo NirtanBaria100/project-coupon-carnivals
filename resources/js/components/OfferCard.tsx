@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { Link } from '@inertiajs/react';
 type StoreType = {
+    coupon_expired: boolean,
     featured_image: string,
     title: string,
     coupon_type: string,
@@ -20,6 +21,7 @@ type StoreType = {
     type: string,
 }
 const OfferCard = ({
+    coupon_expired=false,
     featured_image,
     title,
     coupon_type,
@@ -38,7 +40,6 @@ const OfferCard = ({
     type,
 }: StoreType) => {
 
-    console.log({ type });
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [copyStatus, setCopyStatus] = useState('');
@@ -182,7 +183,7 @@ const OfferCard = ({
                     className={`text-sm text-left ${isExpired ? 'font-bold' : ''}`}
                     style={{ color: isExpired ? 'var(--offer-card-expired-text)' : 'var(--offer-card-expires-text)' }}
                 >
-                    {isExpired ? 'Expired' : ` ${expires == null ? '' : 'Expires: ' + expires}`}
+                    {isExpired ? 'Expired' : ` ${expires == null ? '' : coupon_expired?`Expired: ${expires}`:'Expires: ' + expires}`}
                 </p>
                 <div className="mt-3 flex flex-wrap justify-center gap-2 md:justify-start">
                     {tags.map((tag, index) => (
@@ -341,7 +342,7 @@ const OfferCard = ({
                                     Click the button below to go to the store and get this offer!
                                 </p>
                                 <a
-                                    href={type == 'stores' ? (affiliate_url || store?.home_url) : store_slug}
+                                    href={(affiliate_url || store?.home_url || store?.affiliate_irl)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="focus:ring-opacity-50 mt-6 block w-full rounded-md py-3 text-center font-bold transition-colors duration-200 focus:ring-2 focus:outline-none"

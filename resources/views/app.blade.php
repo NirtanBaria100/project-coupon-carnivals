@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html  lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
     <head>
+
+
+
+                <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-F5YQTKPDCX"></script>
+            <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-F5YQTKPDCX');
+            </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
@@ -31,8 +43,8 @@
             }
         </style>
 
-        <title inertia>Promo Carnivals - Find Exclusive Coupons and Discounts</title>
-        <meta name="description" content="Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!">
+        <!-- <title inertia>Promo Carnivals - Find Exclusive Coupons and Discounts</title> -->
+        <!-- <meta name="description" content="Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"> -->
 
         <link rel="icon" href="{{ asset('favicon-carnivals.png') }}" sizes="any">
         <link rel="icon" href="{{ asset('favicon-carnivals.png') }}" type="image/svg+xml">
@@ -40,11 +52,13 @@
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-
+        
         @routes
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
         @inertiaHead
+
+
     </head>
     <body class="font-sans antialiased">
         @inertia

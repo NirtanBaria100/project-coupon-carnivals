@@ -90,7 +90,8 @@ export default function Dashboard({ stats }: DashboardProps) {
                             <Star className="h-10 w-10 text-primary" />
                             <div>
                                 <h2 className="text-lg font-semibold">Daily Ratings</h2>
-                                <p className="text-2xl font-bold">{stats.ratings}</p>
+                                {/* <p className="text-2xl font-bold">{stats.ratings.reduce((t,r)=> t+(r.ratings??0),0)}</p> */}
+                                {/* <p className="text-2xl font-bold">{stats.ratings}</p> */}
                             </div>
                         </CardContent>
                     </Card>

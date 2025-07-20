@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Link } from "@inertiajs/react";
 import WebLayout from "@/layouts/web-layout";
+import PageMeta from "@/components/PageMeta";
 
 interface Store {
     name: string | "";
@@ -138,6 +139,7 @@ const AllStorePage = ({ allStores }: Props) => {
 
     return (
         <WebLayout>
+            <PageMeta title={"All Brands"} description={""} keywords={""} />
             <div
                 className="pb-12 font-sans"
                 style={{ backgroundColor: "var(--page-bg, #f8f8f8)" }}

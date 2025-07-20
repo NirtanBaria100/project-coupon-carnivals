@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from '@inertiajs/react';
 import WebLayout from '@/layouts/web-layout';
+import PageMeta from '@/components/PageMeta';
 interface Category {
     name: string | null,
     slug: string | null
@@ -24,6 +25,7 @@ const AllCategoryPage = ({ allCategories }: Props) => {
 
     return (
         <WebLayout>
+            <PageMeta title={"Categories"} description={""} keywords={""} />
             <div
                 className="pb-12 font-sans"
                 style={{ backgroundColor: "var(--page-bg)" }}
