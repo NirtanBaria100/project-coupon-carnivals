@@ -81,6 +81,7 @@ const BlogPage = ({ blogs ,popularCategories}: Props) => {
 
     return (
         <WebLayout>
+            
             <PageMeta title={"Blogs"} description={""} keywords={""} />
             <div className="pb-12 font-sans" style={{ backgroundColor: 'var(--page-bg)' }}>
                 <div className="container mx-auto px-4 py-8 md:px-6 lg:px-8">

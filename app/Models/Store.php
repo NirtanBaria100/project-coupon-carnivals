@@ -18,7 +18,7 @@ class Store extends Model
         'extra_info',
         'focus_keyphrase',
         'seo_title',
-        'meta_description'
+        'meta_description',
         'single_line_description',
     ];
 
