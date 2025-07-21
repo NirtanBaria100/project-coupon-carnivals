@@ -304,7 +304,7 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
                         <div
                             className="prose max-w-none leading-relaxed"
                             style={{ color: "var(--text-default)" }}
-                            dangerouslySetInnerHTML={{ __html: stores.extra_info }}
+                            dangerouslySetInnerHTML={{ __html: stores.desc }}
 
                         ></div>
                     </div>
