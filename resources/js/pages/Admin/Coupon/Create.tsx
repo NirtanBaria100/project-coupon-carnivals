@@ -46,6 +46,7 @@ export default function Create({ stores, tags, categories }: CreateProps) {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
+        console.log({ name, value });
         setData(name, value);
     };
 
@@ -79,6 +80,8 @@ export default function Create({ stores, tags, categories }: CreateProps) {
                 payload.append(key, value?.toString() ?? '');
             }
         });
+
+        console.log({formData: payload});
 
         post(route('admin.coupons.store'), {
             forceFormData: true,
@@ -170,14 +173,15 @@ export default function Create({ stores, tags, categories }: CreateProps) {
                                 className="w-full rounded border px-3 py-2"
                             />
 
-                            <input
-                                name="expires"
-                                type="datetime-local"
-                                value={data.expires}
-                                onChange={handleChange}
-                                className="w-full rounded border px-3 py-2"
+                        <input
+                            name="expires"
+                            type="datetime-local"
+                            value={data.expires}
+                            onChange={handleChange}
+                            onKeyDown={(e) => e.preventDefault()}
+                            onFocus={(e) => e.target.showPicker?.()}
+                            className="w-full rounded border px-3 py-2"
                             />
-
                             <label className="block font-medium">Featured Image</label>
                             <input type="file" name="featured_image" onChange={handleFileChange} className="w-full rounded border px-3 py-2" />
                         </div>

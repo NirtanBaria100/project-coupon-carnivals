@@ -25,7 +25,7 @@ const AllCategoryPage = ({ allCategories }: Props) => {
 
     return (
         <WebLayout>
-            <PageMeta title={"Categories - Promo Carnivals"} description={""} keywords={""} />
+            <PageMeta title={"Categories - Promo Carnivals"} description={"Browse all coupon categories and discover great offers across fashion, tech, home, and more."} keywords={""} />
             <div
                 className="pb-12 font-sans"
                 style={{ backgroundColor: "var(--page-bg)" }}

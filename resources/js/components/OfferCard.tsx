@@ -333,7 +333,13 @@ const OfferCard = ({
 
                                 </div>
                                 <p className="mt-3 text-center text-xs gotodivpopup" style={{ color: 'var(--modal-instructions-text)' }}>
-                                    <a target='_blank' href={type == 'stores' ? (affiliate_url || store?.home_url) : store_slug}>Go to {storeName}</a>
+                                    <a  
+                                        target='_blank' 
+                                        // href={type == 'stores' ? (affiliate_url || store?.home_url) : store_slug}
+                                        href={(affiliate_url || store?.home_url || store?.affiliate_irl)}
+                                        >
+                                            Go to {storeName
+                                            }</a>
                                 </p>
                             </div>
                         ) : (

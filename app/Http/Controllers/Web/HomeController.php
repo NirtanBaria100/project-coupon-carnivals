@@ -142,11 +142,13 @@ class HomeController extends Controller
 
     public function CategoryPage($slug)
     {
-        $category = Category::latest()->where('slug', $slug)->first();
+         $category = Category::latest()->where('slug', $slug)->first();
          $popularCategories = Category::latest()->where("is_popular",1)->limit(10)->get();
+         $TotalCoupons = $category->coupons()->count();
         return Inertia::render("User/CategoryPage", [
             'category' => $category,
-            'categories'=>$popularCategories
+            'categories'=>$popularCategories,
+            'totalCouponsIncategory' => $TotalCoupons,
         ]);
     }
 

@@ -5,8 +5,8 @@ const HowToMakeMoney = () => {
   return (
     <WebLayout>
       <PageMeta
-        title="How to Make Money - Promo Carnivals"
-        description="Explore practical tips and strategies to earn money online and offline."
+        title="How We Make Money - Promo Carnivals"
+        description="Discover how our website earns through affiliate partnerships while keeping our content unbiased and free."
         keywords="make money, earn online, side hustle, passive income"
       />
 

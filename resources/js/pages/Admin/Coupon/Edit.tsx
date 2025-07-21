@@ -174,12 +174,15 @@ export default function Edit({ stores, tags, categories, coupon }: EditProps) {
                                 onChange={handleChange}
                                 className="w-full rounded border px-3 py-2"
                             />
-                            <input
-                                name="expires"
-                                type="datetime-local"
-                                value={data.expires}
-                                onChange={handleChange}
-                                className="w-full rounded border px-3 py-2"
+                           
+                        <input
+                            name="expires"
+                            type="datetime-local"
+                            value={data.expires}
+                            onChange={handleChange}
+                            onKeyDown={(e) => e.preventDefault()}
+                            onFocus={(e) => e.target.showPicker?.()}
+                            className="w-full rounded border px-3 py-2"
                             />
 
                             <label className="block font-medium">Featured Image</label>

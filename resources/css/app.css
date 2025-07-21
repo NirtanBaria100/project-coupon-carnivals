@@ -474,6 +474,24 @@ color: #1F2937;
 .storepage_longdescsec h2{
 font-size: 1.5rem;
 }
+.load_more_cat{
+  background: #ff6700;
+color: #fff;
+font-weight: 900;
+text-transform: uppercase;
+font-size: 17px;
+letter-spacing: 1px;
+width: auto;
+padding: 10px 30px;
+}
+.store-thumbnail-secdiv .singleline_desc{
+      padding-top: 5px;
+}
+.storepage_longdescsec h2{
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 
 @media only screen and (max-width: 1023px) {
   .home_featuredoffers_div {

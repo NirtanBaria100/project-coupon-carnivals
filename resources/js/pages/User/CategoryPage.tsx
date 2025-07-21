@@ -39,10 +39,12 @@ interface Coupons {
 
 interface Props {
     category: SingleCategory,
-    categories:SingleCategory[]
+    categories:SingleCategory[],
+    totalCouponsIncategory:number
 }
 // Accept props from the Inertia controller, including categoryName
-const CategoryPage = ({ category,categories }: Props) => {
+const CategoryPage = ({ category,categories,totalCouponsIncategory }: Props) => {
+
     // const { categories } = usePage().props;
 
     const [skip, setSkip] = useState(0);
@@ -105,7 +107,7 @@ const CategoryPage = ({ category,categories }: Props) => {
                                 DISCOUNT CODES AND VOUCHERS FOR <br className="md:hidden" /> {category?.name.toUpperCase() || ""}
                             </h1>
                             <p className="text-gray-600 text-sm sm:text-base">
-                                We have {coupon.length} live discount codes & deals in {category?.name}.
+                                We have {totalCouponsIncategory} live discount codes & deals in {category?.name}.
                             </p>
                         </div>
                     </div>
@@ -118,7 +120,7 @@ const CategoryPage = ({ category,categories }: Props) => {
                                 <OfferCard key={index} coupon_id={offer?.id} store_slug={'/store/' + offer?.stores[0]?.slug} store={offer?.stores[0]} affiliate_url={offer?.coupon_url || offer?.stores[0]?.affiliate_irl} storeName={offer?.stores[0]?.name} type={'home'} {...offer}  />
                             )) : <span className='text-red-500'>No Coupons Available</span>}
                             {totalcoupons > 50  && coupon?.length != totalcoupons ? <div className=" lg:col-span-2 text-center flex justify-center align-items-center w-full">
-                                <button className='btn border border-orange-500 w-full text-orange-500 rounded shadow-sm hover:text-white hover:bg-orange-500 p-2 text-center' onClick={() => loadMore()}>Load More</button>
+                                <button className='btn border border-orange-500 w-full text-orange-500 rounded shadow-sm hover:text-white hover:bg-orange-500 p-2 text-center load_more_cat' onClick={() => loadMore()}>Load More</button>
                             </div> : <></>}
                         </div>
 

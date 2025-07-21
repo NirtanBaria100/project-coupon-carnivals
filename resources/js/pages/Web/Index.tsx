@@ -7,6 +7,7 @@ import OfferCard from '@/components/OfferCard';
 import WebLayout from '@/layouts/web-layout';
 import { excerptFromHtml } from '@/lib/excerptFromHtml';
 import PageMeta from '@/components/PageMeta';
+import {Schema} from '@/components/Schema';
 interface Coupons {
     featured_image: string | null,
     title: string | null,
@@ -46,6 +47,134 @@ interface Props {
 }
 const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }: Props) => {
     const { categories } = usePage().props;
+        const FirstSchema =  {
+        "@context": "http://schema.org",
+        "@type": "WebPage",
+        "url": "https://promocarnivals.com"
+        };
+
+        const SecondSchema = {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Promo Carnivals",
+            "url": "https://promocarnivals.com",
+            "publisher": {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "Promo Carnivals",
+                "url": "https://promocarnivals.com",
+                "logo": {
+                "@context": "https://schema.org",
+                "@type": "ImageObject",
+                "url": "https://promocarnivals.com/build/assets/promocarnivals2-BOfHa-Vt.png",
+                "caption": "Promo Carnivals Logo"
+                }
+            },
+            "potentialAction": {
+                "@context": "https://schema.org",
+                "@type": "SearchAction",
+                "target": "https://promocarnivals.com/search?q={query}",
+                "query-input": "required name=query"
+            }
+        }
+
+        const ThirdSchema = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Home",
+            "url": "https://promocarnivals.com/",
+            "@id": "#trending"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Categories",
+            "url": "https://promocarnivals.com/categories",
+            "@id": "#trending"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Stores",
+            "url": "https://promocarnivals.com/stores",
+            "@id": "#trending"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Blogs",
+            "url": "https://promocarnivals.com/all/blogs",
+            "@id": "#trending"
+            }
+        ]
+        }
+        const FourthSchema = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Travel",
+            "url": "https://promocarnivals.com/category/travel",
+            "@id": "#navigation"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Home & Garden",
+            "url": "https://promocarnivals.com/category/home-and-garden",
+            "@id": "#navigation"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Jewellery & Watches",
+            "url": "https://promocarnivals.com/category/jewellery-watches",
+            "@id": "#navigation"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Clothing & Apparel",
+            "url": "https://promocarnivals.com/category/clothing-and-apparel",
+            "@id": "#navigation"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Sports & Outdoors",
+            "url": "https://promocarnivals.com/category/sports-&-outdoors",
+            "@id": "#navigation"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Arts & Crafts",
+            "url": "https://promocarnivals.com/category/arts-crafts",
+            "@id": "#navigation"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Pet Supplies",
+            "url": "https://promocarnivals.com/category/pet-supplies",
+            "@id": "#navigation"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Electronics",
+            "url": "https://promocarnivals.com/category/electronics",
+            "@id": "#navigation"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Free Shipping",
+            "url": "https://promocarnivals.com/category/free-shipping",
+            "@id": "#navigation"
+            },
+            {
+            "@type": "SiteNavigationElement",
+            "name": "Gifts",
+            "url": "https://promocarnivals.com/category/gifts",
+            "@id": "#navigation"
+            }
+          ]
+        }
+    
+    
+    
     const popularCategories = popular_categories;//Array.isArray(categories)
         //? categories.filter((e: { is_popular:boolean }) => e.is_popular === true).slice(0, 8)
         //: [];
@@ -82,7 +211,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
 
     return (
         <WebLayout>
-            <PageMeta title={"Find Exclusive Coupons and Discounts"} description={"Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"} keywords={""} />
+            <PageMeta title={"Promo Carnivals - Find Exclusive Coupons and Discounts"} description={"Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"} keywords={""} />
             <div className="pb-12 font-sans" style={{ backgroundColor: 'var(--page-bg)' }}>
                 {/* Banners Slider Section START */}
                 <div className="w-full h-60 sm:h-96 md:h-[450px] lg:h-[400px] xl:h-[550px] overflow-hidden relative shadow-lg mb-10">
@@ -316,6 +445,14 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
 
                 </div>
             </div>
+        {/* <!-- 1. WebPage Schema --> */}
+        <Schema data={FirstSchema} />
+        {/* <!-- 2. WebSite + Organization + SearchAction Schema --> */}
+        <Schema data={SecondSchema} />
+        {/* <!-- 3. SiteNavigationElement – Trending Menu (Home, Categories, Stores, Blogs) --> */}
+        <Schema data={ThirdSchema} />
+        {/* <!-- 4. SiteNavigationElement – Main Categories (Travel, Electronics, etc.) --> */}
+        <Schema data={FourthSchema} />
         </WebLayout>
     );
 };

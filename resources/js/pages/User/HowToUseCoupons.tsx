@@ -5,8 +5,8 @@ const HowToUseCoupons = () => {
   return (
     <WebLayout>
       <PageMeta
-        title="How to Make Money - Promo Carnivals"
-        description="Explore practical tips and strategies to earn money online and offline."
+        title="How To Use Coupons - Promo Carnivals"
+        description="Follow our step-by-step guide to learn how to use coupons and save on your favorite brands."
         keywords="make money, earn online, side hustle, passive income"
       />
 

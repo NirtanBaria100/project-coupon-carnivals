@@ -139,7 +139,7 @@ const AllStorePage = ({ allStores }: Props) => {
 
     return (
         <WebLayout>
-            <PageMeta title={"All Brands - Promo Carnivals"} description={""} keywords={""} />
+            <PageMeta title={"All Brands - Promo Carnivals"} description={"Explore all available brands and find the best coupons, deals, and discounts in one place."} keywords={""} />
             <div
                 className="pb-12 font-sans"
                 style={{ backgroundColor: "var(--page-bg, #f8f8f8)" }}
