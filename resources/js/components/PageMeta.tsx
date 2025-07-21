@@ -1,5 +1,6 @@
 
-import React, { useEffect } from 'react'
+import React from 'react';
+import { Helmet } from 'react-helmet';
 
 type MetaProps = {
   title: string,
@@ -8,25 +9,13 @@ type MetaProps = {
 }
 
 export default function PageMeta({ title, description, keywords }: MetaProps) {
-  useEffect(() => {
-    document.title = title;
 
-    const desc = document.createElement('meta');
-    desc.name = 'description';
-    desc.content = description || 'Find the best coupons and offers.';
-    document.head.appendChild(desc);
-
-    // const keyw = document.createElement('meta');
-    // keyw.name = 'keywords';
-    // keyw.content = `${keywords}, coupons, discounts, deals`;
-    // document.head.appendChild(keyw);
-
-    // Optional cleanup on unmount
-    return () => {
-      document.head.removeChild(desc);
-    };
-  }, [title, description]);
-
-  return null;
+  return (
+    <Helmet>
+      <title>{title}</title>
+      <meta name="description" content={description || 'Find the best coupons and offers.'} />
+      <meta name="keywords" content={keywords} />
+    </Helmet>
+  );
 }
 

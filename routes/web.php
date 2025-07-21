@@ -47,7 +47,7 @@ if user is not logged  a 500 internal server eror occured which is handled in bo
             return redirect('/99k356ha56/login');
         }
     }
-SO if in future you  change the login route then change it in bootstrap/app.php
+SO if in future you  change the login route then change also changethe login route in bootstrap/app.php
 */
 Route::prefix('99k356ha56')->middleware(['auth' , 'verified'])->group(function () {
     Route::get("/", [DashboardController::class, 'index'])->name("home");
