@@ -249,17 +249,18 @@ class HomeController extends Controller
                 ->where('is_published', 1)
                 ->leftJoin('coupon_order', function ($join) {
                     $join->on('coupon_order.coupon_id', '=', 'coupons.id');
-                })->limit(50)
+                })
                 ->with('stores')
                 ->orderBy('coupon_order.position')->where(function ($query) {
                     $query->whereDate('expires', '>', Carbon::now())
                         ->orWhereNull('expires');
                 });
+                $totalCoupons = $coupons->count();
                 if($skip > 0)
                 {
                     $coupons->skip($skip);
                 }
-               $coupons = $coupons->get()
+               $coupons = $coupons->limit(50)->get()
                 ->map(function ($coupon) {
                     $coupon->featured_image = $coupon->featured_image
                         ? asset($coupon->featured_image):"";
@@ -275,7 +276,7 @@ class HomeController extends Controller
             });
         }
 
-        return response()->json(['coupons'=> $coupons]);
+        return response()->json(['coupons'=> $coupons , 'totalcoupons' =>$totalCoupons]);
     }
 
 

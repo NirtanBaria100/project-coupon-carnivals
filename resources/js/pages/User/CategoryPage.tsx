@@ -47,6 +47,7 @@ const CategoryPage = ({ category,categories }: Props) => {
 
     const [skip, setSkip] = useState(0);
     const [coupon, setCoupon] = useState<Coupons[]>([]);
+    const [totalcoupons, setTotalCoupons] = useState(0);
     const { data } = useForm({
         category_id: category?.id
     });
@@ -64,6 +65,8 @@ const CategoryPage = ({ category,categories }: Props) => {
         try {
             await axios.post(route('home.loadmore.coupons', skip), data).then((res) => {
                 const newCoupons = res.data.coupons || [];
+                const couponscount = res.data.totalcoupons || 0;
+                setTotalCoupons(couponscount);
                 console.log({newCoupons})
                 setCoupon(prev => [...prev, ...newCoupons]);
             });
@@ -114,7 +117,7 @@ const CategoryPage = ({ category,categories }: Props) => {
                             {coupon?.length > 0 ? coupon?.map((offer, index) => (
                                 <OfferCard key={index} coupon_id={offer?.id} store_slug={'/store/' + offer?.stores[0]?.slug} store={offer?.stores[0]} affiliate_url={offer?.coupon_url || offer?.stores[0]?.affiliate_irl} storeName={offer?.stores[0]?.name} type={'home'} {...offer}  />
                             )) : <span className='text-red-500'>No Coupons Available</span>}
-                            {coupon?.length > 50 ? <div className=" lg:col-span-2 text-center flex justify-center align-items-center w-full">
+                            {totalcoupons > 50 ? <div className=" lg:col-span-2 text-center flex justify-center align-items-center w-full">
                                 <button className='btn border border-orange-500 w-full text-orange-500 rounded shadow-sm hover:text-white hover:bg-orange-500 p-2 text-center' onClick={() => loadMore()}>Load More</button>
                             </div> : <></>}
                         </div>
