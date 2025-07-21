@@ -210,7 +210,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
     })
 
     return (
-        <WebLayout>
+        <WebLayout FirstSchema={FirstSchema} SecondSchema={SecondSchema} ThirdSchema={ThirdSchema} FourthSchema={FourthSchema}>
             <PageMeta title={"Promo Carnivals - Find Exclusive Coupons and Discounts"} description={"Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"} keywords={""} />
             <div className="pb-12 font-sans" style={{ backgroundColor: 'var(--page-bg)' }}>
                 {/* Banners Slider Section START */}
@@ -446,13 +446,7 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
                 </div>
             </div>
         {/* <!-- 1. WebPage Schema --> */}
-        <Schema data={FirstSchema} />
-        {/* <!-- 2. WebSite + Organization + SearchAction Schema --> */}
-        <Schema data={SecondSchema} />
-        {/* <!-- 3. SiteNavigationElement – Trending Menu (Home, Categories, Stores, Blogs) --> */}
-        <Schema data={ThirdSchema} />
-        {/* <!-- 4. SiteNavigationElement – Main Categories (Travel, Electronics, etc.) --> */}
-        <Schema data={FourthSchema} />
+      
         </WebLayout>
     );
 };
