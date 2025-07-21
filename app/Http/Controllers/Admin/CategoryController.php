@@ -87,19 +87,24 @@ class CategoryController extends Controller
     // Update category
     public function update(Request $request, Category $category)
     {
-
-        $validated = $request->validate([
+        $validateData = [
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
             'desc' => 'nullable|string',
             'parent_cat' => 'nullable',
             'icon' => 'nullable|string',
-            'image_icon' => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
             'is_popular' => 'boolean',
             'focus_keyphrase' => 'nullable|string|max:255',
             'seo_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
-        ]);
+        ];
+        if($request->hasFile('image_icon')) {
+            $validateData['image_icon'] = 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048';
+        }
+        $validated = $request->validate($validateData);
+        if($request->image_icon == 'removed') {
+            $validated['image_icon'] = null; 
+        }
         $validated['slug'] =  strtolower(str_replace(' ','-',$validated['slug']));
        if ($request->hasFile('image_icon')) {
             $imagePath = $request->file('image_icon')->store('category-icons', 'public');
