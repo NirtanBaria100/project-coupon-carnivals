@@ -319,7 +319,7 @@ const OfferCard = ({
                                     />
                                     <button
                                         onClick={handleCopyCode}
-                                        className="w-full sm:w-auto  sm:mt-0 sm:ml-2 px-4 py-3 text-sm font-bold text-center whitespace-nowrap transition-colors duration-200 focus:ring-2 focus:outline-none"
+                                        className="w-full sm:w-auto  sm:mt-0 sm:ml-2 px-4 py-4 text-sm font-bold text-center whitespace-nowrap transition-colors duration-200 focus:ring-2 focus:outline-none"
                                         style={{
                                             backgroundColor: 'var(--modal-copy-button-bg)',
                                             color: 'var(--modal-copy-button-text)',
