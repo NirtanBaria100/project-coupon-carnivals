@@ -50,7 +50,7 @@ export default function Create({ categories, csrfToken }: CreateProp) {
 const [imagePreview, setImagePreview] = useState<string | null>(null);
 
 const handleRemoveImage = () => {
-    setData('image_icon', null);
+    setData('image_icon',null);
     setImagePreview(null);
     // Optionally clear the file input as well if you want to reset the actual <input> value
     const fileInput = document.getElementById('image_icon_input') as HTMLInputElement;

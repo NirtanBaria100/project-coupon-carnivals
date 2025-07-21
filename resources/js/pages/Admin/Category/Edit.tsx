@@ -6,7 +6,7 @@ import { Switch } from '@/components/ui/switch';
 import AppLayout from '@/layouts/app-layout';
 import { toastDirection } from '@/lib/utils/Constants';
 import { Head, router, useForm } from '@inertiajs/react';
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
 type Category = {
@@ -30,7 +30,7 @@ interface EditProps {
         meta_description: string;
     };
     categories: Category[];
-    csrfToken: string,
+    csrfToken: string;
 }
 
 export default function Edit({ category, categories, csrfToken }: EditProps) {
@@ -41,7 +41,7 @@ export default function Edit({ category, categories, csrfToken }: EditProps) {
         desc: category.desc || '',
         parent_cat: category.parent_cat,
         icon: category.icon || '',
-        image_icon: null as File | null,
+        image_icon: null as File | 'removed' | null, // Initialize as null or "removed"
         single_line_desc: category.single_line_desc || '',
         is_popular: category.is_popular || false,
         focus_keyphrase: category.focus_keyphrase || '',
@@ -49,24 +49,29 @@ export default function Edit({ category, categories, csrfToken }: EditProps) {
         meta_description: category.meta_description || '',
     });
     const [content, setContent] = useState(category.desc || '');
+    const [removedImage, setRemovedImage] = useState(false);
     const [contentExtra, setContentExtra] = useState(category.single_line_desc || '');
- const [imagePreview, setImagePreview] = useState<string | null>(category.image_icon || null);
-   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, type, value, checked, files } = e.target as HTMLInputElement;
-
-    if (type === 'file' && files?.length) {
-        setData(name, files[0]);
-        const previewURL = URL.createObjectURL(files[0]);
-        setImagePreview(previewURL);
-    } else {
-        setData(name, type === 'checkbox' ? checked : value);
-    }
-};
-
-const handleRemoveImage = () => {
-    setData('image_icon', null);
-    setImagePreview(null);
-};
+    const [imagePreview, setImagePreview] = useState<string | null>(category.image_icon || null);
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, type, value, checked, files } = e.target as HTMLInputElement;
+        if (type === 'file' && files?.length) {
+            setData(name, files[0]);
+            setRemovedImage(false);
+            const previewURL = URL.createObjectURL(files[0]);
+            setImagePreview(previewURL);
+        } else {
+            setData(name, type === 'checkbox' ? checked : value);
+        }
+    };
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const handleRemoveImage = () => {
+        setData('image_icon', null);
+        setRemovedImage(true);
+        setImagePreview(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''; // this is the proper way to reset it
+        }
+    };
     const handleSwitch = (name: string, value: boolean) => {
         setData(name, value);
     };
@@ -93,7 +98,9 @@ const handleRemoveImage = () => {
         if (data.image_icon instanceof File) {
             formData.append('image_icon', data.image_icon);
         }
-
+        if (removedImage == true) {
+            formData.append('image_icon', 'removed');
+        }
         router.post(route('admin.categories.update', data.id), formData, {
             forceFormData: true,
             preserveScroll: true,
@@ -101,7 +108,6 @@ const handleRemoveImage = () => {
                 toast.success('Category updated!', { position: toastDirection });
             },
             onError: (errors) => Object.values(errors).forEach((msg) => toast.error(msg, { position: toastDirection })),
-
         });
     };
 
@@ -130,14 +136,7 @@ const handleRemoveImage = () => {
                         className="w-full rounded border px-3 py-2"
                     />
 
-                    <input
-                        name="slug"
-                        placeholder="Slug"
-
-                        value={data.slug}
-                        onChange={handleChange}
-                        className="w-full rounded border px-3 py-2"
-                    />
+                    <input name="slug" placeholder="Slug" value={data.slug} onChange={handleChange} className="w-full rounded border px-3 py-2" />
 
                     <select
                         name="parent_cat"
@@ -153,10 +152,15 @@ const handleRemoveImage = () => {
                         ))}
                     </select>
 
-
                     <label className="block font-medium">Sidebar Description</label>
-                    <RichTextEditor content={content} setContent={setContent} setFormData={setData} name={'desc'} csrfToken={csrfToken} path={'categories'} />
-
+                    <RichTextEditor
+                        content={content}
+                        setContent={setContent}
+                        setFormData={setData}
+                        name={'desc'}
+                        csrfToken={csrfToken}
+                        path={'categories'}
+                    />
 
                     <input
                         name="icon"
@@ -166,26 +170,27 @@ const handleRemoveImage = () => {
                         className="w-full rounded border px-3 py-2"
                     />
 
-                   <div>
-    <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Image</label>
+                    <div>
+                        <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Image</label>
 
-    {imagePreview && (
-        <div className="mb-2 flex items-center space-x-4">
-            <img src={imagePreview} alt="Preview" className="h-16 w-16 rounded border object-cover" />
-            <Button type="button" variant="destructive" onClick={handleRemoveImage}>
-                Remove
-            </Button>
-        </div>
-    )}
+                        {imagePreview && (
+                            <div className="mb-2 flex items-center space-x-4">
+                                <img src={imagePreview} alt="Preview" className="h-16 w-16 rounded border object-cover" />
+                                <Button type="button" variant="destructive" onClick={handleRemoveImage}>
+                                    Remove
+                                </Button>
+                            </div>
+                        )}
 
-    <input
-        type="file"
-        name="image_icon"
-        accept="image/*"
-        onChange={handleChange}
-        className="w-full rounded border px-3 py-2"
-    />
-</div>
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            name="image_icon"
+                            accept="image/*"
+                            onChange={handleChange}
+                            className="w-full rounded border px-3 py-2"
+                        />
+                    </div>
 
                     <div className="flex items-center space-x-2">
                         <label htmlFor="is_popular" className="text-gray-800 dark:text-white">
@@ -193,10 +198,15 @@ const handleRemoveImage = () => {
                         </label>
                         <Switch checked={data.is_popular} onCheckedChange={(checked) => handleSwitch('is_popular', checked)} />
                     </div>
-                    <label className="block font-semibold text-sm">Single Line Description</label>
-                    <RichTextEditor content={contentExtra} setContent={setContentExtra} setFormData={setData} name={'single_line_desc'} csrfToken={csrfToken} path={'categories'} />
-
-
+                    <label className="block text-sm font-semibold">Single Line Description</label>
+                    <RichTextEditor
+                        content={contentExtra}
+                        setContent={setContentExtra}
+                        setFormData={setData}
+                        name={'single_line_desc'}
+                        csrfToken={csrfToken}
+                        path={'categories'}
+                    />
 
                     <h1 className="text-xl font-semibold text-gray-800 dark:text-white">SEO</h1>
 
