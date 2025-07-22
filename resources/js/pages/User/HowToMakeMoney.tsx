@@ -2,8 +2,15 @@ import PageMeta from "@/components/PageMeta";
 import WebLayout from "@/layouts/web-layout";
 
 const HowToMakeMoney = () => {
+
+  const FirstSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "How We Make Money",
+  "url": "https://promocarnivals.com/how-we-make-money"
+}
   return (
-    <WebLayout>
+    <WebLayout FirstSchema={FirstSchema}>
       <PageMeta
         title="How We Make Money - Promo Carnivals"
         description="Discover how our website earns through affiliate partnerships while keeping our content unbiased and free."

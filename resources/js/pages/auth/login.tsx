@@ -38,7 +38,7 @@ export default function Login({ status, canResetPassword ,waitingForapproval}: L
 
     return (
         <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
-            <Head title="Log in" />
+            <Head  />
             {waitingForapproval?<InputError message={"Waiting For admin To Approve"} />:""}
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
@@ -97,12 +97,7 @@ export default function Login({ status, canResetPassword ,waitingForapproval}: L
                     </Button>
                 </div>
 
-                <div className="text-muted-foreground text-center text-sm">
-                    Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
-                        Sign up
-                    </TextLink>
-                </div>
+             
             </form>
 
             {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}

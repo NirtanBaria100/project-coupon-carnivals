@@ -42,7 +42,7 @@ export default function Index({ blogs }: Props) {
 
     return (
         <AppLayout>
-            <Head title="Blogs" />
+            <Head />
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Blogs</h1>
                 <Link href={route('admin.blogs.create')}>

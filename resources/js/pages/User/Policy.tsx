@@ -2,8 +2,15 @@ import PageMeta from "@/components/PageMeta";
 import WebLayout from "@/layouts/web-layout";
 
 const Policy = () => {
+
+  const FirstSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Privacy Policy",
+    "url": "https://promocarnivals.com/privacy-policy"
+  };
   return (
-    <WebLayout>
+    <WebLayout FirstSchema={FirstSchema}>
       {/* SEO helpers — tweak as needed */}
       <PageMeta
         title="Privacy Policy - Promo Carnivals"

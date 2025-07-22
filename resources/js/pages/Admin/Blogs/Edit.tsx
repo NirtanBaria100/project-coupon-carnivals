@@ -104,7 +104,7 @@ export default function Edit({ blog, categories, csrfToken }: Props) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Edit Blog" />
+            <Head />
             <div className="p-5">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Edit Blog</h1>

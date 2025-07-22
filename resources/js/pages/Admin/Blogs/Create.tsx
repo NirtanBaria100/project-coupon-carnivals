@@ -60,7 +60,7 @@ export default function Create({ categories , csrfToken }: CreateProps) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Create Blog" />
+            <Head  />
             <div className="p-5">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Create Blog</h1>

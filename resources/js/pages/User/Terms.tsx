@@ -2,8 +2,14 @@ import PageMeta from "@/components/PageMeta";
 import WebLayout from "@/layouts/web-layout";
 
 const TermsOfService = () => {
+  const FirstSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Terms of Service",
+    "url": "https://promocarnivals.com/terms-of-service"
+  };  
   return (
-    <WebLayout>
+    <WebLayout FirstSchema={FirstSchema}>
       <PageMeta
         title="Terms of Service - Promo Carnivals"
         description="Review the terms and conditions that govern your use of our website."

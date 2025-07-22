@@ -16,7 +16,7 @@ interface DashboardProps {
 export default function Dashboard({ stats }: DashboardProps) {
     return (
         <AppLayout>
-            <Head title="Dashboard" />
+            <Head/>
             <div className="grid gap-6 p-6 md:grid-cols-2 lg:grid-cols-4">
                 <Link href={route("admin.coupons.index")} className="hover:opacity-80">
                     <Card>

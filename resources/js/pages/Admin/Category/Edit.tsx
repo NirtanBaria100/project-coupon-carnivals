@@ -118,7 +118,7 @@ export default function Edit({ category, categories, csrfToken }: EditProps) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Edit Category" />
+            <Head/>
             <div className="p-5">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Edit Category</h1>
@@ -210,13 +210,13 @@ export default function Edit({ category, categories, csrfToken }: EditProps) {
 
                     <h1 className="text-xl font-semibold text-gray-800 dark:text-white">SEO</h1>
 
-                    <input
+                    {/* <input
                         name="focus_keyphrase"
                         placeholder="Focus Keyphrase"
                         value={data.focus_keyphrase}
                         onChange={handleChange}
                         className="w-full rounded border px-3 py-2"
-                    />
+                    /> */}
 
                     <input
                         name="seo_title"

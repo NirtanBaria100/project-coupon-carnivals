@@ -2,8 +2,15 @@ import PageMeta from "@/components/PageMeta";
 import WebLayout from "@/layouts/web-layout";
 
 const Imprint = () => {
+
+  const FirstSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Imprint",
+    "url": "https://promocarnivals.com/imprint"
+  };
   return (
-    <WebLayout>
+    <WebLayout FirstSchema={FirstSchema}>
       <PageMeta
         title="Imprint - Promo Carnivals"
         description="View our company’s legal details, contact information, and ownership disclosures on this page."

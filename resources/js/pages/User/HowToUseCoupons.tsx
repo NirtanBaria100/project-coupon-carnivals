@@ -2,8 +2,15 @@ import PageMeta from "@/components/PageMeta";
 import WebLayout from "@/layouts/web-layout";
 
 const HowToUseCoupons = () => {
+
+  const FirstSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "How to Use Coupons",
+    "url": "https://promocarnivals.com/how-to-use-coupons"
+  };
   return (
-    <WebLayout>
+    <WebLayout  FirstSchema={FirstSchema}>
       <PageMeta
         title="How To Use Coupons - Promo Carnivals"
         description="Follow our step-by-step guide to learn how to use coupons and save on your favorite brands."

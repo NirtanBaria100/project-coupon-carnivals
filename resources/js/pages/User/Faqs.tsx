@@ -2,8 +2,71 @@ import PageMeta from "@/components/PageMeta";
 import WebLayout from "@/layouts/web-layout";
 
 const FAQ = () => {
+
+  const FirstSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are Promo Carnivals?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Promo Carnivals is the greatest source for the best bargains, discounts, and promotions. We are committed to saving you money by giving access to a wide choice of coupons and unique offers from leading brands and stores."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I Contact You?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you have any queries regarding our service you can contact us with our team member through our email address: support@promocarnivals.com."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are your discount codes trustworthy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Our team of experts searches daily for valid and tested offers. We also work directly with retailers to bring our users the best discounts, deals, and exclusive rewards."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are your discount codes free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. All discount codes are free to use."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I do if my discount code doesn't work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If your code is not working, feel free to contact us at support@promocarnivals.com. Our team will get back to you as soon as possible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a student discount?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A student discount is a special offer just for students. It lets you save on items like clothing, electronics, beauty products and even food."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who can use Promo Carnivals?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anyone! Whether you're a regular online shopper, a deal hunter, or just someone who wants to save money, https://promocarnivals.com/ is for you."
+      }
+    }
+  ]
+}
   return (
-    <WebLayout>
+    <WebLayout FirstSchema={FirstSchema}>
       <PageMeta
         title="Frequently Asked Questions - Promo Carnivals"
         description="Find answers to the most frequently asked questions about our coupons, stores, and website."

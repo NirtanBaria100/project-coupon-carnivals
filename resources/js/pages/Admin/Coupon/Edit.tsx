@@ -123,7 +123,7 @@ export default function Edit({ stores, tags, categories, coupon }: EditProps) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Edit Coupon" />
+            <Head  />
             <div className="p-5">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">Edit Coupon</h1>

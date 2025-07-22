@@ -82,7 +82,7 @@ export default function Create({ categories, csrfToken }: Props) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Create Store" />
+            <Head />
             <div className="p-5">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Create Store</h1>
@@ -167,13 +167,13 @@ export default function Create({ categories, csrfToken }: Props) {
 
                         <hr />
                         <h1>SEO</h1>
-                        <input
+                        {/* <input
                             name="focus_keyphrase"
                             placeholder="Focus Keyphrase"
                             value={data.focus_keyphrase}
                             onChange={handleChange}
                             className="w-full rounded border px-3 py-2"
-                        />
+                        /> */}
 
                         <input
                             name="seo_title"

@@ -22,6 +22,15 @@ const AllStorePage = ({ allStores }: Props) => {
     // State for the active letter in the A-Z filter
     const [activeLetter, setActiveLetter] = useState("All");
 
+
+    const FirstSchema= {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "All Brands",
+  "url": "https://promocarnivals.com/stores"
+}
+
+
     // Dummy fetch function - REPLACE WITH YOUR ACTUAL API CALL if needed
     const fetchStores = useCallback(async () => {
         setLoading(true);
@@ -75,7 +84,7 @@ const AllStorePage = ({ allStores }: Props) => {
 
     if (loading) {
         return (
-            <WebLayout>
+            <WebLayout FirstSchema={FirstSchema}>
                 <div
                     className="min-h-screen flex items-center justify-center font-sans"
                     style={{ backgroundColor: "var(--page-bg, #f8f8f8)" }}

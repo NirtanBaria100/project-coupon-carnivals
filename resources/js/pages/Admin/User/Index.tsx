@@ -92,7 +92,7 @@ export default function Index() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Stores" />
+            <Head />
             <div className="p-5">
 
 

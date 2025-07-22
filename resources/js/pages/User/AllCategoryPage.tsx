@@ -23,8 +23,16 @@ const AllCategoryPage = ({ allCategories }: Props) => {
         // Add more categories as per your requirements
     ];
 
+    const FirstSchema={
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "All Categories",
+    "url": "https://promocarnivals.com/categories"
+}
+
+
     return (
-        <WebLayout>
+        <WebLayout  FirstSchema={FirstSchema} >
             <PageMeta title={"Categories - Promo Carnivals"} description={"Browse all coupon categories and discover great offers across fashion, tech, home, and more."} keywords={""} />
             <div
                 className="pb-12 font-sans"

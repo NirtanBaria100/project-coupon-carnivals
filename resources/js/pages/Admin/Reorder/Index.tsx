@@ -108,7 +108,7 @@ export default function Reorder({ storeId, stores, coupons: initial }: Props) {
 
     return (
         <AppLayout>
-            <Head title="Reorder Coupons" />
+            <Head  />
             <div className="p-6">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">Reorder Coupons</h1>
