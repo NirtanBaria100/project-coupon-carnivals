@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::prefix("")->name("home.")->group(function () {
-    Route::get("/", [HomeController::class, 'Index']); 
-    Route::get("/store/{slug}", [HomeController::class, 'StorePage']);
-    Route::get("/stores", [HomeController::class, 'AllStorePage']);
-    Route::get("/category/{slug}", [HomeController::class, 'CategoryPage']);
-    Route::get("/categories", [HomeController::class, 'AllCategoryPage']);
+    Route::get("/", [HomeController::class, 'Index'])->name('index'); 
+    Route::get("/store/{slug}", [HomeController::class, 'StorePage'])->name('store_details');
+    Route::get("/stores", [HomeController::class, 'AllStorePage'])->name('stores');
+    Route::get("/category/{slug}", [HomeController::class, 'CategoryPage'])->name('category_details');
+    Route::get("/categories", [HomeController::class, 'AllCategoryPage'])->name('categories');
     Route::post("/loadmore/coupons/{skip}", [HomeController::class, 'loadMoreCoupons'])->name('loadmore.coupons');
-    Route::get("/blog/{slug}", [HomeController::class, 'singleBlog']);
-    Route::get("/all/blogs", [HomeController::class, 'AllBlogs']);
+    Route::get("/blog/{slug}", [HomeController::class, 'singleBlog'])->name('blog_details');
+    Route::get("/all/blogs", [HomeController::class, 'AllBlogs'])->name('blogs');
     Route::get("/blogs/category/{category}", [HomeController::class, 'AllBlogs']);
     Route::post("/search/stores", [HomeController::class, 'searchStores']);
     Route::get("/privacy-policy", [HomeController::class, 'policy'])->name('policy');

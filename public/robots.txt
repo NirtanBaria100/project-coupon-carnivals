@@ -6,4 +6,4 @@ User-agent: *
 Disallow: /admin
 Disallow: /login
 
-Sitemap: https://promocarnivals.com/sitemap.xml
+Sitemap: https://promocarnivals.com/sitemaps/sitemap.xml
