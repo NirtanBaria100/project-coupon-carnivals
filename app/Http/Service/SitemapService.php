@@ -14,7 +14,7 @@ use Spatie\Sitemap\Tags\Url;
 
 
 class SitemapService {
-    public $siteMapDirectory = 'sitemaps';
+    public $siteMapDirectory = '';
     public function run_all()
     {
         $this->sitemap();

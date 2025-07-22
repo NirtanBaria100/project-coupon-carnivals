@@ -1,9 +1,5 @@
-https://promocarnivals.com/robots.txt
-
-------------------------------------------------
-
 User-agent: *
 Disallow: /admin
 Disallow: /login
 
-Sitemap: https://promocarnivals.com/sitemaps/sitemap.xml
+Sitemap: https://promocarnivals.com/sitemap.xml
