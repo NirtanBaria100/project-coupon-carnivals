@@ -86,7 +86,6 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
 
     const [userRating, setUserRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
-
     const { data, post, setData, } = useForm({
         store_id: stores.id,
         ratings: stores.ratings
@@ -105,6 +104,8 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
         }
         // Initialize userRating with the store's average rating from props
         setUserRating(ratings);
+
+
     }, [stores.store_ratings]); // Depend on stores.store_ratings to update if it changes
 
     // Handle click on a star - this part still sends rating to backend
@@ -153,9 +154,77 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
         return stars;
     };
 
+    //  Schema Code
+
+    const firstSchema  =  {
+        "@context": "https://schema.org",
+        "@graph": [
+           {
+            "@type":"CollectionPage",
+            "@id":"https://promocarnivals/stores#webpage",
+            "url":"https://promocarnivals/stores",
+            "inLanguage":"en-US",
+            "name":"All Brands - Promo Carnivals",
+            "isPartOf":{"@id":"https://promocarnivals.com/#website"},
+            "description":"Explore all available brands and find the best coupons, deals, and discounts in one place."
+            },
+            {
+                "@type": "WebPage",
+                "@id": window.location.href + "#webpage",
+                "url": window.location.href,
+                "inLanguage": "en-US",
+                "name": (stores.seo_title ?? stores.name) + ' - Promo Carnivals'  ,
+                "isPartOf": { "@id": "https://promocarnivals/stores#webpage"},
+                "description": `${stores.meta_description ?? ""}` 
+            }
+        ]
+        }
+
+    const secondSchema = [
+        {
+            "@context": "http://schema.org",
+            "@type": "ItemList",
+            "name": (stores.seo_title ?? stores.name) + ' - Promo Carnivals',
+            "description": stores.meta_description ?? "",
+            "url": window.location.href,
+            "numberOfItems": coupons.length ?? 0,
+            "itemListElement": coupons.map((coupon, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "item": {
+                "@type": "Offer",
+                "url": stores.affiliate_irl ?? stores.home_url,
+                "description": coupon.title, // Make sure offer_name is a string
+                "validThrough": coupon.expires ?? "",
+                "seller": {
+                "@type": "Organization",
+                "name": stores.name,
+                },
+            },
+            })),
+        },
+        ];
+
+        const thirdSchema = {
+        "@context": "https://schema.org",
+        "@graph": coupons.map((coupon) => ({
+            "@type": "Offer",
+            "url":stores.affiliate_irl ?? stores.home_url,
+            "description": coupon.title, // Assuming this is a plain string
+            "validThrough": coupon.expires ?? "",
+            "seller": {
+            "@type": "Organization",
+            "name": stores.name,
+            "url": window.location.href
+            }
+        }))
+        };
+
+
+
 
     return (
-        <WebLayout>
+        <WebLayout FirstSchema={firstSchema} SecondSchema={secondSchema} ThirdSchema={thirdSchema}>
             <PageMeta 
                 title={stores.seo_title || `${stores.name} - Promo Carnivals`} 
                 description={stores.meta_description||""} 

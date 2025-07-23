@@ -80,9 +80,45 @@ const CategoryPage = ({ category,categories,totalCouponsIncategory }: Props) => 
     useEffect(() => {
         loadMore();
     }, []);
+    // Schema Code
+    const firstSchema = {
+    "@context":"https://schema.org",
+    "@graph":[
+            {
+                "@type":"CollectionPage",
+                "@id":"https://promocarnivals.com/categories#webpage",
+                "url":"https://promocarnivals.com/categories",
+                "name":"Categories - Promo Carnivals",
+                "description":"Browse all coupon categories and discover great offers across fashion, tech, home, and more."
+                },
+            {
+            "@type":"WebPage",
+            "@id":`${window.location.href}#webpage`,
+            "url":`${window.location.href}`,
+            "inLanguage":"en-US",
+            "name": category.seo_title||category?.name+" - Promo Carnivals",
+            "isPartOf":{"@id":"https://promocarnivals.com/categories#webpage"},
+            "description": category.meta_description || ""
+            }
+        ]
+    }
+     const secondSchema = {
+        "@context": "https://schema.org",
+        "@graph": coupon.map((coupons) => ({
+            "@type": "Offer",
+            "url":coupons?.stores[0]?.affiliate_irl ?? coupons?.stores[0]?.home_url,
+            "description": coupons.title, // Assuming this is a plain string
+            "validThrough": coupons.expires ?? "",
+            "seller": {
+            "@type": "Organization",
+            "name": coupons?.stores[0]?.name,
+            "url": window.location.href
+            }
+        }))
+        };
 
     return (
-        <WebLayout>
+        <WebLayout FirstSchema={firstSchema} SecondSchema={secondSchema}>
             <PageMeta title={category.seo_title||category?.name+" - Promo Carnivals"} description={category.meta_description || ""} keywords={category.focus_keyphrase || ""} />
             <div className="bg-white pb-8 min-h-screen">
                 <div className="container mx-auto px-4 py-8">
