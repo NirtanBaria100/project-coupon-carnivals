@@ -1,12 +1,19 @@
-import { Head } from "@inertiajs/react";
+import { useEffect } from "react";
 
-function Schema({data}:{data:object}) {
-  return (
-     <Head>
-       <script type="application/ld+json">
-         {JSON.stringify(data , null, 2)}
-      </script>
-     </Head>
-  )
+function Schema({ data }: { data: object }) {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.text = JSON.stringify(data, null, 2);
+    document.head.appendChild(script);
+
+    // Optional cleanup if component unmounts
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, [data]);
+
+  return null; // No JSX output
 }
-export  { Schema };
+
+export { Schema };
