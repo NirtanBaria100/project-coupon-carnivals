@@ -44,7 +44,11 @@ export default function Create({ categories , csrfToken }: CreateProps) {
     };
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('admin.blogs.store'));
+        post(route('admin.blogs.store'),{
+            onError:(er)=>{
+                console.log(er);
+            }
+        });
     };
 
     const breadcrumbs: BreadcrumbItem[] = [

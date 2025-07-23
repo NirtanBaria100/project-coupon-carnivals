@@ -77,8 +77,8 @@ const BlogPage = ({ blogs ,popularCategories}: Props) => {
         }, [blogs.data, searchTerm, sortOrder]);
 
 
-   
-
+ 
+       
     return (
         <WebLayout>
             

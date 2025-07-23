@@ -14,6 +14,7 @@ interface Post {
     meta_description: string | "",
     focus_keyphrase: string | "",
     category: [],
+    slug:string
 }
 interface RecentPost {
     title: string | null,
@@ -32,8 +33,49 @@ interface Props {
 }
 const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
     const staticCategories = featuredcategories;
+    const WebSchema = 
+        {
+            "@context":"https://schema.org",
+            "@graph":
+            [
+            {
+                "@type": "WebSite",
+                "@id": "https://promocarnivals.com/all/blogs#website",
+                "url": "https://promocarnivals.com/all/blogs",
+                "name": "Blogs - Promo Carnivals",
+                "description": "Read all our latest blog posts covering tips, brand stories, shopping guides, and money-saving ideas."
+            },
+                            {
+                            "@type":"ImageObject",
+                            "@id":`https://promocarnivals.com/blog/${post?.slug}`,
+                            "url":`${post?.imageURL}`,
+                            "width":"718",
+                            "height":"449",
+                            "caption":`${post?.title}`
+                            },
+                            {
+                            "@type":"WebPage",
+                            "@id":`https://promocarnivals.com/blog/${post?.slug}#webpage`,
+                            "url":`https://promocarnivals.com/blog/${post?.slug}`,
+                            "inLanguage":"en-US",
+                            "name":`${post?.seo_title}`,
+                            "description":`${post?.meta_description}`,
+                            "isPartOf":
+                            {
+                                "@id":"https://promocarnivals.com/all/blogs#website"
+                            },
+                            "primaryImageOfPage":
+                            {
+                                "@id":`${post?.imageURL}`
+                            },
+                            "datePublished": `${post?.published_at}`,
+                            "dateModified": `${post?.updated_at ?? post?.created_at}`,
+                "sameAs":[]
+                }
+            ]
+        }
     return (
-        <WebLayout>
+        <WebLayout FirstSchema={WebSchema}>
             <PageMeta title={post?.seo_title || `${post?.title} - Promo Carnivals`} description={post.meta_description || ""} keywords={post.focus_keyphrase || ""} />
             <div
                 className="pb-12 font-sans"

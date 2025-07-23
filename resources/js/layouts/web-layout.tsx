@@ -13,13 +13,18 @@ export default function WebLayout({ children , FirstSchema , SecondSchema , Thir
             <Toaster position="top-right" />
             {/* Main content */}
             <main className="flex-1">{children}</main>
-            <Schema data={FirstSchema} />
-            {/* <!-- 2. WebSite + Organization + SearchAction Schema --> */}
+            {FirstSchema && (
+              <Schema data={FirstSchema} />
+            )}
+            {SecondSchema && (
             <Schema data={SecondSchema} />
-            {/* <!-- 3. SiteNavigationElement – Trending Menu (Home, Categories, Stores, Blogs) --> */}
+            )}
+            {ThirdSchema && (
             <Schema data={ThirdSchema} />
-            {/* <!-- 4. SiteNavigationElement – Main Categories (Travel, Electronics, etc.) --> */}
+            )}
+            {FourthSchema && (
             <Schema data={FourthSchema} />
+            )}
             {/* Footer */}
            <Footer/>
         </div>
