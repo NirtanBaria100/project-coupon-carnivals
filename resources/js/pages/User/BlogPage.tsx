@@ -77,10 +77,33 @@ const BlogPage = ({ blogs ,popularCategories}: Props) => {
         }, [blogs.data, searchTerm, sortOrder]);
 
 
- 
+    const firstSchema  =  {
+        "@context": "https://schema.org",
+        "@graph": [
+        {
+            "@type":"WebSite",
+            "@id":"https://promocarnivals.com/#website",
+            "url":"https://promocarnivals.com/",
+            "name":"Promo Carnivals - Find Exclusive Coupons and Discounts",
+            "description": "Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"
+            },
+        {
+            "@type": "CollectionPage",
+            "@id": "https://promocarnivals.com/blogs#webpage",
+            "url": "https://promocarnivals.com/blogs",
+            "inLanguage": "en-US",
+            "name": "Blogs - Promo Carnivals",
+            "isPartOf":
+            {
+                "@id": "https://promocarnivals.com/blogs#website"
+            },
+            "description": "Read all our latest blog posts covering tips, brand stories, shopping guides, and money-saving ideas."
+        }
+        ]
+    }
        
     return (
-        <WebLayout>
+        <WebLayout FirstSchema={firstSchema}>
             
             <PageMeta title={"Blogs - Promo Carnivals"} description={"Read all our latest blog posts covering tips, brand stories, shopping guides, and money-saving ideas."} keywords={""} />
             <div className="pb-12 font-sans" style={{ backgroundColor: 'var(--page-bg)' }}>

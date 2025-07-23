@@ -23,13 +23,28 @@ const AllStorePage = ({ allStores }: Props) => {
     const [activeLetter, setActiveLetter] = useState("All");
 
 
-    const FirstSchema= {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "All Brands",
-  "url": "https://promocarnivals.com/stores"
-}
-
+    const FirstSchema=  {
+        "@context":"https://schema.org",
+        "@graph":
+        [
+            {
+            "@type":"WebSite",
+            "@id":"https://promocarnivals.com/#website",
+            "url":"https://promocarnivals.com/",
+            "name":"Promo Carnivals - Find Exclusive Coupons and Discounts",
+            "description": "Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"
+            },
+            {
+            "@type":"CollectionPage",
+            "@id":"https://promocarnivals/stores#webpage",
+            "url":"https://promocarnivals/stores",
+            "inLanguage":"en-US",
+            "name":"All Brands - Promo Carnivals",
+            "isPartOf":{"@id":"https://promocarnivals.com/#website"},
+            "description":"Explore all available brands and find the best coupons, deals, and discounts in one place."
+            }
+        ]
+    };
 
     // Dummy fetch function - REPLACE WITH YOUR ACTUAL API CALL if needed
     const fetchStores = useCallback(async () => {
