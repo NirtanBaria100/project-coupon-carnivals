@@ -40,14 +40,13 @@ class UserController extends Controller
     }
     public function store(Request $request, $id = null)
     {
-
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|string|max:255|unique:users,email,' . $id,
 
         ];
         if (empty($id)) {
-            $data['password'] = 'required|string';
+            $rules['password'] = 'required|string';
         }
         if ($request->hasFile('profile')) {
             $rules['profile'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000';;

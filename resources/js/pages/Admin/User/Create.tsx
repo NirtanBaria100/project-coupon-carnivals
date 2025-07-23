@@ -1,33 +1,32 @@
-import AppLayout from '@/layouts/app-layout'
+import { Switch } from '@/components/ui/switch';
+import AppLayout from '@/layouts/app-layout';
 import { toastDirection } from '@/lib/utils/Constants';
 import { BreadcrumbItem } from '@/types';
 import { Button } from '@headlessui/react';
-import { Head, useForm } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react';
 import { User } from 'lucide-react';
-import React, { FormEventHandler, useEffect } from 'react'
+import React, { FormEventHandler, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { Switch } from '@/components/ui/switch';
-import { profile } from 'console';
 
 type User = {
-    name: string | '',
-    email: string | '',
-    profile: string | '',
-    email_verified_at: string | '',
-    password: string | '',
-    id: number,
-}
+    name: string | '';
+    email: string | '';
+    profile: string | '';
+    email_verified_at: string | '';
+    password: string | '';
+    id: number;
+};
 
 interface Props {
-    user: User,
+    user: User;
 }
 export default function Create({ user }: Props) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: user?.name || "",
-        email: user?.email || "",
-        password: user?.password || "",
+    const { data, setData, post, processing, errors, } = useForm({
+        name: user?.name || '',
+        email: user?.email || '',
+        password: user?.password || '',
         is_active: user?.email_verified_at ? true : false,
-        id: user?.id || "",
+        id: user?.id || '',
         profile: null as File | null,
     });
 
@@ -54,12 +53,12 @@ export default function Create({ user }: Props) {
     };
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Users', href: route('admin.users.index') },
-        { title: (user ? "Update User" : "Create User"), href: route('admin.stores.create') },
+        { title: user ? 'Update User' : 'Create User', href: route('admin.stores.create') },
     ];
     useEffect(() => {
         if (Object.keys(errors).length > 0) {
             Object.values(errors).forEach((msg) =>
-                toast.error(msg || "", {
+                toast.error(msg || '', {
                     position: toastDirection,
                 }),
             );
@@ -96,24 +95,22 @@ export default function Create({ user }: Props) {
                             onChange={handleChange}
                             className="w-full rounded border px-3 py-2"
                         />
-                        {!data.id ? <>
-                            <input
-                                name="password"
-                                placeholder="User Password"
-                                value={data.password}
-                                onChange={handleChange}
-                                className="w-full rounded border px-3 py-2"
-                            />
-                        </> : <></>}
+                        {!data.id ? (
+                            <>
+                                <input
+                                    name="password"
+                                    placeholder="User Password"
+                                    value={data.password}
+                                    onChange={handleChange}
+                                    className="w-full rounded border px-3 py-2"
+                                />
+                            </>
+                        ) : (
+                            <></>
+                        )}
 
                         <label className="block font-medium">User Profile</label>
-                        <input
-                            type="file"
-                            name="profile"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            className="w-full rounded border px-3 py-2"
-                        />
+                        <input type="file" name="profile" accept="image/*" onChange={handleFileChange} className="w-full rounded border px-3 py-2" />
 
                         <label className="flex items-center gap-2">
                             Verify User
@@ -123,5 +120,5 @@ export default function Create({ user }: Props) {
                 </form>
             </div>
         </AppLayout>
-    )
+    );
 }
