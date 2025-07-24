@@ -292,12 +292,12 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
                             <div
                                 className="p-2 sm:p-8 home_featuredoffers_div"
                             >
-                                <h2
+                                <h1
                                     className="text-2xl font-extrabold mb-6 border-l-4 pl-4"
                                     style={{ color: 'var(--main-heading-color)', borderColor: 'var(--heading-border-accent)' }}
                                 >
                                     Featured Offers
-                                </h2>
+                                </h1>
                                 <div className="space-y-6">
                                     {/* OfferCard is a separate component, ensure its internal colors are also updated with variables */}
                                     {featured_coupons.length > 0 ? featured_coupons.map((offer, index) => (
@@ -381,11 +381,11 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
                         <h2>Discover Big Savings at Promo Carnivals</h2>
                         <p className="text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                             <p>Welcome to Promo Carnivals, where we help you save money on all your favorite products. Whether you are looking for deals on groceries, clothes, electronics, or home appliances, we have covered you.</p>
-<br /><strong>Fresh Coupons and Deals Updated Daily</strong><br />
+<br /><h3>Fresh Coupons and Deals Updated Daily</h3>
 <p>Our experts update coupons daily bases to ensure our valuable customers get the latest and best deals frequently.</p>
-<br /><strong>Unlock Special Offers You Won’t Find Elsewhere</strong><br />
+<br /><h3>Unlock Special Offers You Won’t Find Elsewhere</h3>
 <p>You can easily get access to exclusive offers and special discounts that you will not find anywhere else. So, why wait? sign up today for our newsletter to stay in the loop and never miss a great deal.</p>
-<br /><strong>Your Smart Shopping Starts Here</strong><br />
+<br /><h3>Your Smart Shopping Starts Here</h3>
 <p>Do not wait! Start exploring Promo Carnivals right now and discover how easy it is to save your money on everything you need. Happy shopping!</p>
 
                         </p>

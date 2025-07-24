@@ -21,6 +21,7 @@ interface SingleCategory {
     seo_title: string | '',
     meta_description: string | '',
     focus_keyphrase: string | '',
+    formattedCreated:string|'',
 }
 interface Coupons {
     featured_image: string | null,
@@ -82,40 +83,90 @@ const CategoryPage = ({ category,categories,totalCouponsIncategory }: Props) => 
     }, []);
     // Schema Code
     const firstSchema = {
-    "@context":"https://schema.org",
-    "@graph":[
-            {
-                "@type":"CollectionPage",
-                "@id":"https://promocarnivals.com/categories#webpage",
-                "url":"https://promocarnivals.com/categories",
-                "name":"Categories - Promo Carnivals",
-                "description":"Browse all coupon categories and discover great offers across fashion, tech, home, and more."
-                },
-            {
-            "@type":"WebPage",
-            "@id":`${window.location.href}#webpage`,
-            "url":`${window.location.href}`,
-            "inLanguage":"en-US",
-            "name": category.seo_title||category?.name+" - Promo Carnivals",
-            "isPartOf":{"@id":"https://promocarnivals.com/categories#webpage"},
-            "description": category.meta_description || ""
-            }
-        ]
-    }
-     const secondSchema = {
         "@context": "https://schema.org",
-        "@graph": coupon.map((coupons) => ({
-            "@type": "Offer",
-            "url":coupons?.stores[0]?.affiliate_irl ?? coupons?.stores[0]?.home_url,
-            "description": coupons.title, // Assuming this is a plain string
-            "validThrough": coupons.expires ?? "",
-            "seller": {
-            "@type": "Organization",
-            "name": coupons?.stores[0]?.name,
-            "url": window.location.href
+        "@type": "Article",
+        "name": category.name,
+        "headline": category.name,
+        "alternativeHeadline":  `We have ${totalCouponsIncategory} live discount codes & deals in ${category?.name}.`,
+        "description":category.meta_description ?? "",
+        "datePublished": category.formattedCreated,
+        "url": "category ka url",
+        "articleSection": "Category",
+        "isAccessibleForFree": "True",
+        "speakable": {
+            "@type": "SpeakableSpecification",
+            "xpath": [
+            "/html/head/title",
+            "/html/head/meta[@name='description']/@content"
+            ]
+        },
+        "image": [
+        {
+            "@type": "ImageObject",
+            "url":category.image_icon,
+            "caption": category.name + ` Thumbnail`,
+            "width": 2048,
+            "height": 2048
+        },
+        {
+            "@type": "ImageObject",
+            "url":category.image_icon,
+            "caption": category.name + ` Thumbnail`,
+            "width": 2048,
+            "height": 1536
+        },
+        {
+            "@type": "ImageObject",
+            "url": category.image_icon,
+            "caption": category.name + ` Thumbnail`,
+            "width": 2048,
+            "height": 1152
+        }
+        ],
+        "thumbnail": {
+        "@type": "ImageObject",
+        "url":category.image_icon,
+        "caption": category.name + ` Thumbnail`,
+        "width": 2048,
+        "height": 2048
+        },
+        "thumbnailUrl": category.image_icon,
+        "publisher": {
+        "@type": "Organization",
+        "name": "Promo Carnivals",
+        "url": "https://promocarnivals.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url":"https://promocarnivals.com/build/assets/promocarnivals2-BOfHa-Vt.png",
+                "caption": "Promo Carnivals Logo"
             }
-        }))
+        }
+     }
+     const secondSchema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://promocarnivals.com/"
+                },
+                {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Categories",
+                "item": "https://promocarnivals.com/categories"
+                },
+                {
+                "@type": "ListItem",
+                "position": 3,
+                "name" : category.name,
+                "item": window.location.href
+                }
+            ]
         };
+
 
     return (
         <WebLayout FirstSchema={firstSchema} SecondSchema={secondSchema}>

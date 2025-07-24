@@ -492,6 +492,10 @@ padding: 10px 30px;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
+.homeweb_desc h3 {
+    font-weight: bold;
+    color: #000;
+}
 
 @media only screen and (max-width: 1023px) {
   .home_featuredoffers_div {

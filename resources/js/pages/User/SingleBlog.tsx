@@ -35,47 +35,91 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
     const staticCategories = featuredcategories;
     const WebSchema = 
         {
-            "@context":"https://schema.org",
-            "@graph":
-            [
-            {
-                "@type": "WebSite",
-                "@id": "https://promocarnivals.com/all/blogs#website",
-                "url": "https://promocarnivals.com/all/blogs",
-                "name": "Blogs - Promo Carnivals",
-                "description": "Read all our latest blog posts covering tips, brand stories, shopping guides, and money-saving ideas."
+            "@context": "https://schema.org",
+            "@type": "NewsArticle",
+            "name": post.title,
+            "headline": post.title,
+            "description": post.meta_description ?? "",
+            "datePublished":post.formattedCreated,
+            "url":window.location.href,
+            "articleSection": " Blogs",
+            "isAccessibleForFree": "True",
+            "speakable": {
+                "@type": "SpeakableSpecification",
+                "xpath": [
+                "/html/head/title",
+                "/html/head/meta[@name='description']/@content"
+                ]
             },
-                            {
-                            "@type":"ImageObject",
-                            "@id":`https://promocarnivals.com/blog/${post?.slug}`,
-                            "url":`${post?.imageURL}`,
-                            "width":"718",
-                            "height":"449",
-                            "caption":`${post?.title}`
-                            },
-                            {
-                            "@type":"WebPage",
-                            "@id":`https://promocarnivals.com/blog/${post?.slug}#webpage`,
-                            "url":`https://promocarnivals.com/blog/${post?.slug}`,
-                            "inLanguage":"en-US",
-                            "name":`${post?.seo_title}`,
-                            "description":`${post?.meta_description}`,
-                            "isPartOf":
-                            {
-                                "@id":"https://promocarnivals.com/all/blogs#website"
-                            },
-                            "primaryImageOfPage":
-                            {
-                                "@id":`${post?.imageURL}`
-                            },
-                            "datePublished": `${post?.published_at}`,
-                            "dateModified": `${post?.updated_at ?? post?.created_at}`,
-                "sameAs":[]
+            "image": [
+                {
+                "@type": "ImageObject",
+                "url": post.image,
+                "caption": post.title,
+                "width": 1024,
+                "height": 703
+                },
+                {
+                "@type": "ImageObject",
+                 "url": post.image,
+                "caption": post.title,
+                "width": 703,
+                "height": 703
+                },
+                {
+                "@type": "ImageObject",
+                 "url": post.image,
+                "caption": post.title,
+                "width": 1024,
+                "height": 576
+                }
+            ],
+            "thumbnail": {
+                "@type": "ImageObject",
+                 "url": post.image,
+                "caption": post.title,
+                "width": 1024,
+                "height": 703
+            },
+            "thumbnailUrl": post.image,
+            "publisher": {
+                "@type": "Organization",
+                "name": "Promo Carnivals",
+                "url": "https://promocarnivals.com",
+                "logo": {
+                "@type": "ImageObject",
+                "url":"https://promocarnivals.com/build/assets/promocarnivals2-BOfHa-Vt.png",
+                "caption": "Promo Carnivals Logo"
+                }
+            }
+            }
+            const secondSchema =  {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://promocarnivals.com"
+                },
+                {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blogs",
+                "item": "https://promocarnivals.com/all/blogs"
+                },
+                {
+                "@type": "ListItem",
+                "position": 3,
+                "name": post.title,
+                "item": window.location.href
                 }
             ]
-        }
+            }
+
     return (
-        <WebLayout FirstSchema={WebSchema}>
+        <WebLayout FirstSchema={WebSchema} SecondSchema={secondSchema}>
             <PageMeta title={post?.seo_title || `${post?.title} - Promo Carnivals`} description={post.meta_description || ""} keywords={post.focus_keyphrase || ""} />
             <div
                 className="pb-12 font-sans"

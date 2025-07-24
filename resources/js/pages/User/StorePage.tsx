@@ -7,8 +7,7 @@ import { Link, useForm } from '@inertiajs/react';
 import { toastDirection } from '@/lib/utils/Constants';
 import toast from 'react-hot-toast';
 import PageMeta from '@/components/PageMeta';
-import { json } from 'stream/consumers';
-
+import promocarnivals2Logo from '@/assets/promocarnivals2.png';
 interface SimilarStore {
     name: string | null,
     slug: string | null,
@@ -156,69 +155,75 @@ const StorePage = ({ coupons, stores, expiredCoupons, similarStores, featuredLin
 
     //  Schema Code
 
-    const firstSchema  =  {
+    const firstSchema  = {
         "@context": "https://schema.org",
-        "@graph": [
-           {
-            "@type":"CollectionPage",
-            "@id":"https://promocarnivals/stores#webpage",
-            "url":"https://promocarnivals/stores",
-            "inLanguage":"en-US",
-            "name":"All Brands - Promo Carnivals",
-            "isPartOf":{"@id":"https://promocarnivals.com/#website"},
-            "description":"Explore all available brands and find the best coupons, deals, and discounts in one place."
-            },
-            {
-                "@type": "WebPage",
-                "@id": window.location.href + "#webpage",
-                "url": window.location.href,
-                "inLanguage": "en-US",
-                "name": (stores.seo_title ?? stores.name) + ' - Promo Carnivals'  ,
-                "isPartOf": { "@id": "https://promocarnivals/stores#webpage"},
-                "description": `${stores.meta_description ?? ""}` 
+        "@type": "WebPage",
+        "name": stores.name,
+        "headline": stores.name,
+        "url": window.location.href,
+        "description": stores.meta_description ?? "",
+        "inLanguage": "en-US",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Promo Carnivals",
+            "url": "https://promocarnivals.com",
+            "logo": {
+            "@type": "ImageObject",
+            "url": 'https://promocarnivals.com/build/assets/promocarnivals2-BOfHa-Vt.png',
+            "width": 250,
+            "height": 60
             }
-        ]
+        }
         }
 
-    const secondSchema = [
-        {
-            "@context": "http://schema.org",
-            "@type": "ItemList",
-            "name": (stores.seo_title ?? stores.name) + ' - Promo Carnivals',
-            "description": stores.meta_description ?? "",
-            "url": window.location.href,
-            "numberOfItems": coupons.length ?? 0,
-            "itemListElement": coupons.map((coupon, index) => ({
-            "@type": "ListItem",
-            "position": index + 1,
-            "item": {
-                "@type": "Offer",
-                "url": stores.affiliate_irl ?? stores.home_url,
-                "description": coupon.title, // Make sure offer_name is a string
-                "validThrough": coupon.expires ?? "",
-                "seller": {
-                "@type": "Organization",
-                "name": stores.name,
-                },
-            },
-            })),
-        },
-        ];
-
-        const thirdSchema = {
+    const secondSchema = {
         "@context": "https://schema.org",
-        "@graph": coupons.map((coupon) => ({
-            "@type": "Offer",
-            "url":stores.affiliate_irl ?? stores.home_url,
-            "description": coupon.title, // Assuming this is a plain string
-            "validThrough": coupon.expires ?? "",
-            "seller": {
-            "@type": "Organization",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://promocarnivals.com"
+            },
+            {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Stores",
+            "item": "https://promocarnivals.com/stores"
+            },
+            {
+            "@type": "ListItem",
+            "position": 3,
             "name": stores.name,
-            "url": window.location.href
+            "item": window.location.href
             }
-        }))
-        };
+        ]
+    }
+
+        const averageRating = stores.store_ratings && stores.store_ratings.length > 0
+        ? (
+            stores.store_ratings.reduce((sum, r) => sum + r.ratings, 0) /
+            stores.store_ratings.length
+            ).toFixed(1)
+        : "0.0";
+
+        const reviewCount = stores.store_ratings ? stores.store_ratings.length : 0;
+
+        const thirdSchema ={
+            "@context": "https://schema.org",
+            "@type": "Store",
+            "name": stores.name,
+            "image":stores.thumbnail,
+            "description": stores.meta_description ?? "",
+            "url":window.location.href,
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue":averageRating,
+                "reviewCount": reviewCount,
+            }
+            }
+
 
 
 

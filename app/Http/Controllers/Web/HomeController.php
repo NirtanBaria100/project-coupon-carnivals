@@ -143,6 +143,7 @@ class HomeController extends Controller
     public function CategoryPage($slug)
     {
          $category = Category::latest()->where('slug', $slug)->first();
+         $category->formattedCreated = Carbon::parse($category->created_at)->format('Y-m-d');
          $popularCategories = Category::latest()->where("is_popular",1)->limit(10)->get();
          $TotalCoupons = $category->coupons()->count();
         return Inertia::render("User/CategoryPage", [
@@ -195,6 +196,7 @@ class HomeController extends Controller
     public function singleBlog($slug)
     {
         $post = Blog::latest()->where('slug', $slug)->with('author')->with('category')->first();
+        $post->formattedCreated = Carbon::parse($post->created_at)->format('Y-m-d');
         $recentPost = Blog::latest()->whereNot('slug', $slug)->where('is_published',1)->with('category')->get();
         $recentPost->transform(function ($query) {
             $query->title = \Str::limit($query->title, 140, '...');
