@@ -23,28 +23,7 @@ const AllStorePage = ({ allStores }: Props) => {
     const [activeLetter, setActiveLetter] = useState("All");
 
 
-    const storeSchema =  {
-        "@context":"https://schema.org",
-        "@graph":
-        [
-            {
-            "@type":"WebSite",
-            "@id":"https://promocarnivals.com/#website",
-            "url":"https://promocarnivals.com/",
-            "name":"Promo Carnivals - Find Exclusive Coupons and Discounts",
-            "description": "Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"
-            },
-            {
-            "@type":"CollectionPage",
-            "@id":"https://promocarnivals/stores#webpage",
-            "url":"https://promocarnivals/stores",
-            "inLanguage":"en-US",
-            "name":"All Brands - Promo Carnivals",
-            "isPartOf":{"@id":"https://promocarnivals.com/#website"},
-            "description":"Explore all available brands and find the best coupons, deals, and discounts in one place."
-            }
-        ]
-    };
+   
 
     // Dummy fetch function - REPLACE WITH YOUR ACTUAL API CALL if needed
     const fetchStores = useCallback(async () => {
@@ -96,10 +75,32 @@ const AllStorePage = ({ allStores }: Props) => {
         // Client's request: "0-9" comes AFTER A-Z
         return ["All", ...letters, "0-9"];
     }, []);
-
+    const storeSchema  = 
+        {
+            "@context":"https://schema.org",
+            "@graph":
+            [{
+                "@type": "WebSite",
+                "@id": "https://promocarnivals.com#website",
+                "url": "https://promocarnivals.com",
+                "name":"Promo Carnivals - Find Exclusive Coupons and Discounts",
+                "description": "Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"
+             },
+             {
+                "@type":"CollectionPage",
+                "@id":"https://promocarnivals.com/stores#webpage",
+                "url":"https://promocarnivals.com/stores",
+                "inLanguage":"en-US",
+                "name":"All Brands - Promo Carnivals",
+                "isPartOf":{"@id":"https://promocarnivals.com#website"},
+                "description":"Explore all available brands and find the best coupons, deals, and discounts in one place."
+             }
+            ]
+        }
+            
     if (loading) {
         return (
-            <WebLayout FirstSchema={storeSchema}>
+            <WebLayout>
                 <div
                     className="min-h-screen flex items-center justify-center font-sans"
                     style={{ backgroundColor: "var(--page-bg, #f8f8f8)" }}
@@ -162,7 +163,7 @@ const AllStorePage = ({ allStores }: Props) => {
     }
 
     return (
-        <WebLayout>
+        <WebLayout FirstSchema={storeSchema}>
             <PageMeta title={"All Brands - Promo Carnivals"} description={"Explore all available brands and find the best coupons, deals, and discounts in one place."} keywords={""} />
             <div
                 className="pb-12 font-sans"
