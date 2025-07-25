@@ -23,12 +23,29 @@ const AllCategoryPage = ({ allCategories }: Props) => {
         // Add more categories as per your requirements
     ];
 
-    const FirstSchema={
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "All Categories",
-    "url": "https://promocarnivals.com/categories"
-}
+    const FirstSchema =
+         {
+            "@context":"https://schema.org",
+            "@graph":
+            [
+                {
+            "@type": "WebSite",
+            "@id": "https://promocarnivals.com#website",
+            "url": "https://promocarnivals.com",
+            "name":"Promo Carnivals - Find Exclusive Coupons and Discounts",
+            "description": "Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"
+            },
+            {
+            "@type":"CollectionPage",
+            "@id":"https://promocarnivals.com/categories#webpage",
+            "url":"https://promocarnivals.com/categories",
+            "inLanguage":"en-US",
+            "name":"Categories - Promo Carnivals",
+            "isPartOf":{"@id":"promocarnivals.com#website"},
+            "description":"Browse all coupon categories and discover great offers across fashion, tech, home, and more."
+            }
+        ]
+    }
 
 
     return (
