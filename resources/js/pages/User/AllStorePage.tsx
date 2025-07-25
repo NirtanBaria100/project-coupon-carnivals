@@ -23,7 +23,7 @@ const AllStorePage = ({ allStores }: Props) => {
     const [activeLetter, setActiveLetter] = useState("All");
 
 
-    const FirstSchema=  {
+    const storeSchema =  {
         "@context":"https://schema.org",
         "@graph":
         [
@@ -99,7 +99,7 @@ const AllStorePage = ({ allStores }: Props) => {
 
     if (loading) {
         return (
-            <WebLayout FirstSchema={FirstSchema}>
+            <WebLayout FirstSchema={storeSchema}>
                 <div
                     className="min-h-screen flex items-center justify-center font-sans"
                     style={{ backgroundColor: "var(--page-bg, #f8f8f8)" }}
