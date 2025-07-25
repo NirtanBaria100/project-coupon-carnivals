@@ -77,30 +77,14 @@ const BlogPage = ({ blogs ,popularCategories}: Props) => {
         }, [blogs.data, searchTerm, sortOrder]);
 
 
-    const firstSchema  =  {
+    const firstSchema  =  
+        {
         "@context": "https://schema.org",
-        "@graph": [
-        {
-            "@type":"WebSite",
-            "@id":"https://promocarnivals.com/#website",
-            "url":"https://promocarnivals.com/",
-            "name":"Promo Carnivals - Find Exclusive Coupons and Discounts",
-            "description": "Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"
-            },
-        {
-            "@type": "CollectionPage",
-            "@id": "https://promocarnivals.com/blogs#webpage",
-            "url": "https://promocarnivals.com/blogs",
-            "inLanguage": "en-US",
-            "name": "Blogs - Promo Carnivals",
-            "isPartOf":
-            {
-                "@id": "https://promocarnivals.com/blogs#website"
-            },
-            "description": "Read all our latest blog posts covering tips, brand stories, shopping guides, and money-saving ideas."
+        "@type": "Blog",
+        "name": "Promo Carnivals Blog",
+        "url": "https://promocarnivals.com/all/blogs"
         }
-        ]
-    }
+
        
     return (
         <WebLayout FirstSchema={firstSchema}>

@@ -76,27 +76,13 @@ const AllStorePage = ({ allStores }: Props) => {
         return ["All", ...letters, "0-9"];
     }, []);
     const storeSchema  = 
-        {
-            "@context":"https://schema.org",
-            "@graph":
-            [{
-                "@type": "WebSite",
-                "@id": "https://promocarnivals.com#website",
-                "url": "https://promocarnivals.com",
-                "name":"Promo Carnivals - Find Exclusive Coupons and Discounts",
-                "description": "Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!"
-             },
-             {
-                "@type":"CollectionPage",
-                "@id":"https://promocarnivals.com/stores#webpage",
-                "url":"https://promocarnivals.com/stores",
-                "inLanguage":"en-US",
-                "name":"All Brands - Promo Carnivals",
-                "isPartOf":{"@id":"https://promocarnivals.com#website"},
-                "description":"Explore all available brands and find the best coupons, deals, and discounts in one place."
-             }
-            ]
-        }
+    {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "All Brands",
+    "url": "https://promocarnivals.com/stores"
+    }
+
             
     if (loading) {
         return (

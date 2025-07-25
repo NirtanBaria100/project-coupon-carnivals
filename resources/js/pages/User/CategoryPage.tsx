@@ -90,7 +90,7 @@ const CategoryPage = ({ category,categories,totalCouponsIncategory }: Props) => 
         "alternativeHeadline":  `We have ${totalCouponsIncategory} live discount codes & deals in ${category?.name}.`,
         "description":category.meta_description ?? "",
         "datePublished": category.formattedCreated,
-        "url": "category ka url",
+        "url": window.location.href,
         "articleSection": "Category",
         "isAccessibleForFree": "True",
         "speakable": {
