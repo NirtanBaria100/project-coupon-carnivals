@@ -215,7 +215,7 @@ class HomeController extends Controller
     {
         $data = $request->except('_token');
         $data['ip_address'] = $request->ip();
-        $store = Rating::updateOrCreate(['ip_address' => $data['ip_address']], $data);
+        $store = Rating::updateOrCreate(['store_id' => $data['store_id'] ,'ip_address' => $data['ip_address']], $data);
 
         if ($store) {
             return redirect()->back()->with('success', 'Thanks for your rating. Your rating will be added soon.');
