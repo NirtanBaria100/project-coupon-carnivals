@@ -37,7 +37,7 @@ class SitemapService {
             array('url' => url(asset($this->siteMapDirectory . '/stores.xml')), 'priority' => 1.0, 'changeFreq' => 'weekly', 'lastmod' => ($store = Store::latest('updated_at')->first()) ? ($store->updated_at->gt($store->created_at) ? $store->updated_at->toIso8601String() : $store->created_at->toIso8601String()) : Carbon::now()->toIso8601String()),
             // array('url' => url(asset($this->siteMapDirectory . '/category-images.xml')), 'priority' => 0.4, 'changeFreq' => 'monthly', 'lastmod' => ($category = Category::latest('updated_at')->first()) ? ($category->updated_at->gt($category->created_at) ? $category->updated_at->toIso8601String() : $category->created_at->toIso8601String()) : Carbon::now()->toIso8601String()),
         ];
-        generate_sitemap($data, $this->siteMapDirectory, 'sitemap.xml');
+        generate_sitemap_index($data, $this->siteMapDirectory, 'sitemap.xml');
     }
     public function pages()
     {

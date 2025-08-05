@@ -5,7 +5,7 @@ if (!function_exists('generate_sitemap')) {
     function generate_sitemap($sitemapData, $directoryName, $filename)
     {
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>');
+         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>');
 
         foreach ($sitemapData as $data) {
             $url = $xml->addChild('url');
@@ -27,6 +27,32 @@ if (!function_exists('generate_sitemap')) {
         }
         $xmlContent = $xml->asXML();
         file_put_contents($filePath, $xmlContent);
+        return response(['success' => true, 'xml' => $xml]);
+    }
+}
+
+if (!function_exists('generate_sitemap_index')) {
+    function generate_sitemap_index($sitemaps, $directoryName, $filename)
+    {
+        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></sitemapindex>');
+
+        foreach ($sitemaps as $sitemap) {
+            $sitemapNode = $xml->addChild('sitemap');
+            $sitemapNode->addChild('loc', htmlspecialchars($sitemap['loc']));
+            if (!empty($sitemap['lastmod'])) {
+                $sitemapNode->addChild('lastmod', $sitemap['lastmod']);
+            }
+        }
+
+        $filePath = public_path($directoryName . '/' . $filename);
+        $directory = dirname($filePath);
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        $xmlContent = $xml->asXML();
+        file_put_contents($filePath, $xmlContent);
+
         return response(['success' => true, 'xml' => $xml]);
     }
 }
