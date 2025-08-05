@@ -200,7 +200,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                                         className="font-semibold"
                                         style={{ color: "var(--primary-orange)" }}
                                     >
-                                        {post.author.name.toUpperCase()}
+                                        Admin
                                     </span>
                                 </span>
                                 <span>•</span>

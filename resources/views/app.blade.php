@@ -41,9 +41,8 @@
         </style>
 
   
-        <link rel="icon" href="{{ asset('favicon-carnivals.png') }}" sizes="any">
-        <link rel="icon" href="{{ asset('favicon-carnivals.png') }}" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
