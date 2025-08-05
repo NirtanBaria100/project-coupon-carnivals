@@ -26,11 +26,6 @@ class SitemapService {
         $this->stores();
         // $this->stores_images();
     }
-  use Carbon\Carbon;
-use App\Models\Blog;
-use App\Models\Category;
-use App\Models\Store;
-
 public function sitemap()
 {
     $data = [
