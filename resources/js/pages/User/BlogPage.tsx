@@ -194,7 +194,7 @@ const BlogPage = ({ blogs ,popularCategories}: Props) => {
                                         </p>
 
                                     <div className="flex items-center justify-between text-xs" style={{ color: 'var(--text-)' }}>
-                                        <span>By {post.author?.name.toUpperCase() || ''}</span> {/* Used optional chaining for author.name */}
+                                        <span>By Admin</span> {/* Used optional chaining for author.name */}
                                         <span>{post.date}</span>
                                     </div>
                                 </div>

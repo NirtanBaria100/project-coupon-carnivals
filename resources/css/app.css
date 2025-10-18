@@ -509,6 +509,44 @@ padding: 10px 30px;
     list-style: disc;
     padding: 0 0 0px 23px;
 }
+.pri_pol_content a{
+  color: #ff6700;
+}
+.pri_pol_content ul{
+      list-style: disc;
+    padding-left: 20px;
+}
+.pri_pol_content h3{
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.store_sidebar_above ul {
+    list-style: disc;
+    padding: 0 0 0 23px;
+}
+
+
+/* blog css */
+.single_blog_content h2{
+  font-size: 22px;
+}
+.single_blog_content h3{
+  font-size: 18px;
+}
+.single_blog_content a{
+  color: #ff6700;
+}
+.single_blog_content table{
+  width: 100% !important;
+}
+.single_blog_content table th{
+font-weight: bold;
+}
+.single_blog_content table th,
+.single_blog_content table td{
+  border: 1px solid #c3c3c3;
+  padding: 5px;
+}
 
 @media only screen and (max-width: 1023px) {
   .home_featuredoffers_div {

@@ -178,7 +178,7 @@ const SingleBlog = ({ post, featuredcategories, recentPost }: Props) => {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         {/* Main Blog Content */}
                         <div
-                            className="lg:col-span-2 p-6 sm:p-8 rounded-lg shadow-lg border"
+                            className="lg:col-span-2 p-6 sm:p-8 rounded-lg shadow-lg border single_blog_content"
                             style={{
                                 backgroundColor: "var(--card-bg)",
                                 borderColor: "var(--card-border)",
