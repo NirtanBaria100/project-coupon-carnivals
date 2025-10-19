@@ -575,6 +575,15 @@ font-weight: bold;
     letter-spacing: 0px;
     font-size: 18px;
 }
+.cookie_banner {
+    display: block !important;
+}
+p.banner_text {
+    margin-bottom: 10px !important;
+}
+.banner_btns button {
+    font-size: 14px;
+}
 }
 
 

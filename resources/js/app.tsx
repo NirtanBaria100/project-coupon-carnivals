@@ -5,6 +5,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
 import { useEffect } from 'react';
+import CookieBanner from './components/CookieBanner';
 
 const appName = 'Promo Carnivals - Find Exclusive Coupons and Discounts';
 const desc = 'Explore top deals & discounts on fashion, tech, beauty & more at PromoCarnivals. Shop smart, save big—new promos added daily!'
@@ -16,7 +17,12 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<App {...props} />);
+        root.render(
+            <>
+                <App {...props} />
+                <CookieBanner/>
+            </>
+    );
     },
     progress: {
         color: '#4B5563',
