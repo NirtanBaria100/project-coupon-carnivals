@@ -382,11 +382,20 @@ const HomePage = ({ featured_coupons, popular_stores, blogs,popular_categories }
                         <p className="text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                             <p>Welcome to Promo Carnivals, where we help you save money on all your favorite products. Whether you are looking for deals on groceries, clothes, electronics, or home appliances, we have covered you.</p>
 <br /><h3>Fresh Coupons and Deals Updated Daily</h3>
-<p>Our experts update coupons daily bases to ensure our valuable customers get the latest and best deals frequently.</p>
-<br /><h3>Unlock Special Offers You Won’t Find Elsewhere</h3>
-<p>You can easily get access to exclusive offers and special discounts that you will not find anywhere else. So, why wait? sign up today for our newsletter to stay in the loop and never miss a great deal.</p>
+<p>Our team updated coupons on daily bases to ensure our valuable customers get the latest and best deals frequently.</p>
+<br /><h3>Popular Retailer Deals in One Place</h3>
+<p>Promo Carnivals highlights trending discounts, seasonal sales, and promotional offers from well-known online stores. Whether you're searching for a voucher code, special promotion, or limited-time deal, you can quickly discover savings that match your needs.</p>
+<br /><h3>Why Choose Promo Carnivals?</h3>
+<p>
+    <ul className="ps-5 list-disc ">
+        <li>Regularly reviewed and updated deals</li>
+        <li>Clear offer details and expiry information</li>
+        <li>Easy-to-use and organized platform</li>
+        <li>Focus on providing helpful savings resources</li>
+    </ul>
+</p>
 <br /><h3>Your Smart Shopping Starts Here</h3>
-<p>Do not wait! Start exploring Promo Carnivals right now and discover how easy it is to save your money on everything you need. Happy shopping!</p>
+<p>Start exploring Promo Carnivals right now and discover how easy it is to save your money on everything you need. Happy shopping!</p>
 
                         </p>
                     </div>

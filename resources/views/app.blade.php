@@ -6,7 +6,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="p:domain_verify" content="37dc9c4b62183b8da7e0e261ad07643c"/>
         <meta name=impact-site-verification value='f41e4ec9-ef72-495f-8c83-518bba3625f7'>
-        
+        <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16635935337"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  // Google Ads
+  gtag('config', 'AW-16635935337');
+
+  // Google Analytics (GA4)
+  gtag('config', 'G-5ZW5WVLK7T');
+</script>
+<!-- Event snippet for Coupons Bliss (1) conversion page -->
+<script>
+  gtag('event', 'conversion', {'send_to': 'AW-16635935337/GleNCI2EzPsaEOn00Pw9'});
+</script>
+
 
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>

@@ -547,6 +547,10 @@ font-weight: bold;
   border: 1px solid #c3c3c3;
   padding: 5px;
 }
+.single_blog_content ul{
+  list-style: disc;
+    padding-left: 20px;
+}
 
 @media only screen and (max-width: 1023px) {
   .home_featuredoffers_div {
